@@ -4,6 +4,7 @@
 .DS_Store
 /captures
 .externalNativeBuild
+
 ### Java template
 # Compiled class file
 *.class
@@ -120,3 +121,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+/.idea/
+app/libs/
