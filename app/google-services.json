@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1093555154793",
+    "firebase_url": "https://trebis-a195d.firebaseio.com",
+    "project_id": "trebis-a195d",
+    "storage_bucket": "trebis-a195d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093555154793:android:fea05c6272d92d4a",
+        "android_client_info": {
+          "package_name": "kocurek.simon.trebis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093555154793-rv9gl6aec50si87kdja6a09bbtrqiqeu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kocurek.simon.trebis",
+            "certificate_hash": "336d9cd2c6af51a617e079d67ab6af9fb2cdac4f"
+          }
+        },
+        {
+          "client_id": "1093555154793-lm7mc2pvtddavfaurgfvkvfh3k1fvogk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA3PKtI4dnhnYjCBpOR8OMpuZvFt7jrHc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093555154793-lm7mc2pvtddavfaurgfvkvfh3k1fvogk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
