@@ -10,23 +10,19 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.plus.PlusOneButton;
 
-/**
- * A fragment with a Google +1 button.
- * Activities that contain this fragment must implement the
- * {@link add_layout.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link add_layout#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class add_layout extends Fragment {
+public class AddLayoutFragment extends Fragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
     // The request code must be 0 or greater.
     private static final int PLUS_ONE_REQUEST_CODE = 0;
+
     // The URL to +1.  Must be a valid URL.
     private final String PLUS_ONE_URL = "http://developer.android.com";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -34,7 +30,7 @@ public class add_layout extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public add_layout() {
+    public AddLayoutFragment() {
         // Required empty public constructor
     }
 
@@ -44,11 +40,11 @@ public class add_layout extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment add_layout.
+     * @return A new instance of fragment AddLayoutFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static add_layout newInstance(String param1, String param2) {
-        add_layout fragment = new add_layout();
+    public static AddLayoutFragment newInstance(String param1, String param2) {
+        AddLayoutFragment fragment = new AddLayoutFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
