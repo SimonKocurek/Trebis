@@ -8,29 +8,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.plus.PlusOneButton;
 
-public class AddLayoutFragment extends Fragment {
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link OnLayoutFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link LayoutFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class LayoutFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // The request code must be 0 or greater.
-    private static final int PLUS_ONE_REQUEST_CODE = 0;
-
-    // The URL to +1.  Must be a valid URL.
-    private final String PLUS_ONE_URL = "http://developer.android.com";
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private PlusOneButton mPlusOneButton;
 
-    private OnAddLayoutFragmentInteractionListener mListener;
+    private OnLayoutFragmentInteractionListener mListener;
 
-    public AddLayoutFragment() {
+    public LayoutFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +39,11 @@ public class AddLayoutFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AddLayoutFragment.
+     * @return A new instance of fragment LayoutFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddLayoutFragment newInstance(String param1, String param2) {
-        AddLayoutFragment fragment = new AddLayoutFragment();
+    public static LayoutFragment newInstance(String param1, String param2) {
+        LayoutFragment fragment = new LayoutFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,15 +63,8 @@ public class AddLayoutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout_edge_menu for this fragment
-        View view = inflater.inflate(R.layout.fragment_add_layout, container, false);
-
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_layout, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -85,8 +77,8 @@ public class AddLayoutFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnAddLayoutFragmentInteractionListener) {
-            mListener = (OnAddLayoutFragmentInteractionListener) context;
+        if (context instanceof OnLayoutFragmentInteractionListener) {
+            mListener = (OnLayoutFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement onFragmentInteractionListener");
@@ -109,9 +101,8 @@ public class AddLayoutFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnAddLayoutFragmentInteractionListener {
+    public interface OnLayoutFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 }

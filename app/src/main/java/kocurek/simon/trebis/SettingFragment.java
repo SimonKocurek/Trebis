@@ -56,7 +56,7 @@ public class SettingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout_edge_menu for this fragment
         return inflater.inflate(R.layout.fragment_setting, container, false);
     }
 
@@ -74,7 +74,7 @@ public class SettingFragment extends Fragment {
             mListener = (OnSettingsFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement onFragmentInteractionListener");
         }
     }
 

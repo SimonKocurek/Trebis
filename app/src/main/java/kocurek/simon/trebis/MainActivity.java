@@ -3,38 +3,32 @@ package kocurek.simon.trebis;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements
         SettingFragment.OnSettingsFragmentInteractionListener,
-        AddLayoutFragment.OnAddLayoutFragmentInteractionListener {
+        AddLayoutFragment.OnAddLayoutFragmentInteractionListener,
+        ShareLayoutFragment.onFragmentInteractionListener,
+        LayoutFragment.OnLayoutFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        goToMenu();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,11 +52,47 @@ public class MainActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    private void goToSettings() {
+    public void goToMenu() {
+        // Create fragment and give it an argument specifying the article it should show
+        MenuFragment newFragment = new MenuFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.add(R.id.fragment, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    public void goToAddLayout(View view) {
+        // Create fragment and give it an argument specifying the article it should show
+        AddLayoutFragment newFragment = new AddLayoutFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    public void goToSettings() {
         // Create fragment and give it an argument specifying the article it should show
         SettingFragment newFragment = new SettingFragment();
-        Bundle args = new Bundle();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    public void goToLayout(View view) {
+        // Create fragment and give it an argument specifying the article it should show
+        LayoutFragment newFragment = new LayoutFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         // Replace whatever is in the fragment_container view with this fragment,
@@ -84,6 +114,65 @@ public class MainActivity extends AppCompatActivity implements
             Log.i("MainActivity", "nothing on backstack, calling super");
             super.onBackPressed();
         }
+    }
+
+    public void onLayoutEdgeClick(final View view) {
+        PopupMenu popup = new PopupMenu(MainActivity.this, view);
+        //Inflating the Popup using xml file
+        popup.getMenuInflater().inflate(R.menu.layout_edge_menu, popup.getMenu());
+
+        //registering popup with OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.one:
+                        createToast("Deleting");
+                        break;
+                    case R.id.two:
+                        goToShareLayout(view);
+                        break;
+                    case R.id.three:
+                        goToEditLayout(view);
+                        break;
+                }
+
+                return true;
+            }
+        });
+
+        popup.show(); //showing popup menu
+    }
+
+    public void createToast(String content) {
+        Toast.makeText(this, content, Toast.LENGTH_LONG).show();
+    }
+
+    public void goToEditLayout(View view) {
+// Create fragment and give it an argument specifying the article it should show
+        AddLayoutFragment newFragment = new AddLayoutFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    public void goToShareLayout(View view) {
+// Create fragment and give it an argument specifying the article it should show
+        ShareLayoutFragment newFragment = new ShareLayoutFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
     }
 
     @Override
