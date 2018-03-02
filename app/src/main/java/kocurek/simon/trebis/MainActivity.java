@@ -1,17 +1,20 @@
 package kocurek.simon.trebis;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import kocurek.simon.trebis.fragments.FragmentInteractionListener;
 import kocurek.simon.trebis.fragments.menu.MenuFragment;
+import kocurek.simon.trebis.fragments.settings.SettingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            goToSettings();
+            fragmentSwitcher.replace(new SettingFragment());
             return true;
         }
 
@@ -75,35 +78,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onLayoutEdgeClick(final View view) {
-        PopupMenu popup = new PopupMenu(MainActivity.this, view);
-        //Inflating the Popup using xml file
-        popup.getMenuInflater().inflate(R.menu.layout_edge_menu, popup.getMenu());
+    public void addLayout() {
+        LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = vi.inflate(R.layout.your_layout, null);
 
-        //registering popup with OnMenuItemClickListener
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.one:
-                        createToast("Deleting");
-                        break;
-                    case R.id.two:
-                        goToShareLayout(view);
-                        break;
-                    case R.id.three:
-                        goToEditLayout(view);
-                        break;
-                }
+        // fill in any details dynamically here
+        TextView textView = v.findViewById(R.id.a_text_view);
+        textView.setText("your text");
 
-                return true;
-            }
-        });
-
-        popup.show(); //showing popup menu
-    }
-
-    public void createToast(String content) {
-        Toast.makeText(this, content, Toast.LENGTH_LONG).show();
+        // insert into main view
+        ViewGroup insertPoint = findViewById(R.id.insert_point);
+        insertPoint.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
     }
 
     public FragmentInteractionListener getInteractionHandler() {

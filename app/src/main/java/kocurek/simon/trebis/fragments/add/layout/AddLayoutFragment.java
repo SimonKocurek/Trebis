@@ -39,18 +39,14 @@ public class AddLayoutFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof MainActivity) {
-            interactionListener = ((MainActivity) context).getInteractionHandler();
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement onFragmentInteractionListener");
-        }
+        MainActivity activity = (MainActivity) context;
+        interactionListener = activity.getInteractionHandler();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        interactionListener = null;
     }
 
 }
