@@ -1,36 +1,39 @@
 package kocurek.simon.trebis;
 
 import android.app.FragmentManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import kocurek.simon.trebis.fragments.AddLayoutFragment;
-import kocurek.simon.trebis.fragments.LayoutFragment;
-import kocurek.simon.trebis.fragments.MenuFragment;
-import kocurek.simon.trebis.fragments.SettingFragment;
-import kocurek.simon.trebis.fragments.ShareLayoutFragment;
+import kocurek.simon.trebis.fragments.FragmentInteractionListener;
+import kocurek.simon.trebis.fragments.menu.MenuFragment;
 
-public class MainActivity extends AppCompatActivity implements FragmentListener {
+public class MainActivity extends AppCompatActivity {
+
+    private FragmentSwitcher fragmentSwitcher;
+
+    private FragmentInteractionHandler interactionHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpDependencies();
         setUpMenu();
         setUpToolbar();
     }
 
+    private void setUpDependencies() {
+        this.fragmentSwitcher = new FragmentSwitcher(getSupportFragmentManager());
+        this.interactionHandler = new FragmentInteractionHandler();
+    }
+
     private void setUpMenu() {
-        addFragment(new MenuFragment());
+        fragmentSwitcher.add(new MenuFragment());
         setContentView(R.layout.main_activity);
     }
 
@@ -61,84 +64,13 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
         return super.onOptionsItemSelected(item);
     }
 
-    private void addFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.add(R.id.fragment, fragment);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.fragment, fragment);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-    }
-
-    public void goToMenu() {
-        // Create fragment and give it an argument specifying the article it should show
-        MenuFragment newFragment = new MenuFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.add(R.id.fragment, newFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-    }
-
-    public void goToAddLayout(View view) {
-        // Create fragment and give it an argument specifying the article it should show
-        AddLayoutFragment newFragment = new AddLayoutFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.fragment, newFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-    }
-
-    public void goToSettings() {
-        // Create fragment and give it an argument specifying the article it should show
-        SettingFragment newFragment = new SettingFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment, newFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-    }
-
-    public void goToLayout(View view) {
-        // Create fragment and give it an argument specifying the article it should show
-        LayoutFragment newFragment = new LayoutFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment, newFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-    }
-
     @Override
     public void onBackPressed() {
-        FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            Log.i("MainActivity", "popping backstack");
-            fm.popBackStackImmediate();
+        FragmentManager fragmentManager = getFragmentManager();
+
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStackImmediate();
         } else {
-            Log.i("MainActivity", "nothing on backstack, calling super");
             super.onBackPressed();
         }
     }
@@ -174,37 +106,8 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
         Toast.makeText(this, content, Toast.LENGTH_LONG).show();
     }
 
-    public void goToEditLayout(View view) {
-// Create fragment and give it an argument specifying the article it should show
-        AddLayoutFragment newFragment = new AddLayoutFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment, newFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-    }
-
-    public void goToShareLayout(View view) {
-// Create fragment and give it an argument specifying the article it should show
-        ShareLayoutFragment newFragment = new ShareLayoutFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment, newFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public FragmentInteractionListener getInteractionHandler() {
+        return interactionHandler;
     }
 
 }
