@@ -1,4 +1,4 @@
-package kocurek.simon.trebis;
+package kocurek.simon.trebis.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

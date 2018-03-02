@@ -1,4 +1,4 @@
-package kocurek.simon.trebis;
+package kocurek.simon.trebis.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,21 +8,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-// TODO MAKE PREFERENCE_FRAGMENT
-public class SettingFragment extends Fragment {
+import com.google.android.gms.plus.PlusOneButton;
+
+import kocurek.simon.trebis.R;
+
+public class AddLayoutFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // The request code must be 0 or greater.
+    private static final int PLUS_ONE_REQUEST_CODE = 0;
+
+    // The URL to +1.  Must be a valid URL.
+    private final String PLUS_ONE_URL = "http://developer.android.com";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private PlusOneButton mPlusOneButton;
 
-    private OnSettingsFragmentInteractionListener mListener;
+    private OnAddLayoutFragmentInteractionListener mListener;
 
-    public SettingFragment() {
+    public AddLayoutFragment() {
         // Required empty public constructor
     }
 
@@ -32,11 +42,11 @@ public class SettingFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingFragment.
+     * @return A new instance of fragment AddLayoutFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SettingFragment newInstance(String param1, String param2) {
-        SettingFragment fragment = new SettingFragment();
+    public static AddLayoutFragment newInstance(String param1, String param2) {
+        AddLayoutFragment fragment = new AddLayoutFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -57,7 +67,14 @@ public class SettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout_edge_menu for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_layout, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -70,8 +87,8 @@ public class SettingFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnSettingsFragmentInteractionListener) {
-            mListener = (OnSettingsFragmentInteractionListener) context;
+        if (context instanceof OnAddLayoutFragmentInteractionListener) {
+            mListener = (OnAddLayoutFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement onFragmentInteractionListener");
@@ -94,8 +111,9 @@ public class SettingFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnSettingsFragmentInteractionListener {
+    public interface OnAddLayoutFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

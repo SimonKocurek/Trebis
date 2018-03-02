@@ -3,6 +3,7 @@ package kocurek.simon.trebis;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -13,43 +14,69 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements
-        SettingFragment.OnSettingsFragmentInteractionListener,
-        AddLayoutFragment.OnAddLayoutFragmentInteractionListener,
-        ShareLayoutFragment.onFragmentInteractionListener,
-        LayoutFragment.OnLayoutFragmentInteractionListener {
+import kocurek.simon.trebis.fragments.AddLayoutFragment;
+import kocurek.simon.trebis.fragments.LayoutFragment;
+import kocurek.simon.trebis.fragments.MenuFragment;
+import kocurek.simon.trebis.fragments.SettingFragment;
+import kocurek.simon.trebis.fragments.ShareLayoutFragment;
+
+public class MainActivity extends AppCompatActivity implements FragmentListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpMenu();
+        setUpToolbar();
+    }
+
+    private void setUpMenu() {
+        addFragment(new MenuFragment());
         setContentView(R.layout.main_activity);
-        goToMenu();
+    }
+
+    private void setUpToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             goToSettings();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.add(R.id.fragment, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
 
     public void goToMenu() {
