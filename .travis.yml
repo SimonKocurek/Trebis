@@ -1,6 +1,10 @@
 language: android
+before_install:
+  - sdkmanager --update && yes | sdkmanager --licenses
+  - chmod +x ./gradlew
 android:
   components:
+    - tools
     - build-tools-27.1.0
 
     # The SDK version used to compile your project

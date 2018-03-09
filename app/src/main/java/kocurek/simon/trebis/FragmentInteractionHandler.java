@@ -1,21 +1,22 @@
 package kocurek.simon.trebis;
 
-import android.content.Context;
 import android.net.Uri;
 
 import kocurek.simon.trebis.fragments.FragmentInteractionListener;
+import kocurek.simon.trebis.fragments.add.layout.AddLayoutFragment;
 
 public class FragmentInteractionHandler implements FragmentInteractionListener {
 
-    private Context context;
+    private MainActivity mainActivity;
 
-    public FragmentInteractionHandler(Context context) {
-        this.context = context;
+    FragmentInteractionHandler(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     @Override
     public void goToAddLayout() {
-
+        FragmentSwitcher fragmentSwitcher = mainActivity.getFragmentSwitcher();
+        fragmentSwitcher.add(new AddLayoutFragment());
     }
 
     @Override

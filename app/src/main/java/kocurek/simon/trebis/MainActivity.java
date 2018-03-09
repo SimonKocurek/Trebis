@@ -3,13 +3,11 @@ package kocurek.simon.trebis;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import kocurek.simon.trebis.fragments.FragmentInteractionListener;
 import kocurek.simon.trebis.fragments.menu.MenuFragment;
-import kocurek.simon.trebis.fragments.settings.SettingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,45 +15,39 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentInteractionHandler interactionHandler;
 
+    private OptionsMenuHandler optionsMenuHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUpDependencies();
-        setUpMenu();
+        setUpMainFragment();
         setUpToolbar();
     }
 
     private void setUpDependencies() {
         this.fragmentSwitcher = new FragmentSwitcher(getSupportFragmentManager());
-        this.interactionHandler = new FragmentInteractionHandler();
+        this.interactionHandler = new FragmentInteractionHandler(this);
+        this.optionsMenuHandler = new OptionsMenuHandler(this);
     }
 
-    private void setUpMenu() {
+    private void setUpMainFragment() {
         fragmentSwitcher.add(new MenuFragment());
         setContentView(R.layout.main_activity);
     }
 
     private void setUpToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        this.optionsMenuHandler.setUp();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
-        return true;
+        return optionsMenuHandler.onCreate(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            fragmentSwitcher.replace(new SettingFragment());
+        if (optionsMenuHandler.onItemSelected(item)) {
             return true;
         }
 
@@ -75,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
     public FragmentInteractionListener getInteractionHandler() {
         return interactionHandler;
+    }
+
+    public FragmentSwitcher getFragmentSwitcher() {
+        return fragmentSwitcher;
     }
 
 }
