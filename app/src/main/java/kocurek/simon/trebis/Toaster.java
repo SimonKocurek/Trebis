@@ -1,11 +1,12 @@
 package kocurek.simon.trebis;
 
+import android.content.Context;
 import android.widget.Toast;
 
 public class Toaster {
 
-    public void createToast(String content) {
-        Toast.makeText(this, content, Toast.LENGTH_LONG).show();
+    public void createToast(Context context, String content) {
+        Toast.makeText(context, content, Toast.LENGTH_LONG).show();
     }
 
 }

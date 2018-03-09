@@ -11,16 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/menu_fragment_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:alignContent="flex_start"
             app:alignItems="flex_start"
             app:flexDirection="row"
             app:flexWrap="wrap"
             app:justifyContent="flex_start">
-
         </com.google.android.flexbox.FlexboxLayout>
     </ScrollView>
 
@@ -29,15 +28,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        fab:fab_plusIconColor="@color/half_black"
-        fab:fab_colorNormal="@color/white"
-        fab:fab_colorPressed="@color/white_pressed"
-        android:layout_alignParentLeft="true"
+        fab:fab_plusIconColor="@color/white"
+        fab:fab_colorNormal="@color/colorPrimary"
+        fab:fab_colorPressed="@color/colorPrimaryPressed"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_gravity="bottom|end"
-        android:onClick="goToAddLayout"></com.getbase.floatingactionbutton.AddFloatingActionButton>
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_gravity="bottom|end" />
 
 </android.support.design.widget.CoordinatorLayout>

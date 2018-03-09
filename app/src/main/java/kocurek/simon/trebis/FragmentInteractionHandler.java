@@ -1,13 +1,20 @@
 package kocurek.simon.trebis;
 
+import android.content.Context;
 import android.net.Uri;
 
 import kocurek.simon.trebis.fragments.FragmentInteractionListener;
 
 public class FragmentInteractionHandler implements FragmentInteractionListener {
 
+    private Context context;
+
+    public FragmentInteractionHandler(Context context) {
+        this.context = context;
+    }
+
     @Override
-    public void onMenuInteraction(Uri uri) {
+    public void goToAddLayout() {
 
     }
 

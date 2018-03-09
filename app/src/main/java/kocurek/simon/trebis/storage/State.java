@@ -9,4 +9,5 @@ import kocurek.simon.trebis.entity.Layout;
 public class State {
 
     List<Layout> layouts = new ArrayList<>();
+
 }

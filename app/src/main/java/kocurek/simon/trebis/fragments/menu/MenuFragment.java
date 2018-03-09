@@ -10,12 +10,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.getbase.floatingactionbutton.AddFloatingActionButton;
+import com.google.android.flexbox.FlexboxLayout;
+
 import kocurek.simon.trebis.MainActivity;
 import kocurek.simon.trebis.R;
 
-public class MenuFragment extends Fragment {
+public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private OnMenuInteractionListener interactionListener;
+
+    private FlexboxLayout content;
+
+    private AddFloatingActionButton fab;
 
     public MenuFragment() {
         // Required empty public constructor
@@ -29,7 +36,15 @@ public class MenuFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
+
+        content = view.findViewById(R.id.menu_fragment_content);
+//        content.addView();
+
+        fab = view.findViewById(R.id.menu_fragment_add_fab);
+        fab.setOnClickListener(this);
+
+        return view;
     }
 
     @Override
@@ -46,11 +61,19 @@ public class MenuFragment extends Fragment {
     }
 
     @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.menu_fragment_add_fab:
+                interactionListener.goToAddLayout();
+                break;
+        }
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         interactionListener = null;
     }
-
 
     public void onLayoutEdgeClick(final View view) {
         PopupMenu popup = new PopupMenu(MainActivity.this, view);
