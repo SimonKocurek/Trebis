@@ -9,27 +9,21 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import kocurek.simon.trebis.storage.entity.Layout;
+import kocurek.simon.trebis.storage.entity.Subpage;
 
 @Dao
-public interface LayoutDao {
+public interface SubpageDao {
 
-    @Query("SELECT * FROM layout WHERE id = :id")
-    Layout get(int id);
-
-    @Query("SELECT * FROM layout")
-    List<Layout> getAll();
-
-    @Query("SELECT * FROM layout Where id = :id")
-    List<Layout> getHistory(int id);
+    @Query("SELECT * FROM subpage WHERE layoutId = :id")
+    List<Subpage> getForLayout(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insert(Layout layout);
+    long insert(Subpage subpage);
 
     @Update
-    void update(Layout layout);
+    void update(Subpage subpage);
 
     @Delete
-    void delete(Layout layout);
+    void delete(Subpage subpage);
 
 }

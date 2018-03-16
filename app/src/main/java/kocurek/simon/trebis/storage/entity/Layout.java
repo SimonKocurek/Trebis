@@ -1,8 +1,10 @@
 package kocurek.simon.trebis.storage.entity;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.graphics.Bitmap;
+
+import java.sql.Date;
 
 @Entity
 public class Layout {
@@ -12,8 +14,9 @@ public class Layout {
 
     public String name;
 
-    public Bitmap picture;
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    public byte[] picture;
 
-    public
+    public Date creationDate;
 
 }

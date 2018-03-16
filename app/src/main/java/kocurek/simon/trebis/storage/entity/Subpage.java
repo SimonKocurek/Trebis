@@ -8,7 +8,8 @@ import android.arch.persistence.room.PrimaryKey;
         foreignKeys = @ForeignKey(
                 entity = Layout.class,
                 parentColumns = "id",
-                childColumns = "layoutId"
+                childColumns = "layoutId",
+                onDelete = ForeignKey.CASCADE
         )
 )
 public class Subpage {
