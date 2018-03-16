@@ -1,9 +1,10 @@
-package kocurek.simon.trebis;
+package kocurek.simon.trebis.main;
 
 import android.net.Uri;
 
 import kocurek.simon.trebis.fragments.FragmentInteractionListener;
 import kocurek.simon.trebis.fragments.add.layout.AddLayoutFragment;
+import kocurek.simon.trebis.util.FragmentSwitcher;
 
 public class FragmentInteractionHandler implements FragmentInteractionListener {
 

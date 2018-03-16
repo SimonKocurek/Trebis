@@ -1,10 +1,12 @@
-package kocurek.simon.trebis;
+package kocurek.simon.trebis.main;
 
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import kocurek.simon.trebis.R;
 import kocurek.simon.trebis.fragments.settings.SettingFragment;
+import kocurek.simon.trebis.util.FragmentSwitcher;
 
 class OptionsMenuHandler {
 

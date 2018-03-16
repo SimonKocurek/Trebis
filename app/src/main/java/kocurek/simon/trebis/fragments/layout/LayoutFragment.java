@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import kocurek.simon.trebis.MainActivity;
 import kocurek.simon.trebis.R;
+import kocurek.simon.trebis.main.MainActivity;
 
 public class LayoutFragment extends Fragment {
 

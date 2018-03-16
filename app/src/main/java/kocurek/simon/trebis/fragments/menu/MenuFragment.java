@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
 import com.google.android.flexbox.FlexboxLayout;
 
-import kocurek.simon.trebis.MainActivity;
 import kocurek.simon.trebis.R;
+import kocurek.simon.trebis.main.MainActivity;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
 

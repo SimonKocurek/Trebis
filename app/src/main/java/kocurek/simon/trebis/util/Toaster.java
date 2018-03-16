@@ -1,4 +1,4 @@
-package kocurek.simon.trebis;
+package kocurek.simon.trebis.util;
 
 import android.content.Context;
 import android.widget.Toast;

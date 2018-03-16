@@ -1,4 +1,4 @@
-package kocurek.simon.trebis;
+package kocurek.simon.trebis.main;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import kocurek.simon.trebis.R;
 import kocurek.simon.trebis.fragments.FragmentInteractionListener;
 import kocurek.simon.trebis.fragments.menu.MenuFragment;
+import kocurek.simon.trebis.util.FragmentSwitcher;
 
 public class MainActivity extends AppCompatActivity {
 

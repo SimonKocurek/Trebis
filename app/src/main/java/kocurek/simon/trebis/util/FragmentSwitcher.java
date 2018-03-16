@@ -1,8 +1,10 @@
-package kocurek.simon.trebis;
+package kocurek.simon.trebis.util;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+
+import kocurek.simon.trebis.R;
 
 public class FragmentSwitcher {
 
