@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     tools:context="kocurek.simon.trebis.fragments.menu.MenuFragment">
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/menu_fragment_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -21,7 +22,7 @@
             app:flexWrap="wrap"
             app:justifyContent="flex_start">
         </com.google.android.flexbox.FlexboxLayout>
-    </ScrollView>
+    </android.support.v7.widget.RecyclerView>
 
     <com.getbase.floatingactionbutton.AddFloatingActionButton
         android:id="@+id/menu_fragment_add_fab"
