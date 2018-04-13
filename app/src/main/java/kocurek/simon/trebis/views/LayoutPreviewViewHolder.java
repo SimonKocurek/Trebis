@@ -12,13 +12,13 @@ public class LayoutPreviewViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindTo(String name) {
-        final TextView textItem = (TextView) itemView.findViewById(R.id.flex_box_recycler_view_text_item);
-        textItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "You click text : " + textItem.getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        final TextView textItem = (TextView) itemView.findViewById(R.id.flex_box_recycler_view_text_item);
+//        textItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(view.getContext(), "You click text : " + textItem.getText(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 

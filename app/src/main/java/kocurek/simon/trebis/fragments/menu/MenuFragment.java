@@ -55,6 +55,17 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+//        <com.google.android.flexbox.FlexboxLayout
+//        android:id="@+id/menu_fragment_content"
+//        android:layout_width="match_parent"
+//        android:layout_height="wrap_content"
+//        app:alignContent="flex_start"
+//        app:alignItems="flex_start"
+//        app:flexDirection="row"
+//        app:flexWrap="wrap"
+//        app:justifyContent="flex_start">
+//        </com.google.android.flexbox.FlexboxLayout>
+//
         fab = view.findViewById(R.id.menu_fragment_add_fab);
         fab.setOnClickListener(this);
 

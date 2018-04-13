@@ -11,17 +11,6 @@
         android:id="@+id/menu_fragment_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/menu_fragment_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:alignContent="flex_start"
-            app:alignItems="flex_start"
-            app:flexDirection="row"
-            app:flexWrap="wrap"
-            app:justifyContent="flex_start">
-        </com.google.android.flexbox.FlexboxLayout>
     </android.support.v7.widget.RecyclerView>
 
     <com.getbase.floatingactionbutton.AddFloatingActionButton

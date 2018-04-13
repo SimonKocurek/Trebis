@@ -21,21 +21,22 @@ public class MainActivity extends AppCompatActivity {
 
     private OptionsMenuHandler optionsMenuHandler;
 
+    private TDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUpDependencies();
         setUpMainFragment();
         setUpToolbar();
-
-        TDatabase db = Room.databaseBuilder(getApplicationContext(),
-                TDatabase.class, "trebis-db").build();
     }
 
     private void setUpDependencies() {
         this.fragmentSwitcher = new FragmentSwitcher(getSupportFragmentManager());
         this.interactionHandler = new FragmentInteractionHandler(this);
         this.optionsMenuHandler = new OptionsMenuHandler(this);
+        database = Room.databaseBuilder(getApplicationContext(), TDatabase.class, "trebis-db")
+                .build();
     }
 
     private void setUpMainFragment() {
@@ -78,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
 
     public FragmentSwitcher getFragmentSwitcher() {
         return fragmentSwitcher;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        database.close();
     }
 
 }
