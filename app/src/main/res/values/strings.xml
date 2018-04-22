@@ -6,4 +6,5 @@
     <string name="share">Share</string>
     <string name="edit">Edit</string>
     <string name="layout_name">Layout Name</string>
+    <string name="layout">Layout</string>
 </resources>

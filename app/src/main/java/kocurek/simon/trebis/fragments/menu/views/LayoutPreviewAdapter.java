@@ -1,4 +1,4 @@
-package kocurek.simon.trebis.views;
+package kocurek.simon.trebis.fragments.menu.views;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

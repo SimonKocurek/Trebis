@@ -10,21 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
-import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 
 import kocurek.simon.trebis.R;
 import kocurek.simon.trebis.main.MainActivity;
-import kocurek.simon.trebis.views.LayoutPreviewAdapter;
+import kocurek.simon.trebis.fragments.menu.views.LayoutPreviewAdapter;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private String textArr[] = {"dev2qa.com", "is", "a very good", "android example website", "there are", "a lot of", "android, java examples"};
 
     private OnMenuInteractionListener interactionListener;
-
-    private FlexboxLayout content;
 
     private AddFloatingActionButton fab;
 
@@ -43,33 +43,41 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        content = view.findViewById(R.id.menu_fragment_content);
-//        content.addView();
+        setupFragmentContent(view);
+        setupFab(view);
 
-        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
-        layoutManager.setFlexWrap(FlexWrap.WRAP);
+        return view;
+    }
 
+    private void setupFragmentContent(View view) {
+        FlexboxLayoutManager layoutManager = createLayoutManager();
         LayoutPreviewAdapter adapter = new LayoutPreviewAdapter(textArr);
 
         RecyclerView recyclerView = view.findViewById(R.id.menu_fragment_recycler);
+        registerRecyclerView(layoutManager, adapter, recyclerView);
+    }
+
+    @NonNull
+    private FlexboxLayoutManager createLayoutManager() {
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
+
+        layoutManager.setFlexWrap(FlexWrap.WRAP);
+        layoutManager.setAlignItems(AlignItems.FLEX_START);
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.FLEX_START);
+
+        return layoutManager;
+    }
+
+    private void registerRecyclerView(FlexboxLayoutManager layoutManager, LayoutPreviewAdapter adapter, RecyclerView recyclerView) {
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+    }
 
-//        <com.google.android.flexbox.FlexboxLayout
-//        android:id="@+id/menu_fragment_content"
-//        android:layout_width="match_parent"
-//        android:layout_height="wrap_content"
-//        app:alignContent="flex_start"
-//        app:alignItems="flex_start"
-//        app:flexDirection="row"
-//        app:flexWrap="wrap"
-//        app:justifyContent="flex_start">
-//        </com.google.android.flexbox.FlexboxLayout>
-//
+    private void setupFab(View view) {
         fab = view.findViewById(R.id.menu_fragment_add_fab);
         fab.setOnClickListener(this);
-
-        return view;
     }
 
     @Override
