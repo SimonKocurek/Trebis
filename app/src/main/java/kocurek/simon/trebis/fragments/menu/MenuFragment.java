@@ -17,12 +17,11 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 
 import kocurek.simon.trebis.R;
+import kocurek.simon.trebis.fragments.menu.views.LayoutPreviewListener;
 import kocurek.simon.trebis.main.MainActivity;
 import kocurek.simon.trebis.fragments.menu.views.LayoutPreviewAdapter;
 
-public class MenuFragment extends Fragment implements View.OnClickListener {
-
-    private String textArr[] = {"dev2qa.com", "is", "a very good", "android example website", "there are", "a lot of", "android, java examples"};
+public class MenuFragment extends Fragment implements View.OnClickListener, LayoutPreviewListener {
 
     private OnMenuInteractionListener interactionListener;
 
@@ -51,7 +50,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private void setupFragmentContent(View view) {
         FlexboxLayoutManager layoutManager = createLayoutManager();
-        LayoutPreviewAdapter adapter = new LayoutPreviewAdapter(textArr);
+        LayoutPreviewAdapter adapter = new LayoutPreviewAdapter(layouts);
 
         RecyclerView recyclerView = view.findViewById(R.id.menu_fragment_recycler);
         registerRecyclerView(layoutManager, adapter, recyclerView);
@@ -107,32 +106,5 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         super.onDetach();
         interactionListener = null;
     }
-
-//    public void onLayoutEdgeClick(final View view) {
-//        PopupMenu popup = new PopupMenu(MainActivity.this, view);
-//        //Inflating the Popup using xml file
-//        popup.getMenuInflater().inflate(R.menu.layout_edge_menu, popup.getMenu());
-//
-//        //registering popup with OnMenuItemClickListener
-//        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//            public boolean onMenuItemClick(MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.one:
-//                        createToast("Deleting");
-//                        break;
-//                    case R.id.two:
-//                        goToShareLayout(view);
-//                        break;
-//                    case R.id.three:
-//                        goToEditLayout(view);
-//                        break;
-//                }
-//
-//                return true;
-//            }
-//        });
-//
-//        popup.show(); //showing popup menu
-//    }
 
 }

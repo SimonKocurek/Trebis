@@ -6,14 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import kocurek.simon.trebis.R;
+import kocurek.simon.trebis.storage.entity.Layout;
 
 public class LayoutPreviewAdapter extends RecyclerView.Adapter<LayoutPreviewViewHolder> {
 
-    private String textArr[];
+    private final List<Layout> layouts;
+    private final LayoutPreviewListener listener;
 
-    public LayoutPreviewAdapter(String[] textArr) {
-        this.textArr = textArr;
+    public LayoutPreviewAdapter(List<Layout> layouts, LayoutPreviewListener listener) {
+        this.layouts = layouts;
+        this.listener = listener;
     }
 
     @NonNull
@@ -23,17 +28,17 @@ public class LayoutPreviewAdapter extends RecyclerView.Adapter<LayoutPreviewView
                 .from(parent.getContext())
                 .inflate(R.layout.layout_preview, parent, false);
 
-        return new LayoutPreviewViewHolder(layoutPreview);
+        return new LayoutPreviewViewHolder(layoutPreview, listener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull LayoutPreviewViewHolder holder, int position) {
-        holder.bindTo(textArr[position]);
+        holder.bindTo(layouts.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return this.textArr.length;
+        return this.layouts.size();
     }
 
 }
