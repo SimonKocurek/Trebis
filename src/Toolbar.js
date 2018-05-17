@@ -5,15 +5,9 @@ export default class AppToolbar extends React.Component {
   render() {
     return (
       <Toolbar>
-        <ToolbarBackAction
-          onPress={this._goBack}
-        />
         <ToolbarContent
-          title="Title"
-          subtitle="Subtitle"
+          title={'Trebis'}
         />
-        <ToolbarAction icon="search" onPress={this._onSearch} />
-        <ToolbarAction icon="more-vert" onPress={this._onMore} />
       </Toolbar>
     );
   }
