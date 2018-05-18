@@ -1,17 +1,15 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Button } from 'react-native-paper';
 import AppToolbar from './Toolbar';
 import AppContent from './AppContent';
 
-export default class Body extends React.Component {
-
+export default class HomePage extends React.Component {
   render() {
     return (
-      <View>
+        <View>
         <AppToolbar />
         <AppContent />
-      </View>
+        </View>
     );
   }
 }

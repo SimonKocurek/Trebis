@@ -17,7 +17,7 @@ export default class AppContent extends React.Component {
                     <View style={{ width: 50, height: 50, backgroundColor: 'steelblue' }} />
                 </View>
 
-                <View style={{ width: 50 }}>
+                <View>
                     <FAB
                         small
                         icon="add"
