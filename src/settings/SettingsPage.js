@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-import AppToolbar from '../components/Toolbar';
 
 export default class Settings extends React.Component {
+
+  static navigationOptions = {
+    title: 'Settings',
+  };
+
   state = {
     checked: false,
   };
@@ -13,7 +17,6 @@ export default class Settings extends React.Component {
 
     return (
       <View>
-        <AppToolbar title={'Settings'} navigation={this.props.navigation} />
         <ScrollView>
           <Checkbox
             checked={checked}

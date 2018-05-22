@@ -8,11 +8,6 @@ export default class AppContent extends React.Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <FAB
-                    style={{ position: 'absolute', right: 10, bottom: 10 }}
-                    icon="add"
-                    onPress={() => { this.props.navigation.navigate('TemplateEditor') }} />
-
                 <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 20 }}>
                     <Template />
                     <Template />
@@ -20,6 +15,11 @@ export default class AppContent extends React.Component {
                     <Template />
                     <Template />
                 </ScrollView>
+
+                <FAB
+                    style={{ position: 'absolute', right: 20, bottom: 20 }}
+                    icon="add"
+                    onPress={() => { this.props.navigation.navigate('TemplateEditor') }} />
             </View>
         );
     }

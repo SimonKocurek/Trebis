@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { YellowBox } from 'react-native';
+import { YellowBox, StatusBar, Button } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { createStackNavigator } from 'react-navigation';
 import HomePage from './homepage/HomePage';
@@ -25,7 +25,22 @@ const RootStack = createStackNavigator(
   },
   {
     initialRouteName: 'Home',
-    headerMode: 'none'
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: theme.colors.primary,
+      },
+      headerTintColor: theme.colors.paper,
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerRight: (
+        <Button
+          onPress={() => alert('This is a button!')}
+          title="Info"
+          color="#fff"
+        />
+      ),
+    }
   }
 );
 
@@ -33,6 +48,7 @@ export default class App extends React.Component {
   render() {
     return (
       <PaperProvider style={{ flex: 1 }} theme={theme}>
+        <StatusBar backgroundColor={theme.colors.primaryDark} />      
         <RootStack />
       </PaperProvider>
     );

@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import AppToolbar from '../components/Toolbar';
 import AppContent from './AppContent';
 
 export default class HomePage extends React.Component {
+
+  static navigationOptions = {
+    title: 'Trebis',
+  };
+
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <AppToolbar initial={true} title={'Trebis'} navigation={this.props.navigation} />
-        <AppContent />
+        <AppContent navigation={this.props.navigation} />
       </View>
     );
   }
