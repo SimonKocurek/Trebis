@@ -7,13 +7,13 @@ export default class AppContent extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={{ flex: 1 }}>
                 <FAB
-                    style={{ position: 'absolute', right: 10}}
+                    style={{ position: 'absolute', right: 10, bottom: 10 }}
                     icon="add"
-                    onPress={() => {this.props.navigation.navigate('TemplateEditor')}} />
+                    onPress={() => { this.props.navigation.navigate('TemplateEditor') }} />
 
-                <ScrollView style={{ padding: 20 }}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 20 }}>
                     <Template />
                     <Template />
                     <Template />
@@ -21,7 +21,6 @@ export default class AppContent extends React.Component {
                     <Template />
                 </ScrollView>
             </View>
-
         );
     }
 }

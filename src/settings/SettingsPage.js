@@ -13,7 +13,7 @@ export default class Settings extends React.Component {
 
     return (
       <View>
-        <AppToolbar navigation={this.props.navigation} />
+        <AppToolbar title={'Settings'} navigation={this.props.navigation} />
         <ScrollView>
           <Checkbox
             checked={checked}

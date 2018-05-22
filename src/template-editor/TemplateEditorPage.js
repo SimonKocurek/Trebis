@@ -7,7 +7,7 @@ export default class TemplateEditor extends React.Component {
   render() {
     return (
       <View>
-        <AppToolbar />
+        <AppToolbar title={'Editor'} />
         <ScrollView>
           <Searchbar
             placeholder="Search"

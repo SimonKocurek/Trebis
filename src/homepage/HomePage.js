@@ -6,10 +6,10 @@ import AppContent from './AppContent';
 export default class HomePage extends React.Component {
   render() {
     return (
-        <View>
-        <AppToolbar navigation={this.props.navigation} />
+      <View style={{ flex: 1 }}>
+        <AppToolbar initial={true} title={'Trebis'} navigation={this.props.navigation} />
         <AppContent />
-        </View>
+      </View>
     );
   }
 }
