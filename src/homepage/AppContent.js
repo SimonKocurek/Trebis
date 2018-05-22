@@ -1,29 +1,27 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { FAB } from 'react-native-paper';
+import Template from './Template';
 
 export default class AppContent extends React.Component {
 
     render() {
         return (
-            <View style={{
-                flexDirection: 'row',
-                height: 100,
-                padding: 20,
-              }}>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <View style={{ width: 50, height: 50, backgroundColor: 'powderblue' }} />
-                    <View style={{ width: 50, height: 50, backgroundColor: 'skyblue' }} />
-                    <View style={{ width: 50, height: 50, backgroundColor: 'steelblue' }} />
-                </View>
+            <View>
+                <FAB
+                    style={{ position: 'absolute', right: 10}}
+                    icon="add"
+                    onPress={() => {this.props.navigation.navigate('TemplateEditor')}} />
 
-                <View>
-                    <FAB
-                        small
-                        icon="add"
-                        onPress={() => { }} />
-                </View>
+                <ScrollView style={{ padding: 20 }}>
+                    <Template />
+                    <Template />
+                    <Template />
+                    <Template />
+                    <Template />
+                </ScrollView>
             </View>
+
         );
     }
 }

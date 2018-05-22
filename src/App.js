@@ -3,6 +3,8 @@ import { YellowBox } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { createStackNavigator } from 'react-navigation';
 import HomePage from './homepage/HomePage';
+import SettingsPage from './settings/SettingsPage';
+import TemplateEditor from './template-editor/TemplateEditorPage';
 
 const theme = {
   ...DefaultTheme,
@@ -14,6 +16,18 @@ const theme = {
   },
 };
 
+const RootStack = createStackNavigator(
+  {
+    Home: { screen: HomePage},
+    Settings: { screen: SettingsPage },
+    TemplateEditor: { screen: TemplateEditor },
+  },
+  {
+    initialRouteName: 'Home',
+    headerMode: 'none'
+  }
+);
+
 export default class App extends React.Component {
   render() {
     return (
@@ -23,11 +37,5 @@ export default class App extends React.Component {
     );
   }
 }
-
-const RootStack = createStackNavigator({
-  Home: {
-    screen: HomePage
-  },
-});
 
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated']);

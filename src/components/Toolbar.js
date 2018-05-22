@@ -8,6 +8,7 @@ export default class AppToolbar extends React.Component {
         <ToolbarContent
           title={'Trebis'}
         />
+        <ToolbarAction icon="more-vert"  />
       </Toolbar>
     );
   }
