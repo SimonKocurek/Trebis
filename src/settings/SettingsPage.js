@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 
-export default class Settings extends React.Component {
+export class SettingsPage extends React.Component {
 
   static navigationOptions = {
     title: 'Settings',

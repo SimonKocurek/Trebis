@@ -9,7 +9,7 @@ import {
     Paragraph
 } from 'react-native-paper';
 
-export default class Template extends React.Component {
+export class Template extends React.Component {
     render() {
         return (
             <Card>

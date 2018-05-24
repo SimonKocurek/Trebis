@@ -2,10 +2,10 @@ import * as React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
-export default class TemplateEditor extends React.Component {
+export class TemplateEditor extends React.Component {
   
   static navigationOptions = {
-    title: 'Settings',
+    title: 'Editor',
   };
   
   constructor(props) {
