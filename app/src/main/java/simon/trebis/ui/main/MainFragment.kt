@@ -16,6 +16,8 @@ import simon.trebis.R
 import simon.trebis.data.TrebisDatabase
 import simon.trebis.data.entity.Website
 import android.support.v7.widget.DividerItemDecoration
+import android.widget.TextView
+import simon.trebis.data.dao.WebsiteDao
 
 
 class MainFragment : Fragment() {
@@ -26,41 +28,62 @@ class MainFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: MainViewModel
+    private lateinit var websiteDao: WebsiteDao
+    private lateinit var fab: FloatingActionButton
+    private lateinit var counter: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.main_fragment, container, false)
 
+        counter = view.findViewById(R.id.registered_count)
+
+        setupLayoutManager(view)
+        setupFab(view)
+
+        return view
+    }
+
+    private fun setupLayoutManager(view: View) {
         val layoutManager = UnscrollableLayoutManager(context!!)
         layoutManager.setScrollEnabled(false)
 
         recyclerView = view.findViewById(R.id.layout_list)
         recyclerView.layoutManager = layoutManager
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, layoutManager.orientation))
+    }
 
-        view.findViewById<FloatingActionButton>(R.id.mainFragment_fab).apply {
-            setOnClickListener {
-                val website = Website()
-                website.name = (Math.random() * Integer.MAX_VALUE).toString()
+    private fun setupFab(view: View) {
+        fab = view.findViewById(R.id.mainFragment_fab)
+        fab.setOnClickListener({
+            val website = Website()
+            website.name = (Math.random() * Integer.MAX_VALUE).toString()
 
-                Thread {
-                    TrebisDatabase.getDatabase(context).websiteDao().insert(website)
-                }.start()
-            }
-        }
-
-        return view
+            Thread {
+                websiteDao.insert(website)
+            }.start()
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        val database = TrebisDatabase.getDatabase(context!!)
+        websiteDao = database.websiteDao()
+
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         recyclerView.adapter = LayoutAdapter(viewModel.layouts)
 
-        TrebisDatabase.getDatabase(context!!).websiteDao().getAll().observe(this, Observer {
+        observeDataSource()
+    }
+
+    private fun observeDataSource() {
+        websiteDao.getAll().observe(this, Observer {
             viewModel.layouts.clear()
             viewModel.layouts.addAll(it!!)
             recyclerView.adapter.notifyDataSetChanged()
+
+            counter.text = "(${it.size})"
         })
     }
 
