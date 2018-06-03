@@ -11,20 +11,20 @@ import java.util.*
         foreignKeys = [ForeignKey(entity = Website::class, parentColumns = ["website_id"], childColumns = ["website_id"])]
 )
 class Entry(
-        @field:PrimaryKey
-        @field:NonNull
-        @field:ColumnInfo(name = "entry_id")
-        val id: Int,
-
-        @field:NotNull
-        @field:ColumnInfo(name = "website_id")
+        @NotNull
+        @ColumnInfo(name = "website_id")
         val website: Int,
 
-        @field:NotNull
-        @field:ColumnInfo(name = "icon_path")
+        @NotNull
+        @ColumnInfo(name = "icon_path")
         val iconPath: String,
 
-        @field:NotNull
-        @field:ColumnInfo(name = "time_created")
+        @NotNull
+        @ColumnInfo(name = "time_created")
         val date: Date = Date()
-)
+) {
+        @PrimaryKey(autoGenerate = true)
+        @NonNull
+        @ColumnInfo(name = "entry_id")
+        var id: Int? = null
+}

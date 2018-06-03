@@ -10,24 +10,24 @@ import java.util.*
 
 @Entity(tableName = "website")
 class Website(
-        @field:PrimaryKey
-        @field:NonNull
-        @field:ColumnInfo(name = "website_id")
-        val id: Int,
+        @NotNull
+        @ColumnInfo(name = "name")
+        var name: String = "",
 
-        @field:NotNull
-        @field:ColumnInfo(name = "name")
-        val name: String = "",
+        @NotNull
+        @ColumnInfo(name = "icon_path")
+        var iconPath: String = "",
 
-        @field:NotNull
-        @field:ColumnInfo(name = "icon_path")
-        val iconPath: String = "",
+        @NotNull
+        @ColumnInfo(name = "time_created")
+        var date: Date = Date(),
 
-        @field:NotNull
-        @field:ColumnInfo(name = "time_created")
-        val date: Date = Date(),
-
-        @field:NotNull
-        @field:ColumnInfo(name = "url")
-        val url: String = ""
-)
+        @NotNull
+        @ColumnInfo(name = "url")
+        var url: String = ""
+) {
+        @PrimaryKey(autoGenerate = true)
+        @NonNull
+        @ColumnInfo(name = "website_id")
+        var id: Int? = null
+}

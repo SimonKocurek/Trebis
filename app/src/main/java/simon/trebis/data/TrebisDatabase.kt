@@ -20,23 +20,25 @@ abstract class TrebisDatabase : RoomDatabase() {
 
     companion object {
 
+        private val DB_NAME = "trebis_database"
+
+        @Volatile
         private var INSTANCE: TrebisDatabase? = null
 
         internal fun getDatabase(context: Context): TrebisDatabase {
-            if (INSTANCE == null) {
-                synchronized(TrebisDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(
-                                context.applicationContext,
-                                TrebisDatabase::class.java,
-                                "trebis_database"
-                        ).build()
-                    }
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: buildDatabase(context).also {
+                    INSTANCE = it
                 }
             }
 
             return INSTANCE!!
         }
+
+        private fun buildDatabase(context: Context) =
+                Room.databaseBuilder(context.applicationContext,
+                        TrebisDatabase::class.java, DB_NAME)
+                        .build()
     }
 
 }

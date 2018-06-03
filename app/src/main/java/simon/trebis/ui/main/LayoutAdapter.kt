@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import simon.trebis.R
+import simon.trebis.data.entity.Website
 
-class LayoutAdapter(private val myDataset: List<String>) :
+class LayoutAdapter(private val myDataset: List<Website>) :
         RecyclerView.Adapter<LayoutAdapter.ViewHolder>() {
 
     // Provide a reference to the views for each data item
