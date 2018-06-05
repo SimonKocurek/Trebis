@@ -30,10 +30,9 @@
       android:layout_marginRight="8dp"
       android:textColor="@android:color/black"
       android:textSize="20sp"
-      app:layout_constraintEnd_toStartOf="@+id/imageButton"
+      android:text="@string/no_site_name"
       app:layout_constraintStart_toEndOf="@+id/layout_list_image_view"
-      app:layout_constraintTop_toTopOf="@+id/layout_list_image_view"
-      tools:text="@tools:sample/full_names" />
+      app:layout_constraintTop_toTopOf="@+id/layout_list_image_view"/>
 
   <TextView
       android:id="@+id/layout_list_description"
@@ -41,9 +40,9 @@
       android:layout_height="20dp"
       android:layout_marginStart="8dp"
       android:layout_marginLeft="8dp"
+      android:text="@string/no_url"
       app:layout_constraintBottom_toBottomOf="@+id/layout_list_image_view"
-      app:layout_constraintStart_toEndOf="@+id/layout_list_image_view"
-      tools:text="@tools:sample/lorem[4:10]" />
+      app:layout_constraintStart_toEndOf="@+id/layout_list_image_view"/>
 
   <TextView
       android:id="@+id/layout_list_date"
@@ -54,10 +53,9 @@
       android:layout_marginEnd="8dp"
       android:layout_marginRight="8dp"
       app:layout_constraintBottom_toBottomOf="@+id/layout_list_date2"
-      app:layout_constraintEnd_toStartOf="@+id/imageButton"
       app:layout_constraintStart_toEndOf="@+id/layout_list_date2"
       app:layout_constraintTop_toTopOf="@+id/layout_list_date2"
-      tools:text="@tools:sample/date/hhmm" />
+      tools:text="@tools:sample/date/ddmmyy" />
 
   <TextView
       android:id="@+id/layout_list_date2"
@@ -72,15 +70,15 @@
       tools:ignore="HardcodedText" />
 
   <ImageButton
-      android:id="@+id/imageButton"
+      android:id="@+id/layout_item_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="8dp"
       android:layout_marginEnd="8dp"
       android:layout_marginRight="8dp"
-      android:background="@color/colorWhite"
+      android:background="@android:color/transparent"
+      android:contentDescription="@string/menu"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/layout_list_name"
       app:srcCompat="@drawable/ic_more_vert_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>

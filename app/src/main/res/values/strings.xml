@@ -4,4 +4,9 @@
     <string name="snapshot">Snapshot</string>
     <string name="open">Open</string>
     <string name="registered">Registered</string>
+    <string name="no_url">No url</string>
+    <string name="remove">Remove</string>
+    <string name="menu">Menu</string>
+    <string name="sort">sort</string>
+    <string name="no_site_name">No site name</string>
 </resources>

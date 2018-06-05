@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+<navigation
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/mainFragment">
@@ -8,5 +9,18 @@
         android:id="@+id/mainFragment"
         android:name="simon.trebis.ui.main.MainFragment"
         android:label="main_fragment"
-        tools:layout="@layout/main_fragment" ></fragment>
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_websiteFragment"
+            app:destination="@id/websiteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/websiteFragment"
+        android:name="simon.trebis.ui.website.WebsiteFragment"
+        android:label="website_fragment"
+        tools:layout="@layout/website_fragment" >
+        <argument
+            android:name="website_id"
+            app:type="integer" />
+    </fragment>
 </navigation>

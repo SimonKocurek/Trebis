@@ -1,34 +1,34 @@
 package simon.trebis.ui.main
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.Fragment
-import android.support.v7.recyclerview.R.attr.layoutManager
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import simon.trebis.R
-import simon.trebis.data.TrebisDatabase
-import simon.trebis.data.entity.Website
-import android.support.v7.widget.DividerItemDecoration
 import android.widget.TextView
-import simon.trebis.data.dao.WebsiteDao
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import simon.trebis.R
+import simon.trebis.data.DatabaseManager
+import simon.trebis.data.entity.Website
 
 
-class MainFragment : Fragment() {
+class MainFragment : NavHostFragment() {
 
     companion object {
         fun newInstance() = MainFragment()
     }
 
+    private var viewModel: MainViewModel? = null
+
+    private lateinit var databaseManager: DatabaseManager
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: MainViewModel
-    private lateinit var websiteDao: WebsiteDao
     private lateinit var fab: FloatingActionButton
     private lateinit var counter: TextView
 
@@ -36,54 +36,62 @@ class MainFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.main_fragment, container, false)
 
-        counter = view.findViewById(R.id.registered_count)
-
-        setupLayoutManager(view)
-        setupFab(view)
+        initializeVariables(view)
+        setupLayoutManager()
+        setupFab()
 
         return view
     }
 
-    private fun setupLayoutManager(view: View) {
-        val layoutManager = UnscrollableLayoutManager(context!!)
-        layoutManager.setScrollEnabled(false)
-
+    private fun initializeVariables(view: View) {
         recyclerView = view.findViewById(R.id.layout_list)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, layoutManager.orientation))
+        counter = view.findViewById(R.id.registered_count)
+        fab = view.findViewById(R.id.mainFragment_fab)
+        databaseManager = DatabaseManager.instance(context!!)
     }
 
-    private fun setupFab(view: View) {
-        fab = view.findViewById(R.id.mainFragment_fab)
-        fab.setOnClickListener({
-            val website = Website()
-            website.name = (Math.random() * Integer.MAX_VALUE).toString()
+    private fun setupLayoutManager() {
+        val layoutManager = UnscrollableLayoutManager(context!!)
+        layoutManager.setScrollEnabled(false)
+        recyclerView.layoutManager = layoutManager
 
-            Thread {
-                websiteDao.insert(website)
-            }.start()
+        val itemDecoration = DividerItemDecoration(recyclerView.context, layoutManager.orientation)
+        recyclerView.addItemDecoration(itemDecoration)
+    }
+
+    private fun setupFab() {
+        fab.setOnClickListener({
+            databaseManager.createWebsite()
         })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val database = TrebisDatabase.getDatabase(context!!)
-        websiteDao = database.websiteDao()
-
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        recyclerView.adapter = LayoutAdapter(viewModel.layouts)
+        recyclerView.adapter = LayoutAdapter(
+                viewModel!!.layouts, context!!,
+                this@MainFragment::goToWebsite,
+                databaseManager::deleteWebsite
+        )
 
         observeDataSource()
     }
 
-    private fun observeDataSource() {
-        websiteDao.getAll().observe(this, Observer {
-            viewModel.layouts.clear()
-            viewModel.layouts.addAll(it!!)
-            recyclerView.adapter.notifyDataSetChanged()
+    private fun goToWebsite(website: Website) {
+        val bundle = Bundle().also { it.putInt("website_id", website.id!!) }
+        this.navController.navigate(R.id.websiteFragment, bundle)
+    }
 
-            counter.text = "(${it.size})"
+    @SuppressLint("SetTextI18n")
+    private fun observeDataSource() {
+        val websitesLiveData = DatabaseManager.instance(context!!).getAllWebsites()
+        websitesLiveData.observe(this, Observer {
+            viewModel?.layouts?.clear()
+            viewModel?.layouts?.addAll(it!!)
+            recyclerView.adapter?.notifyDataSetChanged()
+
+            counter.text = "(${it?.size})"
         })
     }
 

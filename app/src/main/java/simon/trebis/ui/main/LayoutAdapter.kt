@@ -1,46 +1,37 @@
 package simon.trebis.ui.main;
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateFormat
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import simon.trebis.R
 import simon.trebis.data.entity.Website
-import java.text.SimpleDateFormat
 
 
-class LayoutAdapter(private val dataset: List<Website>) :
-        RecyclerView.Adapter<LayoutAdapter.ViewHolder>() {
+class LayoutAdapter(private val dataset: List<Website>,
+                    private val context: Context,
+                    private val navigateToWebsite: (Website) -> Unit,
+                    private val deleteWebsite: (Website) -> Unit) :
+        RecyclerView.Adapter<WebsiteViewHolder>() {
 
-    private val dateFormatter = SimpleDateFormat("dd/MM/yyyy")
+    private val dateFormat = DateFormat.getDateFormat(context.applicationContext)
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
-
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): LayoutAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WebsiteViewHolder{
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.layout_list_item, parent, false)
-
-        view.setOnClickListener({
-
-        })
-
-        return ViewHolder(view)
+        return WebsiteViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: WebsiteViewHolder, position: Int) {
         val website = dataset[position]
 
-        val image = holder.view.findViewById<ImageView>(R.id.layout_list_image_view)
-        val name = holder.view.findViewById<TextView>(R.id.layout_list_name)
-        val description = holder.view.findViewById<TextView>(R.id.layout_list_description)
-        val date = holder.view.findViewById<TextView>(R.id.layout_list_date)
-
-        name.text = website.name
-        description.text = website.url
-        date.text = dateFormatter.format(website.date)
+        website.iconPath
+        holder.setImage()
+        holder.setName(website.name)
+        holder.setUrl(website.url)
+        holder.setDate(website.date, dateFormat)
+        holder.setMenuActions(context, { navigateToWebsite(website) }, { deleteWebsite(website)})
     }
 
     override fun getItemCount() = dataset.size

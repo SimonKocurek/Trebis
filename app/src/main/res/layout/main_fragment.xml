@@ -23,12 +23,13 @@
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
-                android:id="@+id/search_card"
+                android:id="@+id/layout_search_card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:cardBackgroundColor="@color/cardview_light_background">
 
                 <SearchView
+                    android:id="@+id/layout_search_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </android.support.v7.widget.CardView>
@@ -49,7 +50,7 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/layout_registered_counter_description"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -72,14 +73,27 @@
                             android:text="(0)"
                             android:textAppearance="@style/TextAppearance.AppCompat"
                             android:textSize="18sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                            app:layout_constraintStart_toEndOf="@+id/textView2"
-                            app:layout_constraintTop_toTopOf="@+id/textView2"
+                            app:layout_constraintBottom_toBottomOf="@+id/layout_registered_counter_description"
+                            app:layout_constraintStart_toEndOf="@+id/layout_registered_counter_description"
+                            app:layout_constraintTop_toTopOf="@+id/layout_registered_counter_description"
                             tools:ignore="HardcodedText" />
+
+                        <ImageButton
+                            android:id="@+id/layout_sort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@android:color/transparent"
+                            app:srcCompat="@drawable/ic_sort_black_24dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/registered_count"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/registered_count"
+                            android:contentDescription="@string/sort" />
                     </android.support.constraint.ConstraintLayout>
 
                     <View
-                        android:id="@+id/divider"
+                        android:id="@+id/layout_divider"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="?android:attr/listDivider" />
