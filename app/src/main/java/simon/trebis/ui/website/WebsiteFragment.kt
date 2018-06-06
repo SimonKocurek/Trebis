@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CalendarView
 import simon.trebis.R
 
 class WebsiteFragment : Fragment() {
@@ -17,11 +18,14 @@ class WebsiteFragment : Fragment() {
     private lateinit var viewModel: WebsiteViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
+        val view = inflater.inflate(R.layout.website_fragment, container, false)
+
         arguments?.let {
         }
 
-        return inflater.inflate(R.layout.website_fragment, container, false)
+
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
