@@ -1,6 +1,7 @@
 package simon.trebis.ui.main
 
 import android.content.Context
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
 import android.view.View
@@ -13,11 +14,12 @@ import java.util.*
 
 class WebsiteViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
+    var wrapper: CardView = view.findViewById(R.id.layout_list_main_content)
     var image: ImageView = view.findViewById(R.id.layout_list_image_view)
     var name: TextView = view.findViewById(R.id.layout_list_name)
     var url: TextView = view.findViewById(R.id.layout_list_description)
     var date: TextView = view.findViewById(R.id.layout_list_date)
-    var menu: ImageButton = view.findViewById(R.id.layout_item_button)
+    var menu: CardView = view.findViewById(R.id.layout_item_button)
 
     lateinit var openWebsite: () -> Unit
     lateinit var deleteWebsite: () -> Unit
@@ -50,7 +52,7 @@ class WebsiteViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.On
         this.deleteWebsite = deleteFunction
         this.context = context
 
-        view.setOnClickListener(this)
+        wrapper.setOnClickListener(this)
         menu.setOnClickListener(this)
     }
 

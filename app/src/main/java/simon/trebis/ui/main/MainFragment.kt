@@ -53,9 +53,6 @@ class MainFragment : Fragment() {
         val layoutManager = UnscrollableLayoutManager(view.context)
         layoutManager.setScrollEnabled(false)
         recyclerView.layoutManager = layoutManager
-
-        val itemDecoration = DividerItemDecoration(recyclerView.context, layoutManager.orientation)
-        recyclerView.addItemDecoration(itemDecoration)
     }
 
     private fun setupFab() {
