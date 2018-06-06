@@ -14,4 +14,5 @@
     <string name="websitesnapshot">Website snapshot</string>
     <string name="no_website_snapshot_at_this_day">No website snapshot at this day.</string>
     <string name="collapse">Collapse</string>
+    <string name="name_sort">Name sort</string>
 </resources>

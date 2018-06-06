@@ -10,7 +10,6 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
@@ -35,20 +35,21 @@
                         android:layout_height="wrap_content">
 
                         <android.support.constraint.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:id="@+id/website_expand_toggle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginBottom="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
-                            <ImageButton
-                                android:id="@+id/imageButton"
+                            <ImageView
+                                android:id="@+id/website_expand_toggle_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
                                 android:background="@android:color/transparent"
                                 android:contentDescription="@string/collapse"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -57,27 +58,27 @@
                                 app:srcCompat="@drawable/ic_expand_less_black_24dp" />
 
                             <TextView
-                                android:id="@+id/textView"
+                                android:id="@+id/website_expand_toggle_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
                                 android:layout_marginRight="8dp"
                                 android:text="@string/collapse"
-                                app:layout_constraintBottom_toBottomOf="@+id/imageButton"
-                                app:layout_constraintEnd_toStartOf="@+id/imageButton"
-                                app:layout_constraintTop_toTopOf="@+id/imageButton" />
+                                app:layout_constraintBottom_toBottomOf="@+id/website_expand_toggle_button"
+                                app:layout_constraintEnd_toStartOf="@+id/website_expand_toggle_button"
+                                app:layout_constraintTop_toTopOf="@+id/website_expand_toggle_button" />
                         </android.support.constraint.ConstraintLayout>
 
                     </android.support.constraint.ConstraintLayout>
 
                     <View
-                        android:id="@+id/divider"
+                        android:id="@+id/website_calendar_divider"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="?android:attr/listDivider" />
 
                     <CalendarView
-                        android:id="@+id/calendarView"
+                        android:id="@+id/website_calendar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -95,7 +96,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/website_missing_image_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -111,7 +112,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/website_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"

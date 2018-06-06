@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.content.Context
 import simon.trebis.data.dao.EntryDao
 import simon.trebis.data.dao.WebsiteDao
+import simon.trebis.data.entity.Entry
 import simon.trebis.data.entity.Website
 
 class DatabaseManager private constructor(context: Context) {
@@ -33,6 +34,10 @@ class DatabaseManager private constructor(context: Context) {
 
         websiteDao = database.websiteDao()
         entryDao = database.entryDao()
+    }
+
+    fun getEntriesForWebsite(websiteId: Int): LiveData<List<Entry>> {
+        return entryDao.getAllForWebsite(websiteId)
     }
 
     fun getAllWebsites(): LiveData<List<Website>> {
