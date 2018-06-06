@@ -2,6 +2,7 @@ package simon.trebis.ui.main
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -10,13 +11,17 @@ import android.widget.TextView
 import simon.trebis.R
 import java.util.*
 
-class WebsiteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class WebsiteViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
     var image: ImageView = view.findViewById(R.id.layout_list_image_view)
     var name: TextView = view.findViewById(R.id.layout_list_name)
     var url: TextView = view.findViewById(R.id.layout_list_description)
     var date: TextView = view.findViewById(R.id.layout_list_date)
     var menu: ImageButton = view.findViewById(R.id.layout_item_button)
+
+    lateinit var openWebsite: () -> Unit
+    lateinit var deleteWebsite: () -> Unit
+    lateinit var context: Context
 
     fun setImage() {
 
@@ -36,39 +41,48 @@ class WebsiteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     fun setDate(date: Date, format: java.text.DateFormat) {
         this.date.text = format.format(date)
-
     }
 
-    fun setMenuActions(context: Context,
-                       openFunction: () -> Unit,
-                       deleteFunction: () -> Unit) {
+    fun setClickCallback(context: Context,
+                         openFunction: () -> Unit,
+                         deleteFunction: () -> Unit) {
+        this.openWebsite = openFunction
+        this.deleteWebsite = deleteFunction
+        this.context = context
 
-        view.setOnClickListener({
-            when (it.id) {
-                R.id.layout_item_button -> onMenuClick(context, openFunction, deleteFunction)
-                else -> openFunction()
-            }
-        })
+        view.setOnClickListener(this)
+        menu.setOnClickListener(this)
     }
 
-    private fun onMenuClick(context: Context, openFunction: () -> Unit, deleteFunction: () -> Unit) {
+    override fun onClick(view: View) {
+        when (view) {
+            menu -> onMenuClick()
+            else -> openWebsite()
+        }
+    }
+
+    private fun onMenuClick() {
         val popup = PopupMenu(context, menu)
-        popup.setOnMenuItemClickListener({
+        popup.setOnMenuItemClickListener(onMenuItemClick())
+
+        popup.menuInflater.inflate(R.menu.layout_item_menu, popup.menu)
+        popup.show()
+    }
+
+    private fun onMenuItemClick(): (MenuItem) -> Boolean {
+        return {
             when (it.itemId) {
                 R.id.layout_item_menu_open -> {
-                    openFunction()
+                    openWebsite()
                     true
                 }
                 R.id.layout_item_menu_remove -> {
-                    deleteFunction()
+                    deleteWebsite()
                     true
                 }
                 else -> false
             }
-        })
-
-        popup.menuInflater.inflate(R.menu.layout_item_menu, popup.menu)
-        popup.show()
+        }
     }
 
 }

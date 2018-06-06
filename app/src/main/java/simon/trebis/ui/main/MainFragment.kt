@@ -5,21 +5,20 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Website
 
 
-class MainFragment : NavHostFragment() {
+class MainFragment : Fragment() {
 
     companion object {
         fun newInstance() = MainFragment()
@@ -37,7 +36,7 @@ class MainFragment : NavHostFragment() {
         val view = inflater.inflate(R.layout.main_fragment, container, false)
 
         initializeVariables(view)
-        setupLayoutManager()
+        setupLayoutManager(view)
         setupFab()
 
         return view
@@ -47,11 +46,11 @@ class MainFragment : NavHostFragment() {
         recyclerView = view.findViewById(R.id.layout_list)
         counter = view.findViewById(R.id.registered_count)
         fab = view.findViewById(R.id.mainFragment_fab)
-        databaseManager = DatabaseManager.instance(context!!)
+        databaseManager = DatabaseManager.instance(view.context)
     }
 
-    private fun setupLayoutManager() {
-        val layoutManager = UnscrollableLayoutManager(context!!)
+    private fun setupLayoutManager(view: View) {
+        val layoutManager = UnscrollableLayoutManager(view.context)
         layoutManager.setScrollEnabled(false)
         recyclerView.layoutManager = layoutManager
 
@@ -80,7 +79,7 @@ class MainFragment : NavHostFragment() {
 
     private fun goToWebsite(website: Website) {
         val bundle = Bundle().also { it.putInt("website_id", website.id!!) }
-        this.navController.navigate(R.id.websiteFragment, bundle)
+        Navigation.findNavController(view!!).navigate(R.id.action_mainFragment_to_websiteFragment, bundle)
     }
 
     @SuppressLint("SetTextI18n")

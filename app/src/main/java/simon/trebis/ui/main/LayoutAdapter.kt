@@ -31,7 +31,7 @@ class LayoutAdapter(private val dataset: List<Website>,
         holder.setName(website.name)
         holder.setUrl(website.url)
         holder.setDate(website.date, dateFormat)
-        holder.setMenuActions(context, { navigateToWebsite(website) }, { deleteWebsite(website)})
+        holder.setClickCallback(context, { navigateToWebsite(website) }, { deleteWebsite(website)})
     }
 
     override fun getItemCount() = dataset.size

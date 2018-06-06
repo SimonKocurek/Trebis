@@ -8,16 +8,17 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="simon.trebis.ui.main.MainFragment"
-        android:label="main_fragment"
+        android:label="@string/app_name"
         tools:layout="@layout/main_fragment" >
         <action
             android:id="@+id/action_mainFragment_to_websiteFragment"
             app:destination="@id/websiteFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/websiteFragment"
         android:name="simon.trebis.ui.website.WebsiteFragment"
-        android:label="website_fragment"
+        android:label="@string/website"
         tools:layout="@layout/website_fragment" >
         <argument
             android:name="website_id"

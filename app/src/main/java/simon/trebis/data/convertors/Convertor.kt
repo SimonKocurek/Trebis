@@ -12,10 +12,6 @@ class Convertor {
 
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
-        return if (date == null) {
-            null
-        } else {
-            date.getTime()
-        }
+        return date?.time
     }
 }
