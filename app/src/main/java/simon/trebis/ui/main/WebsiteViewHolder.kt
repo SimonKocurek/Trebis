@@ -22,6 +22,7 @@ class WebsiteViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.On
     var menu: CardView = view.findViewById(R.id.layout_item_button)
 
     lateinit var openWebsite: () -> Unit
+    lateinit var editWebsite: () -> Unit
     lateinit var deleteWebsite: () -> Unit
     lateinit var context: Context
 
@@ -47,8 +48,10 @@ class WebsiteViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.On
 
     fun setClickCallback(context: Context,
                          openFunction: () -> Unit,
+                         editFunction: () -> Unit,
                          deleteFunction: () -> Unit) {
         this.openWebsite = openFunction
+        this.editWebsite = editFunction
         this.deleteWebsite = deleteFunction
         this.context = context
 
@@ -76,6 +79,10 @@ class WebsiteViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.On
             when (it.itemId) {
                 R.id.layout_item_menu_open -> {
                     openWebsite()
+                    true
+                }
+                R.id.layout_item_menu_edit -> {
+                    editWebsite()
                     true
                 }
                 R.id.layout_item_menu_remove -> {

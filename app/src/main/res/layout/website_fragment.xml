@@ -77,10 +77,17 @@
                         android:layout_height="1dp"
                         android:background="?android:attr/listDivider" />
 
-                    <CalendarView
+                    <com.github.sundeepk.compactcalendarview.CompactCalendarView
                         android:id="@+id/website_calendar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="fill_parent"
+                        android:layout_height="220dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        app:compactCalendarCurrentDayBackgroundColor="@color/colorGrey"
+                        app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimary"
+                        app:compactCalendarMultiEventIndicatorColor="@color/colorAccent"
+                        app:compactCalendarTargetHeight="250dp"
+                        app:compactCalendarTextSize="14sp" />
 
                 </LinearLayout>
 

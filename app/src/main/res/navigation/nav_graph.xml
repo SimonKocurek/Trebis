@@ -11,8 +11,14 @@
         android:label="@string/app_name"
         tools:layout="@layout/main_fragment" >
         <action
-            android:id="@+id/action_mainFragment_to_websiteFragment"
+            android:id="@+id/mainFragment_to_website"
             app:destination="@id/websiteFragment" />
+        <action
+            android:id="@+id/mainFragment_to_preferences"
+            app:destination="@id/preferenceFragment" />
+        <action
+            android:id="@+id/mainFragment_to_createWebsite"
+            app:destination="@id/createWebsite" />
     </fragment>
 
     <fragment
@@ -23,5 +29,24 @@
         <argument
             android:name="website_id"
             app:type="integer" />
+        <action
+            android:id="@+id/website_to_preferences"
+            app:destination="@id/preferenceFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/createWebsite"
+        android:name="simon.trebis.ui.create.CreateWebsiteFragment"
+        android:label="@string/website"
+        tools:layout="@layout/create_website_fragment" >
+        <action
+            android:id="@+id/createWebsite_to_preference"
+            app:destination="@id/preferenceFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/preferenceFragment"
+        android:name="simon.trebis.ui.preferences.PreferenceFragment"
+        android:label="@string/settings"/>
+
 </navigation>

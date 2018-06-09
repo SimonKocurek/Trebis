@@ -2,19 +2,22 @@ package simon.trebis.ui.website
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.CalendarView
 import android.widget.ImageView
 import android.widget.TextView
+import com.github.sundeepk.compactcalendarview.CompactCalendarView
+import com.github.sundeepk.compactcalendarview.domain.Event
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 import java.util.*
+import androidx.navigation.Navigation
+
 
 class WebsiteFragment : Fragment() {
 
@@ -30,7 +33,7 @@ class WebsiteFragment : Fragment() {
     private lateinit var expandToggle: ConstraintLayout
     private lateinit var expandToggleButton: ImageView
     private lateinit var expandToggleText: TextView
-    private lateinit var calendar: CalendarView
+    private lateinit var calendar: CompactCalendarView
     private lateinit var missingImageText: TextView
     private lateinit var image: ImageView
 
@@ -38,9 +41,16 @@ class WebsiteFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.website_fragment, container, false)
 
+        setHasOptionsMenu(true)
+
         setInstanceVariables(view)
         expandToggle.setOnClickListener(onExpandToggleClick())
-        calendar.setOnDateChangeListener(onCalendarDateChanged())
+
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        val ev1 = Event(Color.GREEN, 1433701251000L, "Some extra data that I want to store.")
+        calendar.addEvent(ev1)
+
+//        calendar.setListener(onCalendarDateChanged())
         return view
     }
 
@@ -76,7 +86,7 @@ class WebsiteFragment : Fragment() {
             it?.getInt(WEBSITE_ID_KEY)?.let { id -> observeEntries(id) }
         }
 
-        calendar.date = viewModel.selectedDay.time
+        calendar.setCurrentDate(viewModel.selectedDay)
     }
 
     private fun observeEntries(websiteId: Int) {
@@ -101,14 +111,29 @@ class WebsiteFragment : Fragment() {
         val drawable = ContextCompat.getDrawable(context!!, R.drawable.ic_expand_more_black_24dp)
         expandToggleButton.setImageDrawable(drawable)
         expandToggleText.text = resources.getString(R.string.expand)
-        calendar.visibility = View.GONE
+        calendar.hideCalendar()
     }
 
     private fun setCalendarExpanded() {
         val drawable = ContextCompat.getDrawable(context!!, R.drawable.ic_expand_less_black_24dp)
         expandToggleButton.setImageDrawable(drawable)
         expandToggleText.text = resources.getString(R.string.collapse)
-        calendar.visibility = View.VISIBLE
+        calendar.showCalendar()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.toolbar_settings -> {
+                Navigation.findNavController(view!!).navigate(R.id.website_to_preferences)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }

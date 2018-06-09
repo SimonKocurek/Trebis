@@ -6,14 +6,12 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.navigation.Navigation
 import simon.trebis.R
+import simon.trebis.R.id.createWebsite
 import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Website
 
@@ -38,6 +36,7 @@ class MainFragment : Fragment() {
         initializeVariables(view)
         setupLayoutManager(view)
         setupFab()
+        setHasOptionsMenu(true)
 
         return view
     }
@@ -68,6 +67,7 @@ class MainFragment : Fragment() {
         recyclerView.adapter = LayoutAdapter(
                 viewModel!!.layouts, context!!,
                 this@MainFragment::goToWebsite,
+                this@MainFragment::editWebsite,
                 databaseManager::deleteWebsite
         )
 
@@ -76,7 +76,12 @@ class MainFragment : Fragment() {
 
     private fun goToWebsite(website: Website) {
         val bundle = Bundle().also { it.putInt("website_id", website.id!!) }
-        Navigation.findNavController(view!!).navigate(R.id.action_mainFragment_to_websiteFragment, bundle)
+        Navigation.findNavController(view!!).navigate(R.id.mainFragment_to_website, bundle)
+    }
+
+    private fun editWebsite(website: Website) {
+        val bundle = Bundle().also { it.putInt("website_id", website.id!!) }
+        Navigation.findNavController(view!!).navigate(R.id.mainFragment_to_createWebsite, bundle)
     }
 
     @SuppressLint("SetTextI18n")
@@ -89,6 +94,21 @@ class MainFragment : Fragment() {
 
             counter.text = "(${it?.size})"
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.toolbar_settings -> {
+                Navigation.findNavController(view!!).navigate(R.id.mainFragment_to_preferences)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }
