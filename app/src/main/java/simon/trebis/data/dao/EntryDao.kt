@@ -18,7 +18,7 @@ interface EntryDao {
     fun getAllForWebsite(websiteId: Int): LiveData<List<Entry>>
 
     @Insert
-    fun insert(entry: Entry)
+    fun insert(entry: Entry): Long?
 
     @Delete
     fun delete(entry: Entry)

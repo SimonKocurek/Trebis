@@ -6,12 +6,15 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.*
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.navigation.Navigation
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import simon.trebis.R
-import simon.trebis.R.id.createWebsite
 import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Website
 
@@ -22,9 +25,9 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private var viewModel: MainViewModel? = null
-
+    private lateinit var viewModel: MainViewModel
     private lateinit var databaseManager: DatabaseManager
+    private lateinit var searchBar: SearchView
     private lateinit var recyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
     private lateinit var counter: TextView
@@ -35,6 +38,7 @@ class MainFragment : Fragment() {
 
         initializeVariables(view)
         setupLayoutManager(view)
+        setupSearchBar()
         setupFab()
         setHasOptionsMenu(true)
 
@@ -43,6 +47,7 @@ class MainFragment : Fragment() {
 
     private fun initializeVariables(view: View) {
         recyclerView = view.findViewById(R.id.layout_list)
+        searchBar = view.findViewById(R.id.layout_search_view)
         counter = view.findViewById(R.id.registered_count)
         fab = view.findViewById(R.id.mainFragment_fab)
         databaseManager = DatabaseManager.instance(view.context)
@@ -54,9 +59,15 @@ class MainFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
     }
 
+    private fun setupSearchBar() {
+        searchBar.setOnClickListener({
+            searchBar.isIconified = false
+        })
+    }
+
     private fun setupFab() {
         fab.setOnClickListener({
-            databaseManager.createWebsite()
+            createWebsite()
         })
     }
 
@@ -65,10 +76,10 @@ class MainFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         recyclerView.adapter = LayoutAdapter(
-                viewModel!!.layouts, context!!,
+                viewModel.layouts, context!!,
                 this@MainFragment::goToWebsite,
                 this@MainFragment::editWebsite,
-                databaseManager::deleteWebsite
+                this@MainFragment::deleteWebsite
         )
 
         observeDataSource()
@@ -84,15 +95,34 @@ class MainFragment : Fragment() {
         Navigation.findNavController(view!!).navigate(R.id.mainFragment_to_createWebsite, bundle)
     }
 
+    private fun deleteWebsite(website: Website) {
+        AlertDialog.Builder(context!!)
+                .setTitle(R.string.deletewebsite)
+                .setMessage(R.string.deletingwebsite)
+                .setIcon(R.drawable.ic_delete_black_24dp)
+                .setPositiveButton(R.string.delete, { _, _ -> databaseManager.deleteWebsite(website) })
+                .setNegativeButton(R.string.cancel, { _, _ -> {} })
+                .show()
+    }
+
+    private fun createWebsite() {
+        launch(UI) {
+            val id = databaseManager.createWebsite().await()
+
+            val bundle = Bundle().also { it.putLong("website_id", id!!) }
+            Navigation.findNavController(view!!).navigate(R.id.mainFragment_to_createWebsite, bundle)
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     private fun observeDataSource() {
         val websitesLiveData = DatabaseManager.instance(context!!).getAllWebsites()
         websitesLiveData.observe(this, Observer {
-            viewModel?.layouts?.clear()
-            viewModel?.layouts?.addAll(it!!)
+            viewModel.layouts.clear()
+            viewModel.layouts.addAll(it!!)
             recyclerView.adapter?.notifyDataSetChanged()
 
-            counter.text = "(${it?.size})"
+            counter.text = "(${it.size})"
         })
     }
 

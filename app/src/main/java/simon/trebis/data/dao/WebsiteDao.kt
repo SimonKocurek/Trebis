@@ -18,7 +18,7 @@ interface WebsiteDao {
     fun findByName(name: String): LiveData<List<Website>>
 
     @Insert
-    fun insert(website: Website)
+    fun insert(website: Website): Long?
 
     @Delete
     fun delete(website: Website)

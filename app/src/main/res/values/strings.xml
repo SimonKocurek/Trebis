@@ -16,4 +16,8 @@
     <string name="collapse">Collapse</string>
     <string name="name_sort">Name sort</string>
     <string name="edit">Edit</string>
+    <string name="deletewebsite">Remove Website?</string>
+    <string name="deletingwebsite">This action will remove all snapshots for this website.</string>
+    <string name="delete">Remove</string>
+    <string name="cancel">Cancel</string>
 </resources>

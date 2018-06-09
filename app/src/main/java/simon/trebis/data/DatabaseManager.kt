@@ -2,6 +2,9 @@ package simon.trebis.data
 
 import android.arch.lifecycle.LiveData
 import android.content.Context
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 import simon.trebis.data.dao.EntryDao
 import simon.trebis.data.dao.WebsiteDao
 import simon.trebis.data.entity.Entry
@@ -44,16 +47,16 @@ class DatabaseManager private constructor(context: Context) {
         return websiteDao.getAll()
     }
 
-    fun createWebsite() {
-        Thread {
+    fun createWebsite(): Deferred<Long?> {
+        return async {
             websiteDao.insert(Website())
-        }.start()
+        }
     }
 
     fun deleteWebsite(website: Website) {
-        Thread {
+        launch {
             websiteDao.delete(website)
-        }.start()
+        }
     }
 
 }
