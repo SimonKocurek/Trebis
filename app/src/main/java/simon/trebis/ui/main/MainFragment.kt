@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.*
-import android.widget.SearchView
 import android.widget.TextView
 import androidx.navigation.Navigation
 import kotlinx.coroutines.experimental.android.UI
@@ -27,7 +26,6 @@ class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var databaseManager: DatabaseManager
-    private lateinit var searchBar: SearchView
     private lateinit var recyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
     private lateinit var counter: TextView
@@ -38,7 +36,6 @@ class MainFragment : Fragment() {
 
         initializeVariables(view)
         setupLayoutManager(view)
-        setupSearchBar()
         setupFab()
         setHasOptionsMenu(true)
 
@@ -47,7 +44,6 @@ class MainFragment : Fragment() {
 
     private fun initializeVariables(view: View) {
         recyclerView = view.findViewById(R.id.layout_list)
-        searchBar = view.findViewById(R.id.layout_search_view)
         counter = view.findViewById(R.id.registered_count)
         fab = view.findViewById(R.id.mainFragment_fab)
         databaseManager = DatabaseManager.instance(view.context)
@@ -57,12 +53,6 @@ class MainFragment : Fragment() {
         val layoutManager = UnscrollableLayoutManager(view.context)
         layoutManager.setScrollEnabled(false)
         recyclerView.layoutManager = layoutManager
-    }
-
-    private fun setupSearchBar() {
-        searchBar.setOnClickListener({
-            searchBar.isIconified = false
-        })
     }
 
     private fun setupFab() {
@@ -128,6 +118,7 @@ class MainFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
+        menu.findItem(R.id.app_bar_search).isVisible = true
         super.onCreateOptionsMenu(menu, inflater)
     }
 
