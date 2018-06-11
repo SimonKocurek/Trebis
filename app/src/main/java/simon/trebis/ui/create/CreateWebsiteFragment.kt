@@ -4,9 +4,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
-
-import simon.trebis.R
 import androidx.navigation.Navigation
+import simon.trebis.R
 
 
 class CreateWebsiteFragment : Fragment() {
@@ -29,7 +28,10 @@ class CreateWebsiteFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(CreateWebsiteViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        arguments.let {
+            it?.getInt(WEBSITE_ID_KEY)?.let { id -> observeEntries(id) }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
