@@ -44,16 +44,29 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:targetApi="o" />
 
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:text="http://"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:layout_editor_absoluteY="67dp" />
+
                     <EditText
                         android:id="@+id/website_edit_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="12dp"
                         android:autofillHints="url"
                         android:ems="10"
                         android:hint="@string/website_url"
+                        android:imeOptions="actionDone"
                         android:inputType="textUri"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView"
                         app:layout_constraintTop_toBottomOf="@+id/website_edit_name"
                         tools:targetApi="o" />
 
@@ -67,6 +80,8 @@
 
                     <WebView
                         android:id="@+id/website_edit_webview"
+                        android:focusable="false"
+                        android:clickable="false"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:layout_marginTop="8dp"
@@ -80,6 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:focusable="false"
                         android:text="@string/confirm"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/website_edit_webview" />

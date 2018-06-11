@@ -8,6 +8,7 @@ import android.view.*
 import androidx.navigation.Navigation
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
+import simon.trebis.data.entity.Website
 
 
 class CreateWebsiteFragment : Fragment() {
@@ -28,6 +29,8 @@ class CreateWebsiteFragment : Fragment() {
 
         databaseManager = DatabaseManager.instance(context!!)
         websiteView = CreateWebsiteView(view)
+        websiteView.goBack = { goBack() }
+        websiteView.update = { website: Website -> databaseManager.updateWebsite(website) }
         setHasOptionsMenu(true)
 
         return view
@@ -62,4 +65,7 @@ class CreateWebsiteFragment : Fragment() {
         }
     }
 
+    private fun goBack() {
+        Navigation.findNavController(view!!).popBackStack()
+    }
 }

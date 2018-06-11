@@ -58,6 +58,7 @@ class DownloadService : IntentService("DownloadService") {
         webView.layout(0, 0, width, height)
 
         webView.settings.javaScriptEnabled = true
+        webView.settings.domStorageEnabled = true
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             webView.settings.allowFileAccessFromFileURLs = true

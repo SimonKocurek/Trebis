@@ -39,8 +39,26 @@ class DatabaseManager private constructor(context: Context) {
         entryDao = database.entryDao()
     }
 
+    fun createEntry(websiteId: Int, iconPath: String): Deferred<Long?> {
+        return async {
+            entryDao.insert(Entry(websiteId, iconPath))
+        }
+    }
+
     fun getEntriesForWebsite(websiteId: Int): LiveData<List<Entry>> {
         return entryDao.getAllForWebsite(websiteId)
+    }
+
+    fun updateEntry(entry: Entry) {
+        launch {
+            entryDao.update(entry)
+        }
+    }
+
+    fun deleteEntry(entry: Entry) {
+        launch {
+            entryDao.delete(entry)
+        }
     }
 
     fun createWebsite(): Deferred<Long?> {
@@ -58,7 +76,9 @@ class DatabaseManager private constructor(context: Context) {
     }
 
     fun updateWebsite(website: Website) {
-        return websiteDao.update(website)
+        launch {
+            websiteDao.update(website)
+        }
     }
 
     fun deleteWebsite(website: Website) {
