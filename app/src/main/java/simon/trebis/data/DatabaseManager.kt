@@ -43,14 +43,22 @@ class DatabaseManager private constructor(context: Context) {
         return entryDao.getAllForWebsite(websiteId)
     }
 
-    fun getAllWebsites(): LiveData<List<Website>> {
-        return websiteDao.getAll()
-    }
-
     fun createWebsite(): Deferred<Long?> {
         return async {
             websiteDao.insert(Website())
         }
+    }
+
+    fun getAllWebsites(): LiveData<List<Website>> {
+        return websiteDao.getAll()
+    }
+
+    fun getWebsite(websiteId: Int): LiveData<Website> {
+        return websiteDao.get(websiteId)
+    }
+
+    fun updateWebsite(website: Website) {
+        return websiteDao.update(website)
     }
 
     fun deleteWebsite(website: Website) {

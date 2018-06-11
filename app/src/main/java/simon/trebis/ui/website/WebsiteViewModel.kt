@@ -9,7 +9,7 @@ class WebsiteViewModel : ViewModel() {
     var websiteId: Int? = null
     var expanded: Boolean = true
     var selectedDay: Date = Date()
-    var entries: List<Entry> = ArrayList<Entry>()
+    var entries: List<Entry> = ArrayList()
 
     fun toggleExpanded() {
         expanded = !expanded

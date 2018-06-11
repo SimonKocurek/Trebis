@@ -99,7 +99,7 @@ class MainFragment : Fragment() {
         launch(UI) {
             val id = databaseManager.createWebsite().await()
 
-            val bundle = Bundle().also { it.putLong("website_id", id!!) }
+            val bundle = Bundle().also { it.putInt("website_id", id!!.toInt()) }
             Navigation.findNavController(view!!).navigate(R.id.mainFragment_to_createWebsite, bundle)
         }
     }
