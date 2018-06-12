@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Website
+import simon.trebis.ui.Consts.Companion.WEBSITE_ID_KEY
 
 
 class CreateWebsiteFragment : Fragment() {
@@ -16,8 +17,6 @@ class CreateWebsiteFragment : Fragment() {
     companion object {
         fun newInstance() = CreateWebsiteFragment()
     }
-
-    private val WEBSITE_ID_KEY = "website_id"
 
     private lateinit var viewModel: CreateWebsiteViewModel
     private lateinit var websiteView: CreateWebsiteView

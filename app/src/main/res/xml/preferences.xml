@@ -2,25 +2,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Settings">
 
-    <PreferenceCategory android:title="@string/downloading">
+    <PreferenceCategory android:title="@string/snapshots">
 
         <Preference
-            android:key="preference_with_icon"
-            android:title="Snapshot format"
-            android:summary="This preference has an icon"
-            android:icon="@android:drawable/ic_menu_camera" />
+            android:key="snapshot_format"
+            android:title="@string/snapshotformat"
+            android:summary="@string/formatdescription"
+            android:icon="@drawable/ic_high_quality_black_24dp" />
 
         <Preference
-            android:key="preference_with_icon"
-            android:title="Snapshot quality"
-            android:summary="This preference has an icon"
-            android:icon="@android:drawable/ic_menu_camera" />
+            android:key="snapshot_quality"
+            android:title="@string/screenshotquality"
+            android:summary="@string/screenshotqualitysummary"
+            android:icon="@drawable/ic_photo_size_select_large_black_24dp" />
 
         <Preference
             android:key="preference_with_icon"
             android:title="Snapshot frequency"
             android:summary="This preference has an icon"
             android:icon="@android:drawable/ic_menu_camera" />
+
+        <SwitchPreference
+            android:key="preference_with_icon"
+            android:title="Javascript enabled"
+            android:summary="This preference has an icon" />
 
         <SwitchPreference
             android:key="switch_preference"

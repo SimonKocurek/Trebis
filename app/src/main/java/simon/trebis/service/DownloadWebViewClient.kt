@@ -15,9 +15,9 @@ import java.util.concurrent.TimeUnit
 
 class DownloadWebViewClient : WebViewClient() {
 
+    // Prevents crashes
     override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
-        Log.e(ContentValues.TAG, "Recieved error from WebView, description: $description, Failing url: $failingUrl")
-        //without this method, your app may crash...
+        Log.e(ContentValues.TAG, "Received error from WebView, description: $description, Failing url: $failingUrl")
     }
 
     override fun onPageFinished(webView: WebView, url: String) {
@@ -33,12 +33,12 @@ class DownloadWebViewClient : WebViewClient() {
 
     private fun takeWebViewScreenshot(outputFile: File, webView: WebView) {
         try {
-            //allow webView to render, otherwise screenshot may be blank or partial
+            // allow webView to render, otherwise screenshot may be blank or partial
             TimeUnit.MILLISECONDS.sleep(5000)
             saveBitmapToFile(webView.drawingCache, outputFile)
 
         } catch (e: InterruptedException) {
-            Log.e(ContentValues.TAG, "InterruptedException when taking webView screenshot ", e)
+            Log.e(ContentValues.TAG, "InterruptedException when taking webView screenshot", e)
         }
     }
 

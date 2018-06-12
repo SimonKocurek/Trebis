@@ -53,12 +53,15 @@ class DownloadService : IntentService("DownloadService") {
         // This is important, so that the webView will render and we don't get blank screenshot
         webView.isDrawingCacheEnabled = true
 
-        //width and height of your webView and the resulting screenshot
+        // width and height of your webView and the resulting screenshot
         webView.measure(width, height)
         webView.layout(0, 0, width, height)
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
+
+        webView.settings.loadWithOverviewMode = true
+        webView.settings.useWideViewPort = true
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             webView.settings.allowFileAccessFromFileURLs = true

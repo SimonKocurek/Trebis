@@ -48,54 +48,64 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_web_asset_black_24dp" />
 
-            <TextView
-                android:id="@+id/layout_list_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/no_site_name"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/layout_list_image_view"
-                app:layout_constraintTop_toTopOf="@+id/layout_list_image_view" />
-
-            <TextView
-                android:id="@+id/layout_list_description"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:text="@string/no_url"
-                app:layout_constraintBottom_toBottomOf="@+id/layout_list_image_view"
-                app:layout_constraintStart_toEndOf="@+id/layout_list_image_view" />
-
-            <TextView
-                android:id="@+id/layout_list_date"
-                android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/layout_list_date2"
-                app:layout_constraintStart_toEndOf="@+id/layout_list_date2"
-                app:layout_constraintTop_toTopOf="@+id/layout_list_date2"
-                tools:text="@tools:sample/date/ddmmyy" />
-
-            <TextView
-                android:id="@+id/layout_list_date2"
-                android:layout_width="wrap_content"
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:text="●"
-                app:layout_constraintBottom_toBottomOf="@+id/layout_list_description"
-                app:layout_constraintStart_toEndOf="@+id/layout_list_description"
-                app:layout_constraintTop_toTopOf="@+id/layout_list_description"
-                tools:ignore="HardcodedText" />
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                app:layout_constraintBottom_toBottomOf="@+id/layout_list_image_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/layout_list_image_view"
+                app:layout_constraintTop_toTopOf="@+id/layout_list_image_view">
+
+                <TextView
+                    android:id="@+id/layout_list_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/layout_list_date2"
+                    app:layout_constraintStart_toEndOf="@+id/layout_list_date2"
+                    app:layout_constraintTop_toTopOf="@+id/layout_list_date2"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    tools:text="@tools:sample/date/ddmmyy" />
+
+                <TextView
+                    android:id="@+id/layout_list_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@string/no_url"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/layout_list_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="92dp"
+                    android:layout_marginLeft="92dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/no_site_name"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/layout_list_date2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:text="●"
+                    app:layout_constraintBottom_toBottomOf="@+id/layout_list_description"
+                    app:layout_constraintStart_toEndOf="@+id/layout_list_description"
+                    app:layout_constraintTop_toTopOf="@+id/layout_list_description"
+                    tools:ignore="HardcodedText" />
+            </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
 

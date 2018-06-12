@@ -9,12 +9,12 @@ import simon.trebis.R
 import simon.trebis.data.entity.Website
 
 
-class LayoutAdapter(private val dataset: List<Website>,
-                    private val context: Context,
-                    private val navigateToWebsite: (Website) -> Unit,
-                    private val editWebsite: (Website) -> Unit,
-                    private val deleteWebsite: (Website) -> Unit) :
+class LayoutAdapter(private val dataset: List<Website>, private val context: Context) :
         RecyclerView.Adapter<WebsiteViewHolder>() {
+
+    var goToWebsite: (Website) -> Unit = {}
+    var goToEditWebsite: (Website) -> Unit = {}
+    var deleteWebsite: (Website) -> Unit = {}
 
     private val dateFormat = DateFormat.getDateFormat(context.applicationContext)
 
@@ -27,17 +27,14 @@ class LayoutAdapter(private val dataset: List<Website>,
     override fun onBindViewHolder(holder: WebsiteViewHolder, position: Int) {
         val website = dataset[position]
 
-        website.iconPath
         holder.setImage()
         holder.setName(website.name)
         holder.setUrl(website.url)
         holder.setDate(website.date, dateFormat)
-        holder.setClickCallback(
-                context,
-                { navigateToWebsite(website) },
-                { editWebsite(website) },
-                { deleteWebsite(website) }
-        )
+        holder.goToWebsite = { goToWebsite(website) }
+        holder.goToEditWebsite = { goToEditWebsite(website) }
+        holder.deleteWebsite = { deleteWebsite(website) }
+        holder.context = context
     }
 
     override fun getItemCount() = dataset.size

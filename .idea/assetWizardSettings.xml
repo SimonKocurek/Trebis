@@ -68,7 +68,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/home/simon/android-studio-canary/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_settings_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/home/simon/android-studio-canary/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_photo_size_select_large_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -78,7 +78,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_settings_black_24dp" />
+                            <entry key="autoMirrored" value="true" />
+                            <entry key="outputName" value="ic_photo_size_select_large_black_24dp" />
                             <entry key="sourceFile" value="$USER_HOME$" />
                           </map>
                         </option>

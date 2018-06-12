@@ -11,12 +11,13 @@ import android.view.*
 import android.widget.CalendarView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
 import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.domain.Event
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
+import simon.trebis.ui.Consts.Companion.WEBSITE_ID_KEY
 import java.util.*
-import androidx.navigation.Navigation
 
 
 class WebsiteFragment : Fragment() {
@@ -24,8 +25,6 @@ class WebsiteFragment : Fragment() {
     companion object {
         fun newInstance() = WebsiteFragment()
     }
-
-    private val WEBSITE_ID_KEY = "website_id"
 
     private lateinit var viewModel: WebsiteViewModel
     private lateinit var databaseManager: DatabaseManager

@@ -13,7 +13,6 @@ class UnscrollableLayoutManager(context: Context) : LinearLayoutManager(context)
     }
 
     override fun canScrollVertically(): Boolean {
-        //Similarly you can customize "canScrollHorizontally()" for managing horizontal scroll
         return isScrollEnabled && super.canScrollVertically()
     }
 }
