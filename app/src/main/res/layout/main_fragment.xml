@@ -47,7 +47,7 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="16dp"
-                            android:text="@string/registered"
+                            android:text="@string/displayed"
                             android:textAppearance="@style/TextAppearance.AppCompat"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"

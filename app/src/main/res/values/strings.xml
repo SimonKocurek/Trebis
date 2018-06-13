@@ -3,7 +3,7 @@
     <string name="settings">Settings</string>
     <string name="snapshot">Snapshot</string>
     <string name="open">Open</string>
-    <string name="registered">Registered</string>
+    <string name="displayed">Displayed</string>
     <string name="no_url">No url</string>
     <string name="remove">Remove</string>
     <string name="menu" translatable="false">Menu</string>

@@ -54,9 +54,8 @@ class MainFragment : Fragment() {
 
         navController = Navigation.findNavController(view!!)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        mainFragmentView.setLayouts(viewModel.layouts, viewModel.sortType)
-        mainFragmentSearchView?.setQuery(viewModel.filter)
 
+        refreshLayout()
         observeWebsites()
     }
 
@@ -69,7 +68,8 @@ class MainFragment : Fragment() {
         if (it != null) {
             viewModel.layouts.clear()
             viewModel.layouts.addAll(it)
-            mainFragmentView.setLayouts(viewModel.layouts, viewModel.sortType)
+
+            refreshLayout()
         }
     }
 
@@ -78,7 +78,7 @@ class MainFragment : Fragment() {
                 .setTitle(getString(R.string.sortby))
                 .setItems(R.array.sort_methods, { _, idx ->
                     viewModel.sortType = SortType.withIndex(idx)!!
-                    mainFragmentView.setLayouts(viewModel.layouts, viewModel.sortType)
+                    refreshLayout()
                 }).show()
     }
 
@@ -110,11 +110,20 @@ class MainFragment : Fragment() {
         navController.navigate(resId, bundle)
     }
 
+    private fun refreshLayout() {
+        mainFragmentView.setLayouts(viewModel.layouts, viewModel.sortType, viewModel.filter)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
         val searchItem = menu.findItem(R.id.app_bar_search)
-        mainFragmentSearchView = MainFragmentSearch(searchItem)
-        mainFragmentSearchView?.setQuery(viewModel.filter)
+
+        mainFragmentSearchView = MainFragmentSearch(searchItem, viewModel)
+        mainFragmentSearchView?.onFilterChange = { filter ->
+            viewModel.filter = filter
+            refreshLayout()
+        }
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 

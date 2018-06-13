@@ -44,16 +44,18 @@ class MainFragmentView(val view: View) {
         recyclerView.layoutManager = layoutManager
     }
 
-    fun setLayouts(layouts: ArrayList<Website>, sortType: SortType) {
-        layouts.sortWith(sortType.comparator)
+    fun setLayouts(layouts: ArrayList<Website>, sortType: SortType, filter: String) {
+        val displayed = layouts
+                .filter { it.name.contains(filter) }
+                .sortedWith(sortType.comparator)
 
-        val adapter = LayoutAdapter(layouts, view.context)
+        val adapter = LayoutAdapter(displayed, view.context)
         adapter.goToWebsite = goToWebsite
         adapter.goToEditWebsite = goToEditWebsite
         adapter.deleteWebsite = deleteWebsite
         recyclerView.adapter = adapter
 
-        setCounter(layouts.size)
+        setCounter(displayed.size)
     }
 
     @SuppressLint("SetTextI18n")
