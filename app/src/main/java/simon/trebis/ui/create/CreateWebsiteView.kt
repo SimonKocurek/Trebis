@@ -12,8 +12,7 @@ import android.widget.TextView
 import simon.trebis.MainActivity
 import simon.trebis.R
 import simon.trebis.data.entity.Website
-import simon.trebis.service.DiskUtils
-
+import java.io.ByteArrayOutputStream
 
 class CreateWebsiteView(root: View, private val activity: MainActivity) {
 
@@ -28,6 +27,7 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
     private var website: Website? = null
 
     var onConfirm: (Website) -> Unit = {}
+    var onUpdate: (Website) -> Unit = {}
 
     init {
         confirm.setOnClickListener { onConfirm(website!!) }
@@ -54,52 +54,52 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
     }
 
     private fun onWebsiteIconChanged(favicon: Bitmap) {
-        if (website != null && website?.id != null) {
-            val path = "${website!!.id}/favicon"
+        website?.let {
+            val byteStream = ByteArrayOutputStream()
+            favicon.compress(Bitmap.CompressFormat.PNG, 100, byteStream)
 
-            DiskUtils.saveBitmapToFile(favicon, path, activity.applicationContext)
-            website!!.iconPath = path
+            it.favicon = byteStream.toByteArray()
+            onUpdate(it)
         }
     }
 
     private fun onWebsiteNameChanged(name: String) {
-        if (website != null) {
-            website!!.name = name
-            updateName()
+        website?.let {
+            it.name = name
+            onUpdate(it)
+            updateName(it)
         }
     }
 
     fun updateWith(website: Website?) {
-        if (website != null) {
-            this.website = website
+        website?.let {
+            this.website = it
 
-            updateName()
-            updateUrl()
-            updateCreationDate()
-            updateWebView()
+            updateName(it)
+            updateUrl(it)
+            updateCreationDate(it)
+            updateWebView(it)
         }
     }
 
-    private fun updateName() {
-        activity.setActionBarTitle(website!!.name)
+    private fun updateName(website: Website) {
+        activity.setActionBarTitle(website.name)
     }
 
-    private fun updateUrl() {
-        websiteUrl.setText(website?.url)
-        websiteUrl.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus && website != null) {
-                website!!.url = websiteUrl.text.toString()
-                updateWebView()
-            }
+    private fun updateUrl(website: Website) {
+        websiteUrl.setText(website.url)
+        websiteUrl.onFocusChangeListener = View.OnFocusChangeListener { _, _ ->
+            website.url = websiteUrl.text.toString()
+            updateWebView(website)
         }
     }
 
-    private fun updateCreationDate() {
-        creationDate.text = dateFormat.format(website?.date)
+    private fun updateCreationDate(website: Website) {
+        creationDate.text = dateFormat.format(website.date)
     }
 
-    private fun updateWebView() {
-        webView.loadUrl(website?.url)
+    private fun updateWebView(website: Website) {
+        webView.loadUrl(website.url)
     }
 
 }

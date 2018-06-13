@@ -34,16 +34,19 @@ class CreateWebsiteFragment : Fragment() {
 
         databaseManager = DatabaseManager.instance(context!!)
         websiteView = CreateWebsiteView(view, activity as MainActivity)
-        websiteView.onConfirm = {
-            if (it.id == null) {
-                createWebsite(it)
-            } else {
-                updateWebsite(it)
-            }
-        }
+        websiteView.onConfirm = { confirmChanges(it) }
+        websiteView.onUpdate = { updateChanges(it) }
         setHasOptionsMenu(true)
 
         return view
+    }
+
+    private fun confirmChanges(website: Website) {
+        if (website.id == null) {
+            createWebsite(website)
+        } else {
+            updateWebsite(website)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -51,16 +54,16 @@ class CreateWebsiteFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(CreateWebsiteViewModel::class.java)
         navController = Navigation.findNavController(view!!)
+        arguments?.getInt(WEBSITE_ID_KEY)?.let { getWebsite(it) }
+    }
 
-        arguments?.getInt(WEBSITE_ID_KEY)?.let { id ->
-            if (id == NO_ID) {
-                val temporalWebsite = Website()
-                websiteView.updateWith(temporalWebsite)
-            } else {
-                observeWebsite(id)
-            }
+    private fun getWebsite(id: Int) {
+        if (id == NO_ID) {
+            val temporalWebsite = Website()
+            websiteView.updateWith(temporalWebsite)
+        } else {
+            observeWebsite(id)
         }
-
     }
 
     private fun observeWebsite(websiteId: Int) {
@@ -80,6 +83,12 @@ class CreateWebsiteFragment : Fragment() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun updateChanges(website: Website) {
+        website.id?.let {
+            databaseManager.updateWebsite(website)
         }
     }
 

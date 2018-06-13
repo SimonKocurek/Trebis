@@ -16,8 +16,8 @@ class Entry(
         val website: Int,
 
         @NotNull
-        @ColumnInfo(name = "icon_path")
-        val iconPath: String,
+        @ColumnInfo(name = "snapshot", typeAffinity = ColumnInfo.BLOB)
+        val snapshot: ByteArray,
 
         @NotNull
         @ColumnInfo(name = "time_created")

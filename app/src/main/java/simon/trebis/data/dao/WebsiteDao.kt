@@ -14,9 +14,6 @@ interface WebsiteDao {
     @Query("SELECT * FROM website WHERE website_id = :websiteId")
     fun get(websiteId: Int): LiveData<Website>
 
-    @Query("SELECT * FROM website WHERE name LIKE :name OR url LIKE :name")
-    fun findByName(name: String): LiveData<List<Website>>
-
     @Update
     fun update(website: Website)
 

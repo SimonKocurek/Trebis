@@ -15,4 +15,5 @@ class UnscrollableLayoutManager(context: Context) : LinearLayoutManager(context)
     override fun canScrollVertically(): Boolean {
         return isScrollEnabled && super.canScrollVertically()
     }
+
 }

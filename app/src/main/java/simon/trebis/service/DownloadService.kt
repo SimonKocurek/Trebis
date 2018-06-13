@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.webkit.WebView
 import android.widget.Toast
+import simon.trebis.data.DatabaseManager
 import simon.trebis.ui.Consts.Companion.ACTION_FETCH_WEBSITE
 import simon.trebis.ui.Consts.Companion.WEBSITE_ID
 import simon.trebis.ui.Consts.Companion.WEBSITE_URL
@@ -16,10 +17,11 @@ class DownloadService : IntentService("DownloadService") {
     companion object {
 
         @JvmStatic
-        fun startFetchAction(context: Context, url: String) {
+        fun startFetchAction(context: Context, url: String, websiteId: Int) {
             val intent = Intent(context, DownloadService::class.java).apply {
                 action = ACTION_FETCH_WEBSITE
                 putExtra(WEBSITE_URL, url)
+                putExtra(WEBSITE_ID, websiteId)
             }
 
             context.startService(intent)
@@ -31,17 +33,18 @@ class DownloadService : IntentService("DownloadService") {
         when (intent?.action) {
             ACTION_FETCH_WEBSITE -> {
                 val url = intent.getStringExtra(WEBSITE_URL)
-                val id = intent.getIntExtra(WEBSITE_ID, -1)
-                handleFetchAction(url, id)
+                val websiteId = intent.getIntExtra(WEBSITE_ID, -1)
+                handleFetchAction(url, websiteId)
             }
         }
     }
 
-    private fun handleFetchAction(url: String, id: Int) {
+    private fun handleFetchAction(url: String, websiteId: Int) {
         val webView = configuredWebView(1280, 720)
 
+        val databaseManager = DatabaseManager.instance(applicationContext)
         webView.loadUrl(url)
-        webView.webViewClient = DownloadWebViewClient(id, applicationContext)
+        webView.webViewClient = DownloadWebViewClient(websiteId, databaseManager)
     }
 
     @SuppressLint("SetJavaScriptEnabled")

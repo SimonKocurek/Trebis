@@ -39,9 +39,9 @@ class DatabaseManager private constructor(context: Context) {
         entryDao = database.entryDao()
     }
 
-    fun createEntry(websiteId: Int, iconPath: String): Deferred<Long?> {
+    fun createEntry(websiteId: Int, snapshot: ByteArray): Deferred<Long?> {
         return async {
-            entryDao.insert(Entry(websiteId, iconPath))
+            entryDao.insert(Entry(websiteId, snapshot))
         }
     }
 

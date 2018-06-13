@@ -30,11 +30,11 @@ class MainFragmentView(val view: View) {
     }
 
     private fun setupSortButton() {
-        sortButton.setOnClickListener({ changeSortMethod() })
+        sortButton.setOnClickListener { changeSortMethod() }
     }
 
     private fun setupFab() {
-        fab.setOnClickListener({ createWebsite() })
+        fab.setOnClickListener { createWebsite() }
     }
 
     private fun setupLayoutManager() {

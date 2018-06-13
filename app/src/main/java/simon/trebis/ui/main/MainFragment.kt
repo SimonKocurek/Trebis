@@ -63,8 +63,8 @@ class MainFragment : Fragment() {
         websites.observe(this, Observer { onWebsitesChanged(it) })
     }
 
-    private fun onWebsitesChanged(it: List<Website>?) {
-        if (it != null) {
+    private fun onWebsitesChanged(websites: List<Website>?) {
+        websites?.let {
             viewModel.layouts.clear()
             viewModel.layouts.addAll(it)
 
@@ -75,17 +75,17 @@ class MainFragment : Fragment() {
     private fun changeSortMethod() {
         AlertDialog.Builder(context!!)
                 .setTitle(getString(R.string.sortby))
-                .setItems(R.array.sort_methods, { _, idx ->
+                .setItems(R.array.sort_methods) { _, idx ->
                     viewModel.sortType = SortType.withIndex(idx)!!
                     refreshLayout()
-                }).show()
+                }.show()
     }
 
     private fun deleteWebsiteWithDialog(website: Website) {
         AlertDialog.Builder(context!!)
                 .setTitle(R.string.deletewebsite)
-                .setPositiveButton(R.string.delete, { _, _ -> databaseManager.deleteWebsite(website) })
-                .setNegativeButton(R.string.cancel, { _, _ -> {} })
+                .setPositiveButton(R.string.delete) { _, _ -> databaseManager.deleteWebsite(website) }
+                .setNegativeButton(R.string.cancel) { _, _ -> run {} }
                 .show()
     }
 

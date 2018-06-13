@@ -13,9 +13,8 @@ class Website(
         @ColumnInfo(name = "name")
         var name: String = "",
 
-        @NotNull
-        @ColumnInfo(name = "icon_path")
-        var iconPath: String = "",
+        @ColumnInfo(name = "favicon", typeAffinity = ColumnInfo.BLOB)
+        var favicon: ByteArray? = null,
 
         @NotNull
         @ColumnInfo(name = "time_created")

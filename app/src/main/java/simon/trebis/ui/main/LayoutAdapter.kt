@@ -19,7 +19,8 @@ class LayoutAdapter(private val dataset: List<Website>, private val context: Con
     private val dateFormat = DateFormat.getDateFormat(context.applicationContext)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WebsiteViewHolder {
-        val view = LayoutInflater.from(parent.context)
+        val view = LayoutInflater
+                .from(parent.context)
                 .inflate(R.layout.layout_list_item, parent, false)
         return WebsiteViewHolder(view)
     }
@@ -27,7 +28,7 @@ class LayoutAdapter(private val dataset: List<Website>, private val context: Con
     override fun onBindViewHolder(holder: WebsiteViewHolder, position: Int) {
         val website = dataset[position]
 
-        holder.setImage(website.id!!, website.iconPath)
+        holder.setImage(website.favicon)
         holder.setName(website.name)
         holder.setUrl(website.url)
         holder.setDate(website.date, dateFormat)
