@@ -61,9 +61,9 @@ class DatabaseManager private constructor(context: Context) {
         }
     }
 
-    fun createWebsite(): Deferred<Long?> {
+    fun createWebsite(website: Website): Deferred<Long?> {
         return async {
-            websiteDao.insert(Website())
+            websiteDao.insert(website)
         }
     }
 

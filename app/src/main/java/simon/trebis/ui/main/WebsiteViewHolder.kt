@@ -8,7 +8,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import simon.trebis.R
+import simon.trebis.service.DiskUtils
 import java.util.*
 
 class WebsiteViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
@@ -30,8 +33,18 @@ class WebsiteViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.On
         menu.setOnClickListener(this)
     }
 
-    fun setImage() {
+    fun setImage(id: Int, path: String) {
+        if (path.isBlank()) {
+            return
+        }
 
+        val file = DiskUtils.fileFor(id, path, context)
+        val bitmapJob = DiskUtils.getBitmapFromFile(file, context)
+
+        launch(UI) {
+            val bitmap = bitmapJob.await()
+            image.setImageBitmap(bitmap)
+        }
     }
 
     fun setName(name: String) {

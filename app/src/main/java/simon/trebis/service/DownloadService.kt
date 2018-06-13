@@ -8,6 +8,7 @@ import android.os.Build
 import android.webkit.WebView
 import android.widget.Toast
 import simon.trebis.ui.Consts.Companion.ACTION_FETCH_WEBSITE
+import simon.trebis.ui.Consts.Companion.WEBSITE_ID
 import simon.trebis.ui.Consts.Companion.WEBSITE_URL
 
 class DownloadService : IntentService("DownloadService") {
@@ -30,16 +31,17 @@ class DownloadService : IntentService("DownloadService") {
         when (intent?.action) {
             ACTION_FETCH_WEBSITE -> {
                 val url = intent.getStringExtra(WEBSITE_URL)
-                handleFetchAction(url)
+                val id = intent.getIntExtra(WEBSITE_ID, -1)
+                handleFetchAction(url, id)
             }
         }
     }
 
-    private fun handleFetchAction(url: String) {
+    private fun handleFetchAction(url: String, id: Int) {
         val webView = configuredWebView(1280, 720)
 
         webView.loadUrl(url)
-        webView.webViewClient = DownloadWebViewClient()
+        webView.webViewClient = DownloadWebViewClient(id, applicationContext)
     }
 
     @SuppressLint("SetJavaScriptEnabled")

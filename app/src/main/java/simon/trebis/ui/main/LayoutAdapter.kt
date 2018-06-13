@@ -27,7 +27,7 @@ class LayoutAdapter(private val dataset: List<Website>, private val context: Con
     override fun onBindViewHolder(holder: WebsiteViewHolder, position: Int) {
         val website = dataset[position]
 
-        holder.setImage()
+        holder.setImage(website.id!!, website.iconPath)
         holder.setName(website.name)
         holder.setUrl(website.url)
         holder.setDate(website.date, dateFormat)

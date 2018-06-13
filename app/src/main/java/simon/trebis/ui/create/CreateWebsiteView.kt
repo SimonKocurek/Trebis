@@ -1,6 +1,7 @@
 package simon.trebis.ui.create
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.Build
 import android.support.design.widget.TextInputEditText
 import android.text.format.DateFormat
@@ -11,9 +12,10 @@ import android.widget.TextView
 import simon.trebis.MainActivity
 import simon.trebis.R
 import simon.trebis.data.entity.Website
+import simon.trebis.service.DiskUtils
 
 
-class CreateWebsiteView(private val root: View, private val activity: MainActivity) {
+class CreateWebsiteView(root: View, private val activity: MainActivity) {
 
     private val dateFormat = DateFormat.getDateFormat(root.context.applicationContext)
 
@@ -25,11 +27,10 @@ class CreateWebsiteView(private val root: View, private val activity: MainActivi
 
     private var website: Website? = null
 
-    var onConfirm: () -> Unit = {}
-    var onUpdate: (website: Website) -> Unit = {}
+    var onConfirm: (Website) -> Unit = {}
 
     init {
-        confirm.setOnClickListener({ onConfirm() })
+        confirm.setOnClickListener { onConfirm(website!!) }
         configureWebView()
     }
 
@@ -47,7 +48,24 @@ class CreateWebsiteView(private val root: View, private val activity: MainActivi
                 settings.allowUniversalAccessFromFileURLs = true
             }
 
-            webViewClient = LoggingWebViewClient(context)
+            webViewClient = PreviewWebViewClient(context) { onWebsiteNameChanged(it) }
+            webChromeClient = PreviewChromeVebViewClient { onWebsiteIconChanged(it) }
+        }
+    }
+
+    private fun onWebsiteIconChanged(favicon: Bitmap) {
+        if (website != null && website?.id != null) {
+            val path = "${website!!.id}/favicon"
+
+            DiskUtils.saveBitmapToFile(favicon, path, activity.applicationContext)
+            website!!.iconPath = path
+        }
+    }
+
+    private fun onWebsiteNameChanged(name: String) {
+        if (website != null) {
+            website!!.name = name
+            updateName()
         }
     }
 
@@ -72,7 +90,6 @@ class CreateWebsiteView(private val root: View, private val activity: MainActivi
             if (!hasFocus && website != null) {
                 website!!.url = websiteUrl.text.toString()
                 updateWebView()
-                onUpdate(website!!)
             }
         }
     }

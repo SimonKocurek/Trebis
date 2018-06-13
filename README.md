@@ -5,10 +5,6 @@ The application will automatically scrape and notify you of updates on your webs
 After that you can view version from any point in time you want. Allowing you to read
 the contents at any time even without internet connection.
 
-If you want deleteWebsiteFunction simple setup and experience out of the box, there is deleteWebsiteFunction list of shared
-layouts and websites that you can choose from. With possibility of contributing to
-the list with your own custom built layouts.
-
 ![](header.png)
 
 Šimon Kocúrek – simon.kocurek@gmail.com

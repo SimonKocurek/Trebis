@@ -8,5 +8,6 @@ class Consts {
 
         const val ACTION_FETCH_WEBSITE = "simon.trebis.action.FETCH_WEBSITE"
         const val WEBSITE_URL = "simon.trebis.extra.WEBSITE_URL"
+        const val WEBSITE_ID = "simon.trebis.extra.WEBSITE_ID"
     }
 }

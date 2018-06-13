@@ -34,8 +34,13 @@ class CreateWebsiteFragment : Fragment() {
 
         databaseManager = DatabaseManager.instance(context!!)
         websiteView = CreateWebsiteView(view, activity as MainActivity)
-        websiteView.onConfirm = { createWebsite() }
-        websiteView.onUpdate = { website: Website -> databaseManager.updateWebsite(website) }
+        websiteView.onConfirm = {
+            if (it.id == null) {
+                createWebsite(it)
+            } else {
+                updateWebsite(it)
+            }
+        }
         setHasOptionsMenu(true)
 
         return view
@@ -49,7 +54,8 @@ class CreateWebsiteFragment : Fragment() {
 
         arguments?.getInt(WEBSITE_ID_KEY)?.let { id ->
             if (id == NO_ID) {
-
+                val temporalWebsite = Website()
+                websiteView.updateWith(temporalWebsite)
             } else {
                 observeWebsite(id)
             }
@@ -77,9 +83,14 @@ class CreateWebsiteFragment : Fragment() {
         }
     }
 
-    private fun createWebsite() {
+    private fun updateWebsite(website: Website) {
+        databaseManager.updateWebsite(website)
+        navController.popBackStack()
+    }
+
+    private fun createWebsite(website: Website) {
         launch(UI) {
-            databaseManager.createWebsite().await()
+            databaseManager.createWebsite(website).await()
             navController.popBackStack()
         }
     }

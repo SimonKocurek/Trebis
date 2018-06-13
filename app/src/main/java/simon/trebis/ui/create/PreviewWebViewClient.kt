@@ -9,7 +9,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 
-class LoggingWebViewClient(val context: Context) : WebViewClient() {
+
+class PreviewWebViewClient(val context: Context, private val onPageTitleLoaded: (String) -> Unit) :
+        WebViewClient() {
 
     override fun onReceivedError(view: WebView, errorCode: Int, description: String, failingUrl: String) {
         Toast.makeText(context, description, Toast.LENGTH_SHORT).show()
@@ -18,6 +20,10 @@ class LoggingWebViewClient(val context: Context) : WebViewClient() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onReceivedError(view: WebView, req: WebResourceRequest, rerr: WebResourceError) {
         onReceivedError(view, rerr.errorCode, rerr.description.toString(), req.url.toString())
+    }
+
+    override fun onPageFinished(view: WebView, url: String) {
+        onPageTitleLoaded(view.title)
     }
 
 }
