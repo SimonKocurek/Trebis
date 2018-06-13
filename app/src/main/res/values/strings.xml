@@ -19,7 +19,7 @@
     <string name="deletewebsite">Remove Website?</string>
     <string name="delete">Remove</string>
     <string name="cancel">Cancel</string>
-    <string name="search">Search</string>
+    <string name="searchItem">Search</string>
     <string name="downloading">Downloading</string>
     <string name="website_name">Website name</string>
     <string name="website_url" translatable="false">Website URL</string>
@@ -31,4 +31,8 @@
     <string name="screenshotqualitysummary">Quality of taken screenshots</string>
     <string name="screenshotquality">Snapshot quality</string>
     <string name="snapshots">Snapshots</string>
+    <string name="alphabetical">Alphabetical</string>
+    <string name="firstcreated">First Created</string>
+    <string name="lastcreated">Last Created</string>
+    <string name="sortby">Sort By</string>
 </resources>

@@ -15,6 +15,7 @@ import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Website
 import simon.trebis.ui.Consts.Companion.WEBSITE_ID_KEY
+import simon.trebis.ui.SortType
 
 
 class MainFragment : Fragment() {
@@ -28,12 +29,16 @@ class MainFragment : Fragment() {
     private lateinit var mainFragmentView: MainFragmentView
     private lateinit var navController: NavController
 
+    private var mainFragmentSearchView: MainFragmentSearch? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.main_fragment, container, false)
 
         databaseManager = DatabaseManager.instance(view.context)
+
         mainFragmentView = MainFragmentView(view)
+        mainFragmentView.changeSortMethod = { changeSortMethod() }
         mainFragmentView.createWebsite = { createWebsite() }
         mainFragmentView.goToWebsite = { website -> goToWebsite(website) }
         mainFragmentView.goToEditWebsite = { website -> goToEditWebsite(website) }
@@ -49,7 +54,8 @@ class MainFragment : Fragment() {
 
         navController = Navigation.findNavController(view!!)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        mainFragmentView.setLayouts(viewModel.layouts)
+        mainFragmentView.setLayouts(viewModel.layouts, viewModel.sortType)
+        mainFragmentSearchView?.setQuery(viewModel.filter)
 
         observeWebsites()
     }
@@ -63,10 +69,17 @@ class MainFragment : Fragment() {
         if (it != null) {
             viewModel.layouts.clear()
             viewModel.layouts.addAll(it)
-
-            mainFragmentView.refreshLayouts()
-            mainFragmentView.setCounter(it.size)
+            mainFragmentView.setLayouts(viewModel.layouts, viewModel.sortType)
         }
+    }
+
+    private fun changeSortMethod() {
+        AlertDialog.Builder(context!!)
+                .setTitle(getString(R.string.sortby))
+                .setItems(R.array.sort_methods, { _, idx ->
+                    viewModel.sortType = SortType.withIndex(idx)!!
+                    mainFragmentView.setLayouts(viewModel.layouts, viewModel.sortType)
+                }).show()
     }
 
     private fun deleteWebsiteWithDialog(website: Website) {
@@ -99,7 +112,9 @@ class MainFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
-        menu.findItem(R.id.app_bar_search).isVisible = true
+        val searchItem = menu.findItem(R.id.app_bar_search)
+        mainFragmentSearchView = MainFragmentSearch(searchItem)
+        mainFragmentSearchView?.setQuery(viewModel.filter)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

@@ -7,9 +7,8 @@ import android.content.Intent
 import android.os.Build
 import android.webkit.WebView
 import android.widget.Toast
-
-private const val ACTION_FETCH_WEBSITE = "simon.trebis.action.FETCH_WEBSITE"
-private const val WEBSITE_URL = "simon.trebis.extra.WEBSITE_URL"
+import simon.trebis.ui.Consts.Companion.ACTION_FETCH_WEBSITE
+import simon.trebis.ui.Consts.Companion.WEBSITE_URL
 
 class DownloadService : IntentService("DownloadService") {
 

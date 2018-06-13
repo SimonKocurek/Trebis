@@ -5,7 +5,6 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import android.support.annotation.NonNull
 import org.jetbrains.annotations.NotNull
-import java.time.Instant
 import java.util.*
 
 @Entity(tableName = "website")

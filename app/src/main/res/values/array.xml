@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sort_methods">
+        <item>Alphabetical</item>
+        <item>First Created</item>
+        <item>Last Created</item>
+    </string-array>
+
+    <string-array name="image_formats">
+        <item>png</item>
+        <item>jpg</item>
+    </string-array>
+
+</resources>
