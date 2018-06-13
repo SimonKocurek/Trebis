@@ -9,11 +9,10 @@ import android.support.v7.app.AlertDialog
 import android.view.*
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Website
+import simon.trebis.ui.Consts.Companion.NO_ID
 import simon.trebis.ui.Consts.Companion.WEBSITE_ID_KEY
 import simon.trebis.ui.SortType
 
@@ -39,7 +38,7 @@ class MainFragment : Fragment() {
 
         mainFragmentView = MainFragmentView(view)
         mainFragmentView.changeSortMethod = { changeSortMethod() }
-        mainFragmentView.createWebsite = { createWebsite() }
+        mainFragmentView.createWebsite = { goToCreateWebsite() }
         mainFragmentView.goToWebsite = { website -> goToWebsite(website) }
         mainFragmentView.goToEditWebsite = { website -> goToEditWebsite(website) }
         mainFragmentView.deleteWebsite = { website -> deleteWebsiteWithDialog(website) }
@@ -90,11 +89,8 @@ class MainFragment : Fragment() {
                 .show()
     }
 
-    private fun createWebsite() {
-        launch(UI) {
-            val id = databaseManager.createWebsite().await()
-            goTo(id!!.toInt(), R.id.mainFragment_to_createWebsite)
-        }
+    private fun goToCreateWebsite() {
+        goTo(NO_ID, R.id.mainFragment_to_createWebsite)
     }
 
     private fun goToWebsite(website: Website) {

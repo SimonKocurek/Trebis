@@ -35,4 +35,5 @@
     <string name="firstcreated">First Created</string>
     <string name="lastcreated">Last Created</string>
     <string name="sortby">Sort By</string>
+    <string name="createwebsite">Create Website</string>
 </resources>

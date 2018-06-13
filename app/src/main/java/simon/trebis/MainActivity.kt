@@ -20,6 +20,10 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navHost.navController)
     }
 
+    fun setActionBarTitle(title: String) {
+        supportActionBar?.title = title
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         return navHost.navController.navigateUp() || super.onSupportNavigateUp()
     }

@@ -81,9 +81,7 @@ class WebsiteFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(WebsiteViewModel::class.java)
         refreshCalendarExpansion()
 
-        arguments.let {
-            it?.getInt(WEBSITE_ID_KEY)?.let { id -> observeEntries(id) }
-        }
+        arguments?.getInt(WEBSITE_ID_KEY)?.let { id -> observeEntries(id) }
 
         calendar.setCurrentDate(viewModel.selectedDay)
     }

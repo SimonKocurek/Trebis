@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/createWebsite"
         android:name="simon.trebis.ui.create.CreateWebsiteFragment"
-        android:label="@string/website"
+        android:label="@string/createwebsite"
         tools:layout="@layout/create_website_fragment" >
         <action
             android:id="@+id/createWebsite_to_preference"

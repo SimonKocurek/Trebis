@@ -8,15 +8,15 @@ import android.view.View
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.TextView
+import simon.trebis.MainActivity
 import simon.trebis.R
 import simon.trebis.data.entity.Website
 
 
-class CreateWebsiteView(root: View) {
+class CreateWebsiteView(private val root: View, private val activity: MainActivity) {
 
     private val dateFormat = DateFormat.getDateFormat(root.context.applicationContext)
 
-    private val websiteName = root.findViewById<TextInputEditText>(R.id.website_edit_name)
     private val websiteUrl = root.findViewById<TextInputEditText>(R.id.website_edit_url)
     private val creationDate = root.findViewById<TextView>(R.id.website_edit_date)
     private val webView = root.findViewById<WebView>(R.id.website_edit_webview)
@@ -25,11 +25,11 @@ class CreateWebsiteView(root: View) {
 
     private var website: Website? = null
 
-    var goBack: () -> Unit = {}
-    var update: (website: Website) -> Unit = {}
+    var onConfirm: () -> Unit = {}
+    var onUpdate: (website: Website) -> Unit = {}
 
     init {
-        confirm.setOnClickListener({ goBack() })
+        confirm.setOnClickListener({ onConfirm() })
         configureWebView()
     }
 
@@ -63,26 +63,16 @@ class CreateWebsiteView(root: View) {
     }
 
     private fun updateName() {
-        websiteName.setText(website?.name)
-        websiteName.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                website?.let {
-                    it.name = websiteName.text.toString()
-                    update(it)
-                }
-            }
-        }
+        activity.setActionBarTitle(website!!.name)
     }
 
     private fun updateUrl() {
         websiteUrl.setText(website?.url)
         websiteUrl.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                website?.let {
-                    it.url = websiteUrl.text.toString()
-                    updateWebView()
-                    update(it)
-                }
+            if (!hasFocus && website != null) {
+                website!!.url = websiteUrl.text.toString()
+                updateWebView()
+                onUpdate(website!!)
             }
         }
     }

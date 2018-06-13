@@ -25,37 +25,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/cardview_light_background"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="16dp">
+                app:cardUseCompatPadding="true">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/website_edit_name_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/website_name"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/website_edit_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="text" />
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
                         android:id="@+id/website_edit_url_layout"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
                         android:hint="@string/http_my_website_com"
-                        app:layout_constraintStart_toStartOf="@+id/website_edit_name_layout"
-                        app:layout_constraintTop_toBottomOf="@+id/website_edit_name_layout">
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/website_edit_date">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/website_edit_url"
@@ -70,19 +58,32 @@
                         android:id="@+id/website_edit_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
                         android:text=""
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/website_edit_name_layout" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@tools:sample/date/ddmmyy" />
+
+                    <View
+                        android:id="@+id/website_edit_divider"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/website_edit_frame"
+                        app:layout_constraintTop_toBottomOf="@+id/website_edit_url_layout" />
 
                     <FrameLayout
                         android:id="@+id/website_edit_frame"
                         android:layout_width="0dp"
                         android:layout_height="300dp"
-                        android:layout_marginTop="8dp"
                         android:background="@color/colorGrey"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/website_edit_url_layout">
+                        app:layout_constraintTop_toBottomOf="@+id/website_edit_divider">
 
                         <WebView
                             android:id="@+id/website_edit_webview"
@@ -96,7 +97,17 @@
                             app:layout_constraintTop_toBottomOf="@+id/website_edit_url">
 
                         </WebView>
+
                     </FrameLayout>
+
+                    <View
+                        android:id="@+id/website_edit_divider1"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/website_edit_frame" />
 
                     <Button
                         android:id="@+id/website_edit_confirm"
@@ -104,11 +115,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="8dp"
                         android:focusable="false"
                         android:text="@string/confirm"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/website_edit_frame" />
+                        app:layout_constraintTop_toBottomOf="@+id/website_edit_divider1" />
 
                 </android.support.constraint.ConstraintLayout>
 
