@@ -25,13 +25,14 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
     private val confirm = root.findViewById<Button>(R.id.website_edit_confirm)
 
     private var website: Website? = null
+    private var fragmentStopped: Boolean = false
 
     var onConfirm: (Website) -> Unit = {}
-    var onUpdate: (Website) -> Unit = {}
 
     init {
         confirm.setOnClickListener { onConfirm(website!!) }
         configureWebView()
+        configureUrlField()
     }
 
     private fun configureWebView() {
@@ -53,13 +54,22 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
         }
     }
 
+    private fun configureUrlField() {
+        websiteUrl.onFocusChangeListener = View.OnFocusChangeListener { _, _ ->
+            website?.let {
+                val url = websiteUrl.text.toString()
+                it.url = withHttpPrefix(url)
+                updateUrl(it)
+            }
+        }
+    }
+
     private fun onWebsiteIconChanged(favicon: Bitmap) {
         website?.let {
             val byteStream = ByteArrayOutputStream()
             favicon.compress(Bitmap.CompressFormat.PNG, 100, byteStream)
 
             it.favicon = byteStream.toByteArray()
-            onUpdate(it)
         }
     }
 
@@ -70,7 +80,6 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
 
         website?.let {
             it.name = name
-            onUpdate(it)
             updateName(it)
         }
     }
@@ -82,28 +91,28 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
             updateName(it)
             updateUrl(it)
             updateCreationDate(it)
-            updateWebView(it)
         }
     }
 
     private fun updateName(website: Website) {
-        activity.setActionBarTitle(website.name)
+        if (website.name.isNotBlank() && !fragmentStopped) {
+            activity.setActionBarTitle(website.name)
+        }
     }
 
     private fun updateUrl(website: Website) {
-        websiteUrl.let {
-            it.setText(website.url)
-            it.onFocusChangeListener = View.OnFocusChangeListener { _, _ ->
-                val url = websiteUrl.text.toString()
-                website.url = withHttpPrefix(url)
-                updateWebView(website)
+        websiteUrl.apply {
+            if (website.url != text.toString()) {
+                setText(website.url)
             }
+
+            webView.loadUrl(website.url)
         }
     }
 
     private fun withHttpPrefix(url: String): String {
-        if (!url.startsWith("http://") || !url.startsWith("https://")) {
-            return "http://$url"
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            return "http://"
         }
 
         return url
@@ -113,8 +122,8 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
         creationDate.text = dateFormat.format(website.date)
     }
 
-    private fun updateWebView(website: Website) {
-        webView.loadUrl(website.url)
+    fun fragmentStopped() {
+        fragmentStopped = true
     }
 
 }

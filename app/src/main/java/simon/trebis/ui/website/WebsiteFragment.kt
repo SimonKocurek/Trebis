@@ -81,12 +81,12 @@ class WebsiteFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(WebsiteViewModel::class.java)
         refreshCalendarExpansion()
 
-        arguments?.getInt(WEBSITE_ID_KEY)?.let { id -> observeEntries(id) }
+        arguments?.getLong(WEBSITE_ID_KEY)?.let { id -> observeEntries(id) }
 
         calendar.setCurrentDate(viewModel.selectedDay)
     }
 
-    private fun observeEntries(websiteId: Int) {
+    private fun observeEntries(websiteId: Long) {
         viewModel.websiteId = websiteId
         val entries = databaseManager.getEntriesForWebsite(websiteId)
         entries.observe(this, Observer {

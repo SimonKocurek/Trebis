@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.*
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import simon.trebis.Const.Companion.NO_ID
@@ -36,7 +37,6 @@ class CreateWebsiteFragment : Fragment() {
         databaseManager = DatabaseManager.instance(context!!)
         websiteView = CreateWebsiteView(view, activity as MainActivity).also {
             it.onConfirm = { website -> confirmChanges(website) }
-            it.onUpdate = { website -> updateChanges(website) }
         }
         setHasOptionsMenu(true)
 
@@ -56,10 +56,10 @@ class CreateWebsiteFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(CreateWebsiteViewModel::class.java)
         navController = Navigation.findNavController(view!!)
-        arguments?.getInt(WEBSITE_ID_KEY)?.let { getWebsite(it) }
+        arguments?.getLong(WEBSITE_ID_KEY)?.let { getWebsite(it) }
     }
 
-    private fun getWebsite(id: Int) {
+    private fun getWebsite(id: Long) {
         if (id == NO_ID) {
             val temporalWebsite = Website()
             websiteView.updateWith(temporalWebsite)
@@ -68,7 +68,7 @@ class CreateWebsiteFragment : Fragment() {
         }
     }
 
-    private fun observeWebsite(websiteId: Int) {
+    private fun observeWebsite(websiteId: Long) {
         val website = databaseManager.getWebsite(websiteId)
         website.observe(this, Observer { websiteView.updateWith(it) })
     }
@@ -88,38 +88,44 @@ class CreateWebsiteFragment : Fragment() {
         }
     }
 
-    private fun updateChanges(website: Website) {
-        website.id?.let {
+    private fun updateWebsite(website: Website) {
+        launch(UI) {
+            updateJob(website.id!!, website.url)
             databaseManager.updateWebsite(website)
-            restartDownloadJob(it, website)
+            navController.popBackStack()
         }
     }
 
-    private fun restartDownloadJob(websiteId: Int, website: Website) {
-        val downloadJob = TrebisDownloadJob()
+    private suspend fun updateJob(websiteId: Long, url: String) {
+        databaseManager.getJobForWebsite(websiteId).await()?.let {
+            TrebisDownloadJob().apply {
+                cancelById(it.schedulerId)
 
-        databaseManager.getJobForWebsite(websiteId)?.let {
-            downloadJob.apply {
-                cancelById(it.schdulerId)
-                databaseManager.deleteJob(it)
+                it.schedulerId = schedule(websiteId, url)
+                databaseManager.updateJob(it)
             }
         }
-
-        downloadJob.schedule(websiteId, website.url).let {
-            databaseManager.createJob(websiteId, it)
-        }
-    }
-
-    private fun updateWebsite(website: Website) {
-        databaseManager.updateWebsite(website)
-        navController.popBackStack()
     }
 
     private fun createWebsite(website: Website) {
         launch(UI) {
-            databaseManager.createWebsite(website).await()
+            databaseManager.createWebsite(website).await()?.let {
+                scheduleNewJob(it, website.url)
+            }
+
             navController.popBackStack()
         }
+    }
+
+    private fun scheduleNewJob(websiteId: Long, url: String): Deferred<Long?> {
+        TrebisDownloadJob().schedule(websiteId, url).let {
+            return databaseManager.createJob(websiteId, it)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        websiteView.fragmentStopped()
     }
 
 }

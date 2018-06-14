@@ -17,7 +17,7 @@ class DownloadService : IntentService("DownloadService") {
     companion object {
 
         @JvmStatic
-        fun startFetchAction(context: Context, url: String, websiteId: Int) {
+        fun startFetchAction(context: Context, url: String, websiteId: Long) {
             val intent = Intent(context, DownloadService::class.java).apply {
                 action = ACTION_FETCH_WEBSITE
                 putExtra(WEBSITE_URL, url)
@@ -33,13 +33,13 @@ class DownloadService : IntentService("DownloadService") {
         when (intent?.action) {
             ACTION_FETCH_WEBSITE -> {
                 val url = intent.getStringExtra(WEBSITE_URL)
-                val websiteId = intent.getIntExtra(WEBSITE_ID, -1)
-                handleFetchAction(url, websiteId)
+                val websiteId = intent.getLongExtra(WEBSITE_ID, -1)
+//                handleFetchAction(url, websiteId)
             }
         }
     }
 
-    private fun handleFetchAction(url: String, websiteId: Int) {
+    private fun handleFetchAction(url: String, websiteId: Long) {
         val databaseManager = DatabaseManager.instance(applicationContext)
 
         configuredWebView(1280, 720).apply {

@@ -8,7 +8,7 @@ import simon.trebis.data.entity.Job
 interface JobDao {
 
     @Query("SELECT * FROM job WHERE website_id = :websiteId")
-    fun getWebsiteJob(websiteId: Int): Job?
+    fun getWebsiteJob(websiteId: Long): Job?
 
     @Update
     fun update(job: Job)

@@ -102,8 +102,8 @@ class MainFragment : Fragment() {
         goTo(website.id!!, R.id.mainFragment_to_createWebsite)
     }
 
-    private fun goTo(websiteId: Int, @IdRes resId: Int) {
-        val bundle = Bundle().also { it.putInt(WEBSITE_ID_KEY, websiteId) }
+    private fun goTo(websiteId: Long, @IdRes resId: Int) {
+        val bundle = Bundle().also { it.putLong(WEBSITE_ID_KEY, websiteId) }
         navController.navigate(resId, bundle)
     }
 

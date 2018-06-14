@@ -27,5 +27,5 @@ class Website(
         @PrimaryKey(autoGenerate = true)
         @NonNull
         @ColumnInfo(name = "website_id")
-        var id: Int? = null
+        var id: Long? = null
 }

@@ -43,14 +43,16 @@ class DatabaseManager private constructor(context: Context) {
         jobDao = database.jobDao()
     }
 
-    fun createJob(websiteId: Int, schedulerId: Int): Deferred<Long?> {
+    fun createJob(websiteId: Long, schedulerId: Int): Deferred<Long?> {
         return async {
             jobDao.insert(Job(websiteId, schedulerId))
         }
     }
 
-    fun getJobForWebsite(websiteId: Int): Job? {
-        return jobDao.getWebsiteJob(websiteId)
+    fun getJobForWebsite(websiteId: Long): Deferred<Job?> {
+        return async {
+            jobDao.getWebsiteJob(websiteId)
+        }
     }
 
     fun updateJob(job: Job) {
@@ -65,13 +67,13 @@ class DatabaseManager private constructor(context: Context) {
         }
     }
 
-    fun createEntry(websiteId: Int, snapshot: ByteArray): Deferred<Long?> {
+    fun createEntry(websiteId: Long, snapshot: ByteArray): Deferred<Long?> {
         return async {
             entryDao.insert(Entry(websiteId, snapshot))
         }
     }
 
-    fun getEntriesForWebsite(websiteId: Int): LiveData<List<Entry>> {
+    fun getEntriesForWebsite(websiteId: Long): LiveData<List<Entry>> {
         return entryDao.getAllForWebsite(websiteId)
     }
 
@@ -97,7 +99,7 @@ class DatabaseManager private constructor(context: Context) {
         return websiteDao.getAll()
     }
 
-    fun getWebsite(websiteId: Int): LiveData<Website> {
+    fun getWebsite(websiteId: Long): LiveData<Website> {
         return websiteDao.get(websiteId)
     }
 

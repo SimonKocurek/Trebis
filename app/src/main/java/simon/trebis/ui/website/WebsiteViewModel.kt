@@ -6,7 +6,7 @@ import java.util.*
 
 class WebsiteViewModel : ViewModel() {
 
-    var websiteId: Int? = null
+    var websiteId: Long? = null
     var expanded: Boolean = true
     var selectedDay: Date = Date()
     var entries: List<Entry> = ArrayList()

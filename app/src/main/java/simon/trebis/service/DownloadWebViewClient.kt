@@ -9,7 +9,7 @@ import simon.trebis.data.DatabaseManager
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.TimeUnit
 
-class DownloadWebViewClient(private val websiteId: Int, private val databaseManager: DatabaseManager)
+class DownloadWebViewClient(private val websiteId: Long, private val databaseManager: DatabaseManager)
     : WebViewClient() {
 
     // Prevents crashes

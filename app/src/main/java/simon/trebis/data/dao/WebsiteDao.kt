@@ -12,7 +12,7 @@ interface WebsiteDao {
     fun getAll(): LiveData<List<Website>>
 
     @Query("SELECT * FROM website WHERE website_id = :websiteId")
-    fun get(websiteId: Int): LiveData<Website>
+    fun get(websiteId: Long): LiveData<Website>
 
     @Update
     fun update(website: Website)

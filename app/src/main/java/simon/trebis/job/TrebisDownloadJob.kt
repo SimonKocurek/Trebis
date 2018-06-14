@@ -1,6 +1,5 @@
 package simon.trebis.job
 
-import android.content.Intent
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobManager
 import com.evernote.android.job.JobRequest
@@ -9,7 +8,6 @@ import simon.trebis.Const
 import simon.trebis.Const.Companion.WEBSITE_ID
 import simon.trebis.Const.Companion.WEBSITE_URL
 import simon.trebis.service.DownloadService
-import java.util.concurrent.TimeUnit
 
 
 class TrebisDownloadJob : Job() {
@@ -19,26 +17,28 @@ class TrebisDownloadJob : Job() {
     }
 
     override fun onRunJob(params: Job.Params): Job.Result {
-        val intent = Intent(context, DownloadService::class.java).apply {
-            putExtra(WEBSITE_ID, params.extras.getInt(WEBSITE_ID, -1))
-            putExtra(WEBSITE_URL, params.extras.getString(WEBSITE_URL, ""))
+        params.extras.apply {
+            DownloadService.startFetchAction(
+                    context,
+                    getString(WEBSITE_URL, ""),
+                    getLong(WEBSITE_ID, -1)
+            )
         }
-
-        context.startService(intent)
         return Job.Result.SUCCESS
     }
 
-    fun schedule(websiteId: Int, url: String): Int {
+    fun schedule(websiteId: Long, url: String): Int {
         val extras = PersistableBundleCompat().apply {
-            putInt(Const.WEBSITE_ID, websiteId)
+            putLong(Const.WEBSITE_ID, websiteId)
             putString(Const.WEBSITE_URL, url)
         }
 
         return JobRequest.Builder(TrebisDownloadJob.TAG)
-                .setPeriodic(TimeUnit.HOURS.toMillis(12))
-                .setRequiredNetworkType(JobRequest.NetworkType.UNMETERED)
-                .setRequiresStorageNotLow(true)
-                .setRequirementsEnforced(true)
+//                .setPeriodic(TimeUnit.HOURS.toMillis(12))
+                .setExact(1)
+//                .setRequiredNetworkType(JobRequest.NetworkType.UNMETERED)
+//                .setRequiresStorageNotLow(true)
+//                .setRequirementsEnforced(true)
                 .setUpdateCurrent(false)
                 .setExtras(extras)
                 .build()
