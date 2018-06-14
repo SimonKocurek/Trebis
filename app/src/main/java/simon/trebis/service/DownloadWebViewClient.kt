@@ -9,8 +9,11 @@ import simon.trebis.data.DatabaseManager
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.TimeUnit
 
-class DownloadWebViewClient(private val websiteId: Long, private val databaseManager: DatabaseManager)
-    : WebViewClient() {
+class DownloadWebViewClient(
+        private val websiteId: Long,
+        private val databaseManager: DatabaseManager,
+        private val downloadServiceHandler: DownloadServiceHandler
+) : WebViewClient() {
 
     // Prevents crashes
     override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
@@ -22,19 +25,22 @@ class DownloadWebViewClient(private val websiteId: Long, private val databaseMan
     }
 
     private fun takeWebViewScreenshot(webView: WebView) {
-        try {
-            // allow webView to render, otherwise screenshot may be blank or partial
-            TimeUnit.MILLISECONDS.sleep(5000)
+        Thread {
+            try {
+                // allow webView to render, otherwise screenshot may be blank or partial
+                TimeUnit.MILLISECONDS.sleep(5000)
 
-            val bitmap = webView.drawingCache
-            val byteStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteStream)
+                val bitmap = webView.drawingCache
+                val byteStream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteStream)
 
-            databaseManager.createEntry(websiteId, byteStream.toByteArray())
+                databaseManager.createEntry(websiteId, byteStream.toByteArray())
+                downloadServiceHandler.stopService()
 
-        } catch (e: InterruptedException) {
-            Log.e(ContentValues.TAG, "InterruptedException when taking webView screenshot", e)
-        }
+            } catch (e: InterruptedException) {
+                Log.e(ContentValues.TAG, "InterruptedException when taking webView screenshot", e)
+            }
+        }.start()
     }
 
 }
