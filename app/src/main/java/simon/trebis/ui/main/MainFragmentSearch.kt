@@ -5,7 +5,8 @@ import android.widget.SearchView
 
 class MainFragmentSearch(search: MenuItem, private val viewModel: MainViewModel) {
 
-    val searchView: SearchView = search.actionView as SearchView
+    private val searchView: SearchView = search.actionView as SearchView
+
     var onFilterChange: (String) -> Unit = {}
 
     init {

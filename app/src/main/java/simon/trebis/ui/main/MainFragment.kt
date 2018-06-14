@@ -9,11 +9,11 @@ import android.support.v7.app.AlertDialog
 import android.view.*
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import simon.trebis.Const.Companion.NO_ID
+import simon.trebis.Const.Companion.WEBSITE_ID_KEY
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Website
-import simon.trebis.ui.Consts.Companion.NO_ID
-import simon.trebis.ui.Consts.Companion.WEBSITE_ID_KEY
 import simon.trebis.ui.SortType
 
 
@@ -36,12 +36,13 @@ class MainFragment : Fragment() {
 
         databaseManager = DatabaseManager.instance(view.context)
 
-        mainFragmentView = MainFragmentView(view)
-        mainFragmentView.changeSortMethod = { changeSortMethod() }
-        mainFragmentView.createWebsite = { goToCreateWebsite() }
-        mainFragmentView.goToWebsite = { website -> goToWebsite(website) }
-        mainFragmentView.goToEditWebsite = { website -> goToEditWebsite(website) }
-        mainFragmentView.deleteWebsite = { website -> deleteWebsiteWithDialog(website) }
+        mainFragmentView = MainFragmentView(view).also {
+            it.changeSortMethod = { changeSortMethod() }
+            it.createWebsite = { goToCreateWebsite() }
+            it.goToWebsite = { website -> goToWebsite(website) }
+            it.goToEditWebsite = { website -> goToEditWebsite(website) }
+            it.deleteWebsite = { website -> deleteWebsiteWithDialog(website) }
+        }
 
         setHasOptionsMenu(true)
 
@@ -114,10 +115,11 @@ class MainFragment : Fragment() {
         inflater.inflate(R.menu.toolbar_menu, menu)
         val searchItem = menu.findItem(R.id.app_bar_search)
 
-        mainFragmentSearchView = MainFragmentSearch(searchItem, viewModel)
-        mainFragmentSearchView?.onFilterChange = { filter ->
-            viewModel.filter = filter
-            refreshLayout()
+        mainFragmentSearchView = MainFragmentSearch(searchItem, viewModel).also {
+            it.onFilterChange = { filter ->
+                viewModel.filter = filter
+                refreshLayout()
+            }
         }
 
         super.onCreateOptionsMenu(menu, inflater)

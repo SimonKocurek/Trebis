@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.evernote.android.job.JobManager
+import simon.trebis.job.TrebisJobCreator
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,6 +16,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+
+        JobManager.create(this).addJobCreator(TrebisJobCreator())
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 

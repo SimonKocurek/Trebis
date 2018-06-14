@@ -27,15 +27,16 @@ class LayoutAdapter(private val dataset: List<Website>, private val context: Con
 
     override fun onBindViewHolder(holder: WebsiteViewHolder, position: Int) {
         val website = dataset[position]
-
-        holder.setImage(website.favicon)
-        holder.setName(website.name)
-        holder.setUrl(website.url)
-        holder.setDate(website.date, dateFormat)
-        holder.goToWebsite = { goToWebsite(website) }
-        holder.goToEditWebsite = { goToEditWebsite(website) }
-        holder.deleteWebsite = { deleteWebsite(website) }
-        holder.context = context
+        holder.also {
+            it.setImage(website.favicon)
+            it.setName(website.name)
+            it.setUrl(website.url)
+            it.setDate(website.date, dateFormat)
+            it.goToWebsite = { goToWebsite(website) }
+            it.goToEditWebsite = { goToEditWebsite(website) }
+            it.deleteWebsite = { deleteWebsite(website) }
+            it.context = context
+        }
     }
 
     override fun getItemCount() = dataset.size

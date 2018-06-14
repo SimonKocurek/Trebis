@@ -49,11 +49,11 @@ class MainFragmentView(val view: View) {
                 .filter { it.name.contains(filter) }
                 .sortedWith(sortType.comparator)
 
-        val adapter = LayoutAdapter(displayed, view.context)
-        adapter.goToWebsite = goToWebsite
-        adapter.goToEditWebsite = goToEditWebsite
-        adapter.deleteWebsite = deleteWebsite
-        recyclerView.adapter = adapter
+        recyclerView.adapter = LayoutAdapter(displayed, view.context).also {
+            it.goToWebsite = goToWebsite
+            it.goToEditWebsite = goToEditWebsite
+            it.deleteWebsite = deleteWebsite
+        }
 
         setCounter(displayed.size)
     }

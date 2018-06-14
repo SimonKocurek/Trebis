@@ -87,10 +87,12 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
     }
 
     private fun updateUrl(website: Website) {
-        websiteUrl.setText(website.url)
-        websiteUrl.onFocusChangeListener = View.OnFocusChangeListener { _, _ ->
-            website.url = websiteUrl.text.toString()
-            updateWebView(website)
+        websiteUrl.also {
+            it.setText(website.url)
+            it.onFocusChangeListener = View.OnFocusChangeListener { _, _ ->
+                website.url = websiteUrl.text.toString()
+                updateWebView(website)
+            }
         }
     }
 

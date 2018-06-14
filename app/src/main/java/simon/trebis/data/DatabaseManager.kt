@@ -6,8 +6,10 @@ import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import simon.trebis.data.dao.EntryDao
+import simon.trebis.data.dao.JobDao
 import simon.trebis.data.dao.WebsiteDao
 import simon.trebis.data.entity.Entry
+import simon.trebis.data.entity.Job
 import simon.trebis.data.entity.Website
 
 class DatabaseManager private constructor(context: Context) {
@@ -29,14 +31,38 @@ class DatabaseManager private constructor(context: Context) {
 
     }
 
-    private var websiteDao: WebsiteDao
-    private var entryDao: EntryDao
+    private val websiteDao: WebsiteDao
+    private val entryDao: EntryDao
+    private val jobDao: JobDao
 
     init {
         val database = TrebisDatabase.getDatabase(context)
 
         websiteDao = database.websiteDao()
         entryDao = database.entryDao()
+        jobDao = database.jobDao()
+    }
+
+    fun createJob(websiteId: Int, schedulerId: Int): Deferred<Long?> {
+        return async {
+            jobDao.insert(Job(websiteId, schedulerId))
+        }
+    }
+
+    fun getJobForWebsite(websiteId: Int): LiveData<Job> {
+        return jobDao.getWebsiteJob(websiteId)
+    }
+
+    fun updateJob(job: Job) {
+        launch {
+            jobDao.update(job)
+        }
+    }
+
+    fun deleteJob(job: Job) {
+        launch {
+            jobDao.delete(job)
+        }
     }
 
     fun createEntry(websiteId: Int, snapshot: ByteArray): Deferred<Long?> {

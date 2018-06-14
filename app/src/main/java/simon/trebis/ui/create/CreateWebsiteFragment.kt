@@ -9,12 +9,12 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import simon.trebis.Const.Companion.NO_ID
+import simon.trebis.Const.Companion.WEBSITE_ID_KEY
 import simon.trebis.MainActivity
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Website
-import simon.trebis.ui.Consts.Companion.NO_ID
-import simon.trebis.ui.Consts.Companion.WEBSITE_ID_KEY
 
 
 class CreateWebsiteFragment : Fragment() {
@@ -33,9 +33,10 @@ class CreateWebsiteFragment : Fragment() {
         val view = inflater.inflate(R.layout.create_website_fragment, container, false)
 
         databaseManager = DatabaseManager.instance(context!!)
-        websiteView = CreateWebsiteView(view, activity as MainActivity)
-        websiteView.onConfirm = { confirmChanges(it) }
-        websiteView.onUpdate = { updateChanges(it) }
+        websiteView = CreateWebsiteView(view, activity as MainActivity).also {
+            it.onConfirm = { website -> confirmChanges(website) }
+            it.onUpdate = { website -> updateChanges(website) }
+        }
         setHasOptionsMenu(true)
 
         return view

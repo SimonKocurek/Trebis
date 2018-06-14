@@ -1,6 +1,6 @@
-package simon.trebis.ui
+package simon.trebis
 
-class Consts {
+class Const {
 
     companion object {
         const val NO_ID = -1

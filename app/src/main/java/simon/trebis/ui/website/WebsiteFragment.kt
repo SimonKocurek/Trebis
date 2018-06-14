@@ -14,9 +14,9 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.domain.Event
+import simon.trebis.Const.Companion.WEBSITE_ID_KEY
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
-import simon.trebis.ui.Consts.Companion.WEBSITE_ID_KEY
 import java.util.*
 
 

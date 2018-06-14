@@ -7,10 +7,10 @@ import android.content.Intent
 import android.os.Build
 import android.webkit.WebView
 import android.widget.Toast
+import simon.trebis.Const.Companion.ACTION_FETCH_WEBSITE
+import simon.trebis.Const.Companion.WEBSITE_ID
+import simon.trebis.Const.Companion.WEBSITE_URL
 import simon.trebis.data.DatabaseManager
-import simon.trebis.ui.Consts.Companion.ACTION_FETCH_WEBSITE
-import simon.trebis.ui.Consts.Companion.WEBSITE_ID
-import simon.trebis.ui.Consts.Companion.WEBSITE_URL
 
 class DownloadService : IntentService("DownloadService") {
 
@@ -40,11 +40,12 @@ class DownloadService : IntentService("DownloadService") {
     }
 
     private fun handleFetchAction(url: String, websiteId: Int) {
-        val webView = configuredWebView(1280, 720)
-
         val databaseManager = DatabaseManager.instance(applicationContext)
-        webView.loadUrl(url)
-        webView.webViewClient = DownloadWebViewClient(websiteId, databaseManager)
+
+        configuredWebView(1280, 720).apply {
+            webViewClient = DownloadWebViewClient(websiteId, databaseManager)
+            loadUrl(url)
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -54,25 +55,25 @@ class DownloadService : IntentService("DownloadService") {
         // without this toast message, screenshot will be blank, dont ask me why...
         Toast.makeText(this@DownloadService, "Picture taken.", Toast.LENGTH_SHORT).show()
 
-        // This is important, so that the webView will render and we don't get blank screenshot
-        webView.isDrawingCacheEnabled = true
+        return webView.apply {
+            // This is important, so that the webView will render and we don't get blank screenshot
+            isDrawingCacheEnabled = true
 
-        // width and height of your webView and the resulting screenshot
-        webView.measure(width, height)
-        webView.layout(0, 0, width, height)
+            // width and height of your webView and the resulting screenshot
+            measure(width, height)
+            layout(0, 0, width, height)
 
-        webView.settings.javaScriptEnabled = true
-        webView.settings.domStorageEnabled = true
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
 
-        webView.settings.loadWithOverviewMode = true
-        webView.settings.useWideViewPort = true
+            settings.loadWithOverviewMode = true
+            settings.useWideViewPort = true
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            webView.settings.allowFileAccessFromFileURLs = true
-            webView.settings.allowUniversalAccessFromFileURLs = true
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                settings.allowFileAccessFromFileURLs = true
+                settings.allowUniversalAccessFromFileURLs = true
+            }
         }
-
-        return webView
     }
 
 }

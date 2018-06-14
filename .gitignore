@@ -88,3 +88,4 @@ app/libs/
 app/src/androidTest/
 app/src/main/ic_launcher-web.png~
 app/src/test/
+/.idea/

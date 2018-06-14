@@ -23,7 +23,9 @@ class PreviewWebViewClient(val context: Context, private val onPageTitleLoaded: 
     }
 
     override fun onPageFinished(view: WebView, url: String) {
-        onPageTitleLoaded(view.title)
+        view.title?.let {
+            onPageTitleLoaded(it)
+        }
     }
 
 }
