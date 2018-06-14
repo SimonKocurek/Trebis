@@ -52,7 +52,10 @@ class WebsiteFragment : Fragment() {
     private fun observeEntries(viewModel: WebsiteViewModel) {
         arguments?.getLong(WEBSITE_ID_KEY)?.let { id ->
             databaseManager.getEntriesForWebsite(id).observe(this, Observer { entries ->
-                entries?.let { viewModel.entries = it }
+                entries?.let {
+                    viewModel.entries = it
+                    websiteView.refresh()
+                }
             })
         }
     }

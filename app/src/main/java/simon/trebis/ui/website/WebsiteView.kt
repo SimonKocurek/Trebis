@@ -1,6 +1,7 @@
 package simon.trebis.ui.website
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
@@ -71,6 +72,15 @@ class WebsiteView(root: View, val context: Context, val databaseManager: Databas
     fun refresh() {
         refreshCalendarExpansion()
         calendar.setCurrentDate(viewModel?.selectedDay)
+
+        viewModel?.entries?.let { entries ->
+            if (entries.isNotEmpty()) {
+                entries.last().snapshot.let {
+                    val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+                    image.setImageBitmap(bitmap)
+                }
+            }
+        }
     }
 
 }

@@ -7,7 +7,6 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.webkit.WebView
-import android.widget.Toast
 import simon.trebis.Const
 import simon.trebis.data.DatabaseManager
 
@@ -43,9 +42,6 @@ class DownloadServiceHandler(
     @SuppressLint("SetJavaScriptEnabled")
     private fun configuredWebView(width: Int, height: Int): WebView {
         val webView = WebView(downloadService)
-
-        // without this toast message, screenshot will be blank, dont ask me why...
-        Toast.makeText(downloadService, "Picture taken.", Toast.LENGTH_SHORT).show()
 
         return webView.apply {
             // This is important, so that the webView will render and we don't get blank screenshot
