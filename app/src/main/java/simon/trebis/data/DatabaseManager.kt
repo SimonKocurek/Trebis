@@ -49,7 +49,7 @@ class DatabaseManager private constructor(context: Context) {
         }
     }
 
-    fun getJobForWebsite(websiteId: Int): LiveData<Job> {
+    fun getJobForWebsite(websiteId: Int): Job? {
         return jobDao.getWebsiteJob(websiteId)
     }
 

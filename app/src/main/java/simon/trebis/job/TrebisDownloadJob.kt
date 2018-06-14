@@ -5,6 +5,7 @@ import com.evernote.android.job.Job
 import com.evernote.android.job.JobManager
 import com.evernote.android.job.JobRequest
 import com.evernote.android.job.util.support.PersistableBundleCompat
+import simon.trebis.Const
 import simon.trebis.Const.Companion.WEBSITE_ID
 import simon.trebis.Const.Companion.WEBSITE_URL
 import simon.trebis.service.DownloadService
@@ -27,13 +28,13 @@ class TrebisDownloadJob : Job() {
         return Job.Result.SUCCESS
     }
 
-    fun scheduleJob(websiteId: Int, url: String): Int {
+    fun schedule(websiteId: Int, url: String): Int {
         val extras = PersistableBundleCompat().apply {
-            putInt(WEBSITE_ID, websiteId)
-            putString(WEBSITE_URL, url)
+            putInt(Const.WEBSITE_ID, websiteId)
+            putString(Const.WEBSITE_URL, url)
         }
 
-        return JobRequest.Builder(TAG)
+        return JobRequest.Builder(TrebisDownloadJob.TAG)
                 .setPeriodic(TimeUnit.HOURS.toMillis(12))
                 .setRequiredNetworkType(JobRequest.NetworkType.UNMETERED)
                 .setRequiresStorageNotLow(true)
@@ -44,7 +45,7 @@ class TrebisDownloadJob : Job() {
                 .schedule()
     }
 
-    private fun cancelJob(jobId: Int) {
+    fun cancelById(jobId: Int) {
         JobManager.instance().cancel(jobId)
     }
 

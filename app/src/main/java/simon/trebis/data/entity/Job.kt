@@ -23,5 +23,5 @@ class Job(
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "job_id")
-    var id: Int? = null
+    var id: Long? = null
 }

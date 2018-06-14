@@ -64,6 +64,10 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
     }
 
     private fun onWebsiteNameChanged(name: String) {
+        if ("about:blank" == name) {
+            return
+        }
+
         website?.let {
             it.name = name
             onUpdate(it)
@@ -87,13 +91,22 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
     }
 
     private fun updateUrl(website: Website) {
-        websiteUrl.also {
+        websiteUrl.let {
             it.setText(website.url)
             it.onFocusChangeListener = View.OnFocusChangeListener { _, _ ->
-                website.url = websiteUrl.text.toString()
+                val url = websiteUrl.text.toString()
+                website.url = withHttpPrefix(url)
                 updateWebView(website)
             }
         }
+    }
+
+    private fun withHttpPrefix(url: String): String {
+        if (!url.startsWith("http://") || !url.startsWith("https://")) {
+            return "http://$url"
+        }
+
+        return url
     }
 
     private fun updateCreationDate(website: Website) {

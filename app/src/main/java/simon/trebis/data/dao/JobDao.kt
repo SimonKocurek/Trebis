@@ -1,6 +1,5 @@
 package simon.trebis.data.dao
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import simon.trebis.data.entity.Job
 
@@ -9,7 +8,7 @@ import simon.trebis.data.entity.Job
 interface JobDao {
 
     @Query("SELECT * FROM job WHERE website_id = :websiteId")
-    fun getWebsiteJob(websiteId: Int): LiveData<Job>
+    fun getWebsiteJob(websiteId: Int): Job?
 
     @Update
     fun update(job: Job)
