@@ -21,7 +21,6 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
     private val websiteUrl = root.findViewById<TextInputEditText>(R.id.website_edit_url)
     private val creationDate = root.findViewById<TextView>(R.id.website_edit_date)
     private val webView = root.findViewById<WebView>(R.id.website_edit_webview)
-
     private val confirm = root.findViewById<Button>(R.id.website_edit_confirm)
 
     private var website: Website? = null
