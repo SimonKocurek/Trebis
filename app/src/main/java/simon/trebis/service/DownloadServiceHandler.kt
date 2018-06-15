@@ -6,8 +6,10 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.DisplayMetrics
 import android.webkit.WebView
 import simon.trebis.Const
+import simon.trebis.Const.Companion.JAVASCRIPT_APP
 import simon.trebis.data.DatabaseManager
 
 
@@ -33,23 +35,23 @@ class DownloadServiceHandler(
     private fun handleFetchAction(url: String, websiteId: Long) {
         val databaseManager = DatabaseManager.instance(downloadService)
 
-        configuredWebView(1280, 720).let {
-            it.webViewClient = DownloadWebViewClient(websiteId, databaseManager, this)
+        configuredWebView().let {
+            it.webViewClient = DownloadWebViewClient(websiteId, databaseManager, this, it)
             it.loadUrl(url)
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun configuredWebView(width: Int, height: Int): WebView {
-        val webView = WebView(downloadService)
-
-        return webView.apply {
+    @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface", "AddJavascriptInterface")
+    private fun configuredWebView(): WebView {
+        return WebView(downloadService).apply {
             // This is important, so that the webView will render and we don't get blank screenshot
             isDrawingCacheEnabled = true
 
             // width and height of your webView and the resulting screenshot
-            measure(width, height)
-            layout(0, 0, width, height)
+            dimensions()?.let {
+                measure(it.widthPixels, it.heightPixels)
+                layout(0, 0, it.widthPixels, it.heightPixels)
+            }
 
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
@@ -61,7 +63,13 @@ class DownloadServiceHandler(
                 settings.allowFileAccessFromFileURLs = true
                 settings.allowUniversalAccessFromFileURLs = true
             }
+
+            addJavascriptInterface(this, JAVASCRIPT_APP)
         }
+    }
+
+    fun dimensions(): DisplayMetrics? {
+        return downloadService.resources.displayMetrics
     }
 
     fun stopService() {

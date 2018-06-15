@@ -11,7 +11,7 @@ class MainFragmentSearch(search: MenuItem, private val viewModel: MainViewModel)
 
     init {
         search.isVisible = true
-        searchView.setOnSearchClickListener { searchView.setQuery(viewModel.filter, false) }
+        searchView.setOnSearchClickListener { searchView.setQuery(viewModel.filter, true) }
         searchView.setOnQueryTextListener(QueryTextListener { query -> onFilterChange(query) })
     }
 

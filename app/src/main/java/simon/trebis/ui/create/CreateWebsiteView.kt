@@ -1,11 +1,14 @@
 package simon.trebis.ui.create
 
 import android.annotation.SuppressLint
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Bitmap
 import android.os.Build
 import android.support.design.widget.TextInputEditText
 import android.text.format.DateFormat
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.TextView
@@ -13,6 +16,7 @@ import simon.trebis.MainActivity
 import simon.trebis.R
 import simon.trebis.data.entity.Website
 import java.io.ByteArrayOutputStream
+
 
 class CreateWebsiteView(root: View, private val activity: MainActivity) {
 
@@ -54,12 +58,25 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
     }
 
     private fun configureUrlField() {
-        websiteUrl.onFocusChangeListener = View.OnFocusChangeListener { _, _ ->
-            website?.let {
-                val url = websiteUrl.text.toString()
-                it.url = withHttpPrefix(url)
-                updateUrl(it)
-            }
+        websiteUrl.setOnEditorActionListener { _, actionId, _ -> unfocusUrl(actionId) }
+        websiteUrl.onFocusChangeListener = View.OnFocusChangeListener { _, _ -> updateUrlText() }
+    }
+
+    private fun unfocusUrl(actionId: Int): Boolean {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            val inputManager = activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(activity.currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            websiteUrl.clearFocus()
+        }
+
+        return actionId == EditorInfo.IME_ACTION_DONE
+    }
+
+    private fun updateUrlText() {
+        website?.let {
+            val url = websiteUrl.text.toString()
+            it.url = withHttpPrefix(url)
+            updateUrl(it)
         }
     }
 
@@ -111,7 +128,7 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
 
     private fun withHttpPrefix(url: String): String {
         if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            return "http://"
+            return "http://www."
         }
 
         return url

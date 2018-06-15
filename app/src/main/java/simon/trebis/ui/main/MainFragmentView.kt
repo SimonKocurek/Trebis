@@ -46,7 +46,7 @@ class MainFragmentView(val view: View) {
 
     fun setLayouts(layouts: ArrayList<Website>, sortType: SortType, filter: String) {
         val displayed = layouts
-                .filter { it.name.contains(filter) }
+                .filter { filter.isBlank() || it.name.contains(filter) }
                 .sortedWith(sortType.comparator)
 
         recyclerView.adapter = LayoutAdapter(displayed, view.context).also {

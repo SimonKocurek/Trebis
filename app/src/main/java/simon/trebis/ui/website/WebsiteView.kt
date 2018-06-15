@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.CalendarView
 import android.widget.ImageView
 import android.widget.TextView
+import com.github.chrisbanes.photoview.PhotoView
 import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.domain.Event
 import simon.trebis.R
@@ -22,7 +23,7 @@ class WebsiteView(root: View, val context: Context, val databaseManager: Databas
     private val expandToggleText: TextView = root.findViewById(R.id.website_expand_toggle_text)
     private val calendar: CompactCalendarView = root.findViewById(R.id.website_calendar)
     private val missingImageText: TextView = root.findViewById(R.id.website_missing_image_text)
-    private val image: ImageView = root.findViewById(R.id.website_image)
+    private val image: PhotoView = root.findViewById(R.id.website_image)
 
     var viewModel: WebsiteViewModel? = null
 
@@ -75,9 +76,10 @@ class WebsiteView(root: View, val context: Context, val databaseManager: Databas
 
         viewModel?.entries?.let { entries ->
             if (entries.isNotEmpty()) {
-                entries.last().snapshot.let {
+                entries.first().snapshot.let {
                     val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
                     image.setImageBitmap(bitmap)
+                    missingImageText.visibility = View.GONE
                 }
             }
         }

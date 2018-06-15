@@ -22,10 +22,9 @@
     <string name="searchItem">Search</string>
     <string name="downloading">Downloading</string>
     <string name="website_name">Website name</string>
-    <string name="website_url" translatable="false">Website URL</string>
+    <string name="website_url">Website URL</string>
     <string name="confirm">Confirm</string>
     <string name="favouritewebsite">My favourite website</string>
-    <string name="http_my_website_com" translatable="false">http://something.com</string>
     <string name="formatdescription">Image format for website screenshots</string>
     <string name="snapshotformat">Snapshot format</string>
     <string name="screenshotqualitysummary">Quality of taken screenshots</string>
