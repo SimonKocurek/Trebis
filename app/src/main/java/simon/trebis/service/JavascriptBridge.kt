@@ -1,8 +1,7 @@
 package simon.trebis.service
 
-import android.content.ContentValues
 import android.graphics.Bitmap
-import android.util.Log
+import android.graphics.Canvas
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import simon.trebis.data.DatabaseManager
@@ -17,34 +16,15 @@ class JavascriptBridge(
 
     companion object {
         const val JAVASCRIPT_APP = "TREBIS_APP"
-        const val javascriptCallback = "javascript:$JAVASCRIPT_APP.resizeAndCapture(document.body.getBoundingClientRect().height)"
+        const val javascriptCallback = "$JAVASCRIPT_APP.capture()"
     }
 
     @JavascriptInterface
-    fun resizeAndCapture(height: Float) {
-        downloadServiceHandler.dimensions()?.let {
-            webView.measure(it.widthPixels, (it.density * height).toInt())
-            webView.layout(0, 0, it.widthPixels, (it.density * height).toInt())
-        }
+    fun capture() {
+        val bitmap = Bitmap.createBitmap(webView.measuredWidth, webView.measuredHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        webView.draw(canvas)
 
-        takeWebViewScreenshot(webView)
-    }
-
-    private fun takeWebViewScreenshot(webView: WebView) {
-        Thread {
-            try {
-                takeScreenshot(webView)
-            } catch (e: InterruptedException) {
-                Log.e(ContentValues.TAG, "InterruptedException when taking webView screenshot", e)
-            }
-        }.start()
-    }
-
-    private fun takeScreenshot(webView: WebView) {
-        while (webView.drawingCache == null) {
-            Thread.sleep(1000)
-        }
-        val bitmap = webView.drawingCache
         val byteStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteStream)
 

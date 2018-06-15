@@ -49,10 +49,6 @@ class DownloadServiceHandler(
     @SuppressLint("SetJavaScriptEnabled")
     private fun configuredWebView(): WebView {
         return WebView(downloadService).apply {
-            // This is important, so that the webView will render and we don't get blank screenshot
-            isDrawingCacheEnabled = true
-
-            // width and height of your webView and the resulting screenshot
             dimensions()?.let {
                 measure(it.widthPixels, it.heightPixels)
                 layout(0, 0, it.widthPixels, it.heightPixels)
