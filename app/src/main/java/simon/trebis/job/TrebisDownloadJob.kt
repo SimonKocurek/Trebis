@@ -8,7 +8,6 @@ import simon.trebis.Const
 import simon.trebis.Const.Companion.WEBSITE_ID
 import simon.trebis.Const.Companion.WEBSITE_URL
 import simon.trebis.service.DownloadService
-import java.util.concurrent.TimeUnit
 
 
 class TrebisDownloadJob : Job() {
@@ -35,10 +34,11 @@ class TrebisDownloadJob : Job() {
         }
 
         return JobRequest.Builder(TrebisDownloadJob.TAG)
-                .setPeriodic(TimeUnit.MINUTES.toMillis(5))
-                .setRequiredNetworkType(JobRequest.NetworkType.UNMETERED)
-                .setRequiresStorageNotLow(true)
-                .setRequirementsEnforced(true)
+//                .setPeriodic(TimeUnit.HOURS.toMillis(12), TimeUnit.HOURS.toMillis(11) + TimeUnit.MINUTES.toMillis(50))
+                .setExact(1)
+//                .setRequiredNetworkType(JobRequest.NetworkType.UNMETERED)
+//                .setRequiresStorageNotLow(true)
+//                .setRequirementsEnforced(true)
                 .setUpdateCurrent(false)
                 .setExtras(extras)
                 .build()

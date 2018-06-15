@@ -64,6 +64,7 @@ class DownloadServiceHandler(
 
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
+            settings.loadsImagesAutomatically = true
 
             settings.loadWithOverviewMode = true
             settings.useWideViewPort = true

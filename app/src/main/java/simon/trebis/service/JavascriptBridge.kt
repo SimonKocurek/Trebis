@@ -6,6 +6,8 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import simon.trebis.data.DatabaseManager
 import java.io.ByteArrayOutputStream
+import kotlin.math.max
+import kotlin.math.min
 
 class JavascriptBridge(
         private val websiteId: Long,
@@ -33,8 +35,10 @@ class JavascriptBridge(
     @JavascriptInterface
     fun resizeAndCapture(height: Float) {
         downloadServiceHandler.dimensions()?.let {
-            webView.measure(it.widthPixels, (it.density * height).toInt())
-            webView.layout(0, 0, it.widthPixels, (it.density * height).toInt())
+            val newHeight = max(100, min(4000, height.toInt()))
+
+            webView.measure(it.widthPixels, newHeight)
+            webView.layout(0, 0, it.widthPixels, newHeight)
         }
 
         takeWebViewScreenshot()
@@ -48,7 +52,7 @@ class JavascriptBridge(
         webView.draw(canvas)
 
         val byteStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteStream)
+        BitmapCropper().crop(bitmap).compress(Bitmap.CompressFormat.PNG, 100, byteStream)
 
         databaseManager.createEntry(websiteId, byteStream.toByteArray())
         downloadServiceHandler.stopService()

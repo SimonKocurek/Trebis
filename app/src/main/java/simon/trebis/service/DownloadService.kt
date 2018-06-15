@@ -1,6 +1,6 @@
 package simon.trebis.service
 
-import android.app.Service
+import android.app.IntentService
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
@@ -9,7 +9,7 @@ import simon.trebis.Const.Companion.ACTION_FETCH_WEBSITE
 import simon.trebis.Const.Companion.WEBSITE_ID
 import simon.trebis.Const.Companion.WEBSITE_URL
 
-class DownloadService : Service() {
+class DownloadService : IntentService("DownloadService") {
 
     companion object {
 
@@ -27,6 +27,9 @@ class DownloadService : Service() {
     }
 
     var serviceHandler: DownloadServiceHandler? = null
+
+    override fun onHandleIntent(intent: Intent?) {
+    }
 
     override fun onCreate() {
         super.onCreate()

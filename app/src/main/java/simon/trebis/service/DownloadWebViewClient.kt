@@ -6,7 +6,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import simon.trebis.service.JavascriptBridge.Companion.javascriptCallback
 
-
 class DownloadWebViewClient : WebViewClient() {
 
     // Prevents crashes
