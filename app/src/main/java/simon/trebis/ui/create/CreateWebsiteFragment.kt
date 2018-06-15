@@ -80,7 +80,7 @@ class CreateWebsiteFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.toolbar_settings -> {
+            R.id.app_bar_settings -> {
                 Navigation.findNavController(view!!).navigate(R.id.createWebsite_to_preference)
                 true
             }

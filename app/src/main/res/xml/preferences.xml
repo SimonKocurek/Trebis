@@ -4,11 +4,14 @@
 
     <PreferenceCategory android:title="@string/snapshots">
 
-        <Preference
+        <ListPreference
             android:key="snapshot_format"
             android:title="@string/snapshotformat"
             android:summary="@string/formatdescription"
-            android:icon="@drawable/ic_high_quality_black_24dp" />
+            android:icon="@drawable/ic_high_quality_black_24dp"
+            android:entries="@array/image_formats"
+            android:entryValues="@array/image_formats"
+            android:dialogTitle="@string/snapshotformat" />
 
         <Preference
             android:key="snapshot_quality"
@@ -20,33 +23,18 @@
             android:key="preference_with_icon"
             android:title="Snapshot frequency"
             android:summary="This preference has an icon"
-            android:icon="@android:drawable/ic_menu_camera" />
+            android:icon="@drawable/ic_timer_black_24dp" />
 
         <SwitchPreference
-            android:key="preference_with_icon"
+            android:key="javascript_enabled"
             android:title="Javascript enabled"
-            android:summary="This preference has an icon" />
+            android:defaultValue="true"
+            android:summary="Allow websites to run code" />
 
         <SwitchPreference
             android:key="switch_preference"
             android:title="Snapshot notifications"
             android:summary="This is a switch" />
-
-
-        <!--<ListPreference-->
-            <!--android:key="list_preference"-->
-            <!--android:title="List"-->
-            <!--android:summary="@string/summary_list_preference"-->
-            <!--android:entries="@array/entries_list_preference"-->
-            <!--android:entryValues="@array/entryvalues_list_preference"-->
-            <!--android:dialogTitle="@string/dialog_title_list_preference" />-->
-
-        <!--<DropDownPreference-->
-        <!--android:key="dropdown_preference"-->
-        <!--android:title="@string/title_dropdown_preference"-->
-        <!--android:summary="@string/summary_dropdown_preference"-->
-        <!--android:entries="@array/entries_list_preference"-->
-        <!--android:entryValues="@array/entryvalues_list_preference" />-->
 
     </PreferenceCategory>
 

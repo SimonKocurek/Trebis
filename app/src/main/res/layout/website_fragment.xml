@@ -26,111 +26,16 @@
                 android:layout_height="wrap_content"
                 app:cardUseCompatPadding="true">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <android.support.constraint.ConstraintLayout
-                            android:id="@+id/website_expand_toggle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginBottom="16dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <ImageView
-                                android:id="@+id/website_expand_toggle_button"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@android:color/transparent"
-                                android:contentDescription="@string/collapse"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_expand_less_black_24dp" />
-
-                            <TextView
-                                android:id="@+id/website_expand_toggle_text"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="8dp"
-                                android:text="@string/collapse"
-                                app:layout_constraintBottom_toBottomOf="@+id/website_expand_toggle_button"
-                                app:layout_constraintEnd_toStartOf="@+id/website_expand_toggle_button"
-                                app:layout_constraintTop_toTopOf="@+id/website_expand_toggle_button" />
-                        </android.support.constraint.ConstraintLayout>
-
-                    </android.support.constraint.ConstraintLayout>
-
-                    <View
-                        android:id="@+id/website_calendar_divider"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="?android:attr/listDivider" />
-
-                    <com.github.sundeepk.compactcalendarview.CompactCalendarView
-                        android:id="@+id/website_calendar"
-                        android:layout_width="fill_parent"
-                        android:layout_height="220dp"
-                        android:paddingLeft="12dp"
-                        android:paddingRight="12dp"
-                        app:compactCalendarCurrentDayBackgroundColor="@color/colorGrey"
-                        app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimary"
-                        app:compactCalendarMultiEventIndicatorColor="@color/colorAccent"
-                        app:compactCalendarTargetHeight="250dp"
-                        app:compactCalendarTextSize="14sp" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardUseCompatPadding="true">
-
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/website_missing_image_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginBottom="16dp"
-                        android:text="@string/no_website_snapshot_at_this_day"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.github.chrisbanes.photoview.PhotoView
-                        android:id="@+id/website_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/websitesnapshot"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </android.support.constraint.ConstraintLayout>
+                <com.github.chrisbanes.photoview.PhotoView
+                    android:id="@+id/website_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/websitesnapshot"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.v7.widget.CardView>
 

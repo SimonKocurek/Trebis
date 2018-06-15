@@ -6,12 +6,6 @@ import java.util.*
 
 class WebsiteViewModel : ViewModel() {
 
-    var expanded: Boolean = true
-    var selectedDay: Date = Date()
     var entries: List<Entry> = ArrayList()
-
-    fun toggleExpanded() {
-        expanded = !expanded
-    }
 
 }

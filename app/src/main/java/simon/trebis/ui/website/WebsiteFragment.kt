@@ -20,13 +20,12 @@ class WebsiteFragment : Fragment() {
 
     private lateinit var databaseManager: DatabaseManager
     private lateinit var websiteView: WebsiteView
+    private lateinit var websiteFragmentCalendar: WebsiteFragmentCalendar
     private lateinit var navController: NavController
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.website_fragment, container, false)
-
-
 
         context?.let {
             databaseManager = DatabaseManager.instance(it)
@@ -62,12 +61,16 @@ class WebsiteFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
+
+        val calendarItem = menu.findItem(R.id.app_bar_calendar)
+        websiteFragmentCalendar = WebsiteFragmentCalendar(context!!, calendarItem, websiteView.viewModel)
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.toolbar_settings -> {
+            R.id.app_bar_settings -> {
                 navController.navigate(R.id.website_to_preferences)
                 true
             }
