@@ -9,8 +9,8 @@ import android.os.Message
 import android.util.DisplayMetrics
 import android.webkit.WebView
 import simon.trebis.Const
-import simon.trebis.Const.Companion.JAVASCRIPT_APP
 import simon.trebis.data.DatabaseManager
+import simon.trebis.service.JavascriptBridge.Companion.JAVASCRIPT_APP
 
 
 class DownloadServiceHandler(
@@ -32,16 +32,21 @@ class DownloadServiceHandler(
         }
     }
 
+    @SuppressLint("AddJavascriptInterface", "NewApi")
     private fun handleFetchAction(url: String, websiteId: Long) {
         val databaseManager = DatabaseManager.instance(downloadService)
 
         configuredWebView().let {
-            it.webViewClient = DownloadWebViewClient(websiteId, databaseManager, this, it)
+            it.webViewClient = DownloadWebViewClient()
+            it.addJavascriptInterface(
+                    JavascriptBridge(websiteId, databaseManager, this, it),
+                    JAVASCRIPT_APP
+            )
             it.loadUrl(url)
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface", "AddJavascriptInterface")
+    @SuppressLint("SetJavaScriptEnabled")
     private fun configuredWebView(): WebView {
         return WebView(downloadService).apply {
             // This is important, so that the webView will render and we don't get blank screenshot
@@ -63,8 +68,6 @@ class DownloadServiceHandler(
                 settings.allowFileAccessFromFileURLs = true
                 settings.allowUniversalAccessFromFileURLs = true
             }
-
-            addJavascriptInterface(this, JAVASCRIPT_APP)
         }
     }
 

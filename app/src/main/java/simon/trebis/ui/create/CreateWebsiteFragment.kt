@@ -100,7 +100,6 @@ class CreateWebsiteFragment : Fragment() {
         databaseManager.getJobForWebsite(websiteId).await()?.let {
             TrebisDownloadJob().apply {
                 cancelById(it.schedulerId)
-
                 it.schedulerId = schedule(websiteId, url)
                 databaseManager.updateJob(it)
             }

@@ -76,7 +76,7 @@ class WebsiteView(root: View, val context: Context, val databaseManager: Databas
 
         viewModel?.entries?.let { entries ->
             if (entries.isNotEmpty()) {
-                entries.first().snapshot.let {
+                entries.last().snapshot.let {
                     val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
                     image.setImageBitmap(bitmap)
                     missingImageText.visibility = View.GONE
