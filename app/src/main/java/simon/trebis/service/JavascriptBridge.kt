@@ -16,11 +16,33 @@ class JavascriptBridge(
 
     companion object {
         const val JAVASCRIPT_APP = "TREBIS_APP"
-        const val javascriptCallback = "$JAVASCRIPT_APP.capture()"
+
+        val javascriptCallback = """
+            javascript:(function() {
+                var body = document.body;
+                var html = document.documentElement;
+
+                var height = Math.max( body.scrollHeight, body.offsetHeight,
+                                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+                $JAVASCRIPT_APP.resizeAndCapture(height);
+            })()
+        """.trimIndent()
     }
 
     @JavascriptInterface
-    fun capture() {
+    fun resizeAndCapture(height: Float) {
+        downloadServiceHandler.dimensions()?.let {
+            webView.measure(it.widthPixels, (it.density * height).toInt())
+            webView.layout(0, 0, it.widthPixels, (it.density * height).toInt())
+        }
+
+        takeWebViewScreenshot()
+    }
+
+    private fun takeWebViewScreenshot() {
+        Thread.sleep(20000)
+
         val bitmap = Bitmap.createBitmap(webView.measuredWidth, webView.measuredHeight, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         webView.draw(canvas)

@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.DisplayMetrics
+import android.view.View
 import android.webkit.WebView
 import simon.trebis.Const
 import simon.trebis.data.DatabaseManager
@@ -49,10 +50,17 @@ class DownloadServiceHandler(
     @SuppressLint("SetJavaScriptEnabled")
     private fun configuredWebView(): WebView {
         return WebView(downloadService).apply {
+            // This is important, so that the webView will render and we don't get blank screenshot
+            isDrawingCacheEnabled = true
+
+            // width and height of your webView and the resulting screenshot
             dimensions()?.let {
                 measure(it.widthPixels, it.heightPixels)
                 layout(0, 0, it.widthPixels, it.heightPixels)
             }
+
+            // Set software rendering
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true

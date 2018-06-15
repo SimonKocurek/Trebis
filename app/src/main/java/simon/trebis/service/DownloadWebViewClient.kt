@@ -6,6 +6,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import simon.trebis.service.JavascriptBridge.Companion.javascriptCallback
 
+
 class DownloadWebViewClient : WebViewClient() {
 
     // Prevents crashes
@@ -14,8 +15,9 @@ class DownloadWebViewClient : WebViewClient() {
     }
 
     override fun onPageFinished(webView: WebView, url: String) {
-        webView.loadUrl(javascriptCallback)
-        super.onPageFinished(webView, url)
+        if ("about:blank" != url) {
+            webView.loadUrl(javascriptCallback)
+        }
     }
 
 }
