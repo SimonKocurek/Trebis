@@ -60,8 +60,10 @@ class MainFragment : Fragment() {
     }
 
     private fun observeWebsites() {
-        val websites = DatabaseManager.instance(context!!).getAllWebsites()
-        websites.observe(this, Observer { onWebsitesChanged(it) })
+        DatabaseManager
+                .instance(context!!)
+                .getAllWebsites()
+                .observe(this, Observer { onWebsitesChanged(it) })
     }
 
     private fun onWebsitesChanged(websites: List<Website>?) {

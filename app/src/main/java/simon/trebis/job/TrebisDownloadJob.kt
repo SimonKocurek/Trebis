@@ -49,7 +49,7 @@ class TrebisDownloadJob : Job() {
 
     private fun schedulePeriodic(extras: PersistableBundleCompat): Int {
         return JobRequest.Builder(TAG)
-                .setPeriodic(TimeUnit.HOURS.toMillis(12), TimeUnit.HOURS.toMillis(1))
+                .setPeriodic(TimeUnit.MINUTES.toMillis(15), TimeUnit.MINUTES.toMillis(5))
                 .setRequiredNetworkType(JobRequest.NetworkType.UNMETERED)
                 .setRequiresStorageNotLow(true)
                 .setRequirementsEnforced(true)

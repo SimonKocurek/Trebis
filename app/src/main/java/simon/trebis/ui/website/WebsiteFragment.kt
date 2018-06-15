@@ -8,6 +8,7 @@ import android.view.*
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import simon.trebis.Const.Companion.WEBSITE_ID_KEY
+import simon.trebis.MainActivity
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 
@@ -50,12 +51,20 @@ class WebsiteFragment : Fragment() {
 
     private fun observeEntries(viewModel: WebsiteViewModel) {
         arguments?.getLong(WEBSITE_ID_KEY)?.let { id ->
-            databaseManager.getEntriesForWebsite(id).observe(this, Observer { entries ->
-                entries?.let {
-                    viewModel.entries = it
-                    websiteView.refresh()
-                }
-            })
+            databaseManager
+                    .getWebsite(id)
+                    .observe(this, Observer { website ->
+                        (activity as MainActivity).setActionBarTitle(website!!.name)
+                    })
+
+            databaseManager
+                    .getEntriesForWebsite(id)
+                    .observe(this, Observer { entries ->
+                        entries?.let {
+                            viewModel.entries = it
+                            websiteView.refresh()
+                        }
+                    })
         }
     }
 
