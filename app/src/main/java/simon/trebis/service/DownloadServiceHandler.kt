@@ -8,6 +8,7 @@ import android.os.Looper
 import android.os.Message
 import android.util.DisplayMetrics
 import android.view.View
+import android.webkit.WebChromeClient
 import android.webkit.WebView
 import simon.trebis.Const
 import simon.trebis.data.DatabaseManager
@@ -38,7 +39,6 @@ class DownloadServiceHandler(
         val databaseManager = DatabaseManager.instance(downloadService)
 
         configuredWebView().let {
-            it.webViewClient = DownloadWebViewClient()
             it.addJavascriptInterface(
                     JavascriptBridge(websiteId, databaseManager, this, it),
                     JAVASCRIPT_APP
@@ -62,6 +62,7 @@ class DownloadServiceHandler(
             // Set software rendering
             setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 
+            settings.setAppCacheEnabled(true)
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
             settings.loadsImagesAutomatically = true
@@ -73,6 +74,9 @@ class DownloadServiceHandler(
                 settings.allowFileAccessFromFileURLs = true
                 settings.allowUniversalAccessFromFileURLs = true
             }
+
+            webViewClient = DownloadWebViewClient()
+            webChromeClient = WebChromeClient()
         }
     }
 

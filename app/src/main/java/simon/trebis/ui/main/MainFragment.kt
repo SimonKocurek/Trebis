@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog
 import android.view.*
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import kotlinx.coroutines.experimental.launch
 import simon.trebis.Const.Companion.NO_ID
 import simon.trebis.Const.Companion.WEBSITE_ID_KEY
 import simon.trebis.R
@@ -62,7 +63,7 @@ class MainFragment : Fragment() {
     private fun observeWebsites() {
         DatabaseManager
                 .instance(context!!)
-                .getAllWebsites()
+                .getWebsites()
                 .observe(this, Observer { onWebsitesChanged(it) })
     }
 
@@ -87,9 +88,19 @@ class MainFragment : Fragment() {
     private fun deleteWebsiteWithDialog(website: Website) {
         AlertDialog.Builder(context!!)
                 .setTitle(R.string.deletewebsite)
-                .setPositiveButton(R.string.delete) { _, _ -> databaseManager.deleteWebsite(website) }
+                .setPositiveButton(R.string.delete) { _, _ -> deleteWebsite(website) }
                 .setNegativeButton(R.string.cancel) { _, _ -> run {} }
                 .show()
+    }
+
+    private fun deleteWebsite(website: Website) {
+        launch {
+            databaseManager.deleteWebsite(website)
+            databaseManager.getWork(website.id!!).let {
+                it.await()?.schedulerId.let { id -> TrebisDownloadJob().cancelById(id!!) }
+            }
+            databaseManager.deleteWork(website.id!!)
+        }
     }
 
     private fun goToCreateWebsite() {

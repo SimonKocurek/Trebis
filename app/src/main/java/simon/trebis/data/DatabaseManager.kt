@@ -6,11 +6,12 @@ import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import simon.trebis.data.dao.EntryDao
-import simon.trebis.data.dao.JobDao
 import simon.trebis.data.dao.WebsiteDao
+import simon.trebis.data.dao.WorkDao
 import simon.trebis.data.entity.Entry
-import simon.trebis.data.entity.Job
 import simon.trebis.data.entity.Website
+import simon.trebis.data.entity.Work
+import java.util.*
 
 class DatabaseManager private constructor(context: Context) {
 
@@ -33,86 +34,70 @@ class DatabaseManager private constructor(context: Context) {
 
     private val websiteDao: WebsiteDao
     private val entryDao: EntryDao
-    private val jobDao: JobDao
+    private val workDao: WorkDao
 
     init {
         val database = TrebisDatabase.getDatabase(context)
 
         websiteDao = database.websiteDao()
         entryDao = database.entryDao()
-        jobDao = database.jobDao()
+        workDao = database.workDao()
     }
 
-    fun createJob(websiteId: Long, schedulerId: Int): Deferred<Long?> {
-        return async {
-            jobDao.insert(Job(websiteId, schedulerId))
-        }
+    fun createWork(websiteId: Long, workId: UUID): Deferred<Long?> {
+        return async { workDao.insert(Work(websiteId, workId)) }
     }
 
-    fun getJobForWebsite(websiteId: Long): Deferred<Job?> {
-        return async {
-            jobDao.getWebsiteJob(websiteId)
-        }
+    fun getWork(websiteId: Long): Deferred<Work?> {
+        return async { workDao.get(websiteId) }
     }
 
-    fun updateJob(job: Job) {
-        launch {
-            jobDao.update(job)
-        }
+    fun updateWork(work: Work) {
+        launch { workDao.update(work) }
     }
 
-    fun deleteJob(job: Job) {
-        launch {
-            jobDao.delete(job)
-        }
+    fun deleteWork(work: Work) {
+        launch { workDao.delete(work) }
+    }
+
+    fun deleteWork(websiteId: Long) {
+        launch { workDao.delete(websiteId) }
     }
 
     fun createEntry(websiteId: Long, snapshot: ByteArray): Deferred<Long?> {
-        return async {
-            entryDao.insert(Entry(websiteId, snapshot))
-        }
+        return async { entryDao.insert(Entry(websiteId, snapshot)) }
     }
 
-    fun getEntriesForWebsite(websiteId: Long): LiveData<List<Entry>> {
-        return entryDao.getAllForWebsite(websiteId)
+    fun getEntries(websiteId: Long): Deferred<LiveData<List<Entry>>> {
+        return async { entryDao.getAll(websiteId) }
     }
 
     fun updateEntry(entry: Entry) {
-        launch {
-            entryDao.update(entry)
-        }
+        launch { entryDao.update(entry) }
     }
 
     fun deleteEntry(entry: Entry) {
-        launch {
-            entryDao.delete(entry)
-        }
+        launch { entryDao.delete(entry) }
     }
 
     fun createWebsite(website: Website): Deferred<Long?> {
-        return async {
-            websiteDao.insert(website)
-        }
+        return async { websiteDao.insert(website) }
     }
 
-    fun getAllWebsites(): LiveData<List<Website>> {
-        return websiteDao.getAll()
+    fun getWebsites(): Deferred<LiveData<List<Website>>> {
+        return async { websiteDao.getAll() }
     }
 
-    fun getWebsite(websiteId: Long): LiveData<Website> {
-        return websiteDao.get(websiteId)
+    fun getWebsite(websiteId: Long): Deferred<Website?> {
+        return async { websiteDao.get(websiteId) }
     }
 
     fun updateWebsite(website: Website) {
-        launch {
-            websiteDao.update(website)
-        }
+        launch { websiteDao.update(website) }
     }
 
     fun deleteWebsite(website: Website) {
-        launch {
-            websiteDao.delete(website)
-        }
+        launch { websiteDao.delete(website) }
     }
 
 }

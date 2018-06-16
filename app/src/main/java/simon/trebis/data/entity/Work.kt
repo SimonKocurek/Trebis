@@ -7,9 +7,10 @@ import android.arch.persistence.room.ForeignKey.CASCADE
 import android.arch.persistence.room.PrimaryKey
 import android.support.annotation.NonNull
 import org.jetbrains.annotations.NotNull
+import java.util.*
 
 @Entity(
-        tableName = "job",
+        tableName = "work",
         foreignKeys = [
             ForeignKey(
                     entity = Website::class,
@@ -19,17 +20,13 @@ import org.jetbrains.annotations.NotNull
             )
         ]
 )
-class Job(
+class Work(
         @NotNull
         @ColumnInfo(name = "website_id")
         val website: Long,
 
-        @NotNull
-        @ColumnInfo(name = "scheduler_id")
-        var schedulerId: Int
-) {
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
-    @ColumnInfo(name = "job_id")
-    var id: Long? = null
-}
+        @PrimaryKey
+        @NonNull
+        @ColumnInfo(name = "work_id")
+        val id: UUID
+)

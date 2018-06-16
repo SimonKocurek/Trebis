@@ -5,24 +5,24 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
-import simon.trebis.data.convertors.Convertor
+import simon.trebis.data.converters.Converter
 import simon.trebis.data.dao.EntryDao
-import simon.trebis.data.dao.JobDao
 import simon.trebis.data.dao.WebsiteDao
+import simon.trebis.data.dao.WorkDao
 import simon.trebis.data.entity.Entry
-import simon.trebis.data.entity.Job
 import simon.trebis.data.entity.Website
+import simon.trebis.data.entity.Work
 
 @Database(
-        entities = [Entry::class, Website::class, Job::class],
+        entities = [Entry::class, Website::class, Work::class],
         version = 1
 )
-@TypeConverters(Convertor::class)
+@TypeConverters(Converter::class)
 abstract class TrebisDatabase : RoomDatabase() {
 
     abstract fun entryDao(): EntryDao
     abstract fun websiteDao(): WebsiteDao
-    abstract fun jobDao(): JobDao
+    abstract fun workDao(): WorkDao
 
     companion object {
 
@@ -41,10 +41,9 @@ abstract class TrebisDatabase : RoomDatabase() {
             return INSTANCE!!
         }
 
-        private fun buildDatabase(context: Context) =
-                Room.databaseBuilder(context.applicationContext,
-                        TrebisDatabase::class.java, DB_NAME)
-                        .build()
+        private fun buildDatabase(context: Context) = Room
+                .databaseBuilder(context.applicationContext, TrebisDatabase::class.java, DB_NAME)
+                .build()
     }
 
 }

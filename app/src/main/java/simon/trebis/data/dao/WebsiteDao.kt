@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import simon.trebis.data.entity.Website
 
-
 @Dao
 interface WebsiteDao {
 
@@ -12,7 +11,7 @@ interface WebsiteDao {
     fun getAll(): LiveData<List<Website>>
 
     @Query("SELECT * FROM website WHERE website_id = :websiteId")
-    fun get(websiteId: Long): LiveData<Website>
+    fun get(websiteId: Long): Website?
 
     @Update
     fun update(website: Website)

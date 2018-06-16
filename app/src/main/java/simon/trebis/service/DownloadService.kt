@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.os.Looper
-import simon.trebis.Const.Companion.ACTION_FETCH_WEBSITE
 import simon.trebis.Const.Companion.WEBSITE_ID
 import simon.trebis.Const.Companion.WEBSITE_URL
 
@@ -16,7 +15,6 @@ class DownloadService : IntentService("DownloadService") {
         @JvmStatic
         fun startFetchAction(context: Context, url: String, websiteId: Long) {
             val intent = Intent(context, DownloadService::class.java).apply {
-                action = ACTION_FETCH_WEBSITE
                 putExtra(WEBSITE_URL, url)
                 putExtra(WEBSITE_ID, websiteId)
             }

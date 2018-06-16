@@ -16,7 +16,6 @@ import simon.trebis.MainActivity
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Website
-import simon.trebis.job.TrebisDownloadJob
 
 
 class CreateWebsiteFragment : Fragment() {
@@ -97,11 +96,10 @@ class CreateWebsiteFragment : Fragment() {
     }
 
     private suspend fun updateJob(websiteId: Long, url: String) {
-        databaseManager.getJobForWebsite(websiteId).await()?.let {
+        databaseManager.getWork(websiteId).await()?.let {
             TrebisDownloadJob().apply {
-                cancelById(it.schedulerId)
                 it.schedulerId = schedule(websiteId, url)
-                databaseManager.updateJob(it)
+                databaseManager.updateWork(it)
             }
         }
     }
@@ -117,8 +115,8 @@ class CreateWebsiteFragment : Fragment() {
     }
 
     private fun scheduleNewJob(websiteId: Long, url: String): Deferred<Long?> {
-        TrebisDownloadJob().schedule(websiteId, url).let {
-            return databaseManager.createJob(websiteId, it)
+        TrebisDownloadJob().schedule(activity?.applicationContext!!, websiteId, url).let {
+            return databaseManager.createWork(websiteId, it)
         }
     }
 

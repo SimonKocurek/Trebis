@@ -58,7 +58,7 @@ class WebsiteFragment : Fragment() {
                     })
 
             databaseManager
-                    .getEntriesForWebsite(id)
+                    .getEntries(id)
                     .observe(this, Observer { entries ->
                         entries?.let {
                             viewModel.entries = it

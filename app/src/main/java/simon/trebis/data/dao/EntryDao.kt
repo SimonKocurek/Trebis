@@ -8,11 +8,8 @@ import simon.trebis.data.entity.Entry
 @Dao
 interface EntryDao {
 
-    @Query("SELECT * FROM entry")
-    fun getAll(): LiveData<List<Entry>>
-
     @Query("SELECT * FROM entry WHERE website_id = :websiteId")
-    fun getAllForWebsite(websiteId: Long): LiveData<List<Entry>>
+    fun getAll(websiteId: Long): LiveData<List<Entry>>
 
     @Update
     fun update(entry: Entry)
