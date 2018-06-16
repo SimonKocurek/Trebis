@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog
 import android.view.*
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import simon.trebis.Const.Companion.NO_ID
 import simon.trebis.Const.Companion.WEBSITE_ID_KEY
@@ -16,6 +17,7 @@ import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Website
 import simon.trebis.ui.SortType
+import simon.trebis.work.DownloadManager
 
 
 class MainFragment : Fragment() {
@@ -56,14 +58,17 @@ class MainFragment : Fragment() {
         navController = Navigation.findNavController(view!!)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        refreshLayout()
-        observeWebsites()
+        launch(UI) {
+            refreshLayout()
+            observeWebsites()
+        }
     }
 
-    private fun observeWebsites() {
+    private suspend fun observeWebsites() {
         DatabaseManager
                 .instance(context!!)
                 .getWebsites()
+                .await()
                 .observe(this, Observer { onWebsitesChanged(it) })
     }
 
@@ -94,13 +99,8 @@ class MainFragment : Fragment() {
     }
 
     private fun deleteWebsite(website: Website) {
-        launch {
-            databaseManager.deleteWebsite(website)
-            databaseManager.getWork(website.id!!).let {
-                it.await()?.schedulerId.let { id -> TrebisDownloadJob().cancelById(id!!) }
-            }
-            databaseManager.deleteWork(website.id!!)
-        }
+        databaseManager.deleteWebsite(website)
+        DownloadManager().unschedule(website)
     }
 
     private fun goToCreateWebsite() {

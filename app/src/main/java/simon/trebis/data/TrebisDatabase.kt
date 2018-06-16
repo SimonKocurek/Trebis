@@ -8,13 +8,11 @@ import android.content.Context
 import simon.trebis.data.converters.Converter
 import simon.trebis.data.dao.EntryDao
 import simon.trebis.data.dao.WebsiteDao
-import simon.trebis.data.dao.WorkDao
 import simon.trebis.data.entity.Entry
 import simon.trebis.data.entity.Website
-import simon.trebis.data.entity.Work
 
 @Database(
-        entities = [Entry::class, Website::class, Work::class],
+        entities = [Entry::class, Website::class],
         version = 1
 )
 @TypeConverters(Converter::class)
@@ -22,7 +20,6 @@ abstract class TrebisDatabase : RoomDatabase() {
 
     abstract fun entryDao(): EntryDao
     abstract fun websiteDao(): WebsiteDao
-    abstract fun workDao(): WorkDao
 
     companion object {
 

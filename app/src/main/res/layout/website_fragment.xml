@@ -15,31 +15,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="6dp">
+            android:padding="6dp" />
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true">
-
-                <com.github.chrisbanes.photoview.PhotoView
-                    android:id="@+id/website_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/websitesnapshot"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </android.support.v7.widget.CardView>
-
-        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.constraint.ConstraintLayout>

@@ -34,11 +34,11 @@ class JavascriptBridge(
 
     @JavascriptInterface
     fun resizeAndCapture(height: Float) {
-        downloadServiceHandler.dimensions()?.let {
-            val newHeight = max(100, min(4000, height.toInt()))
+        downloadServiceHandler.let {
+            val newHeight = max(it.height / 2, min(height.toInt(), it.height * 3))
 
-            webView.measure(it.widthPixels, newHeight)
-            webView.layout(0, 0, it.widthPixels, newHeight)
+            webView.measure(it.width, newHeight)
+            webView.layout(0, 0, it.width, newHeight)
         }
 
         takeWebViewScreenshot()

@@ -1,56 +1,50 @@
 package simon.trebis.work
 
-import android.content.Context
 import androidx.work.*
-import kotlinx.coroutines.experimental.launch
+import simon.trebis.Const.Companion.DEVICE_HEIGHT
+import simon.trebis.Const.Companion.DEVICE_WIDTH
 import simon.trebis.Const.Companion.WEBSITE_ID
 import simon.trebis.Const.Companion.WEBSITE_URL
-import simon.trebis.data.DatabaseManager
+import simon.trebis.MainActivity
 import simon.trebis.data.entity.Website
 import java.util.concurrent.TimeUnit
 
-class DownloadManager(context: Context) {
+class DownloadManager {
 
-    private val databaseManager: DatabaseManager = DatabaseManager.instance(context)
     private val workManager: WorkManager = WorkManager.getInstance()
 
     fun schedule(website: Website) {
         immediateWork(website).let { workManager.enqueue(it) }
-        periodicWork(website).let {
-            workManager.enqueue(it)
-            databaseManager.createWork(website.id!!, it.id)
-        }
+        periodicWork(website).let { workManager.enqueue(it) }
     }
 
-    fun unschedule(websiteId: Long) {
-        workManager.cancelAllWorkByTag(websiteId)
-        launch {
-            databaseManager
-                    .getWork(websiteId)
-                    .await()
-                    ?.let {
-                        workManager.cancelWorkById(it.id)
-                        databaseManager.deleteWork(it)
-                    }
-        }
+    fun unschedule(website: Website) {
+        workManager.cancelAllWorkByTag(website.id.toString())
     }
 
     private fun immediateWork(website: Website): OneTimeWorkRequest {
         return OneTimeWorkRequestBuilder<DownloadWorker>()
                 .setInputData(inputData(website))
                 .setConstraints(constraints())
+                .addTag(website.id.toString())
                 .build()
     }
 
     private fun periodicWork(website: Website): PeriodicWorkRequest {
-        return PeriodicWorkRequestBuilder<DownloadWorker>(12, TimeUnit.HOURS)
+        return PeriodicWorkRequestBuilder<DownloadWorker>(15, TimeUnit.MINUTES)
                 .setInputData(inputData(website))
                 .setConstraints(constraints())
+                .addTag(website.id.toString())
                 .build()
     }
 
     private fun inputData(website: Website): Data {
-        return mapOf(WEBSITE_ID to website.id, WEBSITE_URL to website.url).toWorkData()
+        return mapOf(
+                WEBSITE_ID to website.id,
+                WEBSITE_URL to website.url,
+                DEVICE_HEIGHT to MainActivity.deviceHeight,
+                DEVICE_WIDTH to MainActivity.deviceWidth
+        ).toWorkData()
     }
 
     private fun constraints(): Constraints {

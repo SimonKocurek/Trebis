@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment
 import android.view.*
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import simon.trebis.Const.Companion.WEBSITE_ID_KEY
 import simon.trebis.MainActivity
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
+import simon.trebis.data.entity.Entry
 
 
 class WebsiteFragment : Fragment() {
@@ -50,21 +53,32 @@ class WebsiteFragment : Fragment() {
     }
 
     private fun observeEntries(viewModel: WebsiteViewModel) {
-        arguments?.getLong(WEBSITE_ID_KEY)?.let { id ->
-            databaseManager
-                    .getWebsite(id)
-                    .observe(this, Observer { website ->
-                        (activity as MainActivity).setActionBarTitle(website!!.name)
-                    })
+        launch(UI) {
+            arguments?.getLong(WEBSITE_ID_KEY)?.let { id ->
+                setFragmentTitle(id)
+                getEntries(id, viewModel)
+            }
+        }
+    }
 
-            databaseManager
-                    .getEntries(id)
-                    .observe(this, Observer { entries ->
-                        entries?.let {
-                            viewModel.entries = it
-                            websiteView.refresh()
-                        }
-                    })
+    private suspend fun setFragmentTitle(websiteId: Long) {
+        databaseManager
+                .getWebsite(websiteId)
+                .await()
+                ?.let { (activity as MainActivity).setActionBarTitle(it.name) }
+    }
+
+    private suspend fun getEntries(websiteId: Long, viewModel: WebsiteViewModel) {
+        databaseManager
+                .getEntries(websiteId)
+                .await()
+                .observe(this, Observer { setEntries(it, viewModel) })
+    }
+
+    private fun setEntries(entries: List<Entry>?, viewModel: WebsiteViewModel) {
+        entries?.let {
+            viewModel.entries = it
+            websiteView.refresh()
         }
     }
 

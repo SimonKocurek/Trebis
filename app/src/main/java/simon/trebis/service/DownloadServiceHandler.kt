@@ -6,11 +6,16 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.DisplayMetrics
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import simon.trebis.Const
+import simon.trebis.Const.Companion.DEFAULT_HEIGHT
+import simon.trebis.Const.Companion.DEFAULT_WIDHT
+import simon.trebis.Const.Companion.DEVICE_HEIGHT
+import simon.trebis.Const.Companion.DEVICE_WIDTH
+import simon.trebis.Const.Companion.NO_ID
+import simon.trebis.Const.Companion.WEBSITE_ID
+import simon.trebis.Const.Companion.WEBSITE_URL
 import simon.trebis.data.DatabaseManager
 import simon.trebis.service.JavascriptBridge.Companion.JAVASCRIPT_APP
 
@@ -22,20 +27,28 @@ class DownloadServiceHandler(
 
     private var startId = 1
 
+    var url = ""
+    var websiteId = NO_ID
+    var width = DEFAULT_WIDHT
+    var height = DEFAULT_HEIGHT
+
     override fun handleMessage(message: Message) {
         message.apply {
             startId = arg1
 
-            val intent = obj as Intent
-            val url = intent.getStringExtra(Const.WEBSITE_URL)
-            val websiteId = intent.getLongExtra(Const.WEBSITE_ID, -1)
+            (obj as Intent).apply {
+                url = getStringExtra(WEBSITE_URL)
+                websiteId = getLongExtra(WEBSITE_ID, NO_ID)
+                width = getIntExtra(DEVICE_WIDTH, DEFAULT_WIDHT)
+                height = getIntExtra(DEVICE_HEIGHT, DEFAULT_HEIGHT)
+            }
 
-            handleFetchAction(url, websiteId)
+            handleFetchAction()
         }
     }
 
     @SuppressLint("AddJavascriptInterface", "NewApi")
-    private fun handleFetchAction(url: String, websiteId: Long) {
+    private fun handleFetchAction() {
         val databaseManager = DatabaseManager.instance(downloadService)
 
         configuredWebView().let {
@@ -54,10 +67,8 @@ class DownloadServiceHandler(
             isDrawingCacheEnabled = true
 
             // width and height of your webView and the resulting screenshot
-            dimensions()?.let {
-                measure(it.widthPixels, it.heightPixels)
-                layout(0, 0, it.widthPixels, it.heightPixels)
-            }
+            measure(width, height * 2)
+            layout(0, 0, width, height * 2)
 
             // Set software rendering
             setLayerType(View.LAYER_TYPE_SOFTWARE, null)
@@ -78,10 +89,6 @@ class DownloadServiceHandler(
             webViewClient = DownloadWebViewClient()
             webChromeClient = WebChromeClient()
         }
-    }
-
-    fun dimensions(): DisplayMetrics? {
-        return downloadService.resources.displayMetrics
     }
 
     fun stopService() {

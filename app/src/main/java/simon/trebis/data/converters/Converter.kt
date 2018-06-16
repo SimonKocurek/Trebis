@@ -15,14 +15,4 @@ class Converter {
         return date.time
     }
 
-    @TypeConverter
-    fun fromUUID(value: String?): UUID? {
-        return if (value == null) null else UUID.fromString(value)
-    }
-
-    @TypeConverter
-    fun UUIDToString(uuid: UUID): String {
-        return uuid.toString()
-    }
-
 }
