@@ -46,17 +46,17 @@ class WebsiteFragment : Fragment() {
         websiteView.viewModel = ViewModelProviders
                 .of(this)
                 .get(WebsiteViewModel::class.java)
-                .also { observeEntries(it) }
 
         websiteView.setEntries(ArrayList())
         navController = Navigation.findNavController(view!!)
+        observeEntries()
     }
 
-    private fun observeEntries(viewModel: WebsiteViewModel) {
+    private fun observeEntries() {
         launch(UI) {
             arguments?.getLong(WEBSITE_ID_KEY)?.let { id ->
                 setFragmentTitle(id)
-                getEntries(id, viewModel)
+                getEntries(id)
             }
         }
     }
@@ -68,14 +68,14 @@ class WebsiteFragment : Fragment() {
                 ?.let { (activity as MainActivity).setActionBarTitle(it.name) }
     }
 
-    private suspend fun getEntries(websiteId: Long, viewModel: WebsiteViewModel) {
+    private suspend fun getEntries(websiteId: Long) {
         databaseManager
                 .getEntries(websiteId)
                 .await()
-                .observe(this, Observer { setEntries(it, viewModel) })
+                .observe(this, Observer { setEntries(it) })
     }
 
-    private fun setEntries(entries: List<Entry>?, viewModel: WebsiteViewModel) {
+    private fun setEntries(entries: List<Entry>?) {
         entries?.let { websiteView.setEntries(it) }
     }
 
