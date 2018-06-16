@@ -20,8 +20,6 @@
 
             <nav-graph android:value="@navigation/nav_graph" />
         </activity>
-
-        <service android:name=".service.DownloadService"></service>
     </application>
 
 </manifest>

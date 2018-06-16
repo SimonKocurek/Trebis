@@ -1,11 +1,8 @@
 package simon.trebis.work
 
 import androidx.work.*
-import simon.trebis.Const.Companion.DEVICE_HEIGHT
-import simon.trebis.Const.Companion.DEVICE_WIDTH
 import simon.trebis.Const.Companion.WEBSITE_ID
 import simon.trebis.Const.Companion.WEBSITE_URL
-import simon.trebis.MainActivity
 import simon.trebis.data.entity.Website
 import java.util.concurrent.TimeUnit
 
@@ -32,9 +29,7 @@ class DownloadManager {
     private fun inputData(website: Website): Data {
         return mapOf(
                 WEBSITE_ID to website.id,
-                WEBSITE_URL to website.url,
-                DEVICE_HEIGHT to MainActivity.deviceHeight,
-                DEVICE_WIDTH to MainActivity.deviceWidth
+                WEBSITE_URL to website.url
         ).toWorkData()
     }
 

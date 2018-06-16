@@ -10,7 +10,6 @@
     <string-array name="image_formats">
         <item>png</item>
         <item>jpg</item>
-        <item>webp</item>
     </string-array>
 
 </resources>

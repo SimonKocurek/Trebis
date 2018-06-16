@@ -40,20 +40,25 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
 
     private fun configureWebView() {
         webView.apply {
-            @SuppressLint("SetJavaScriptEnabled")
-            settings.javaScriptEnabled = true
-            settings.domStorageEnabled = true
-
-            settings.loadWithOverviewMode = true
-            settings.useWideViewPort = true
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                settings.allowFileAccessFromFileURLs = true
-                settings.allowUniversalAccessFromFileURLs = true
-            }
-
+            configureSettings()
             webViewClient = PreviewWebViewClient(context) { onWebsiteNameChanged(it) }
             webChromeClient = PreviewChromeVebViewClient { onWebsiteIconChanged(it) }
+        }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun WebView.configureSettings() {
+        settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+
+            loadWithOverviewMode = true
+            useWideViewPort = true
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                allowFileAccessFromFileURLs = true
+                allowUniversalAccessFromFileURLs = true
+            }
         }
     }
 
