@@ -14,20 +14,11 @@ class DownloadManager {
     private val workManager: WorkManager = WorkManager.getInstance()
 
     fun schedule(website: Website) {
-        immediateWork(website).let { workManager.enqueue(it) }
         periodicWork(website).let { workManager.enqueue(it) }
     }
 
     fun unschedule(website: Website) {
         workManager.cancelAllWorkByTag(website.id.toString())
-    }
-
-    private fun immediateWork(website: Website): OneTimeWorkRequest {
-        return OneTimeWorkRequestBuilder<DownloadWorker>()
-                .setInputData(inputData(website))
-                .setConstraints(constraints())
-                .addTag(website.id.toString())
-                .build()
     }
 
     private fun periodicWork(website: Website): PeriodicWorkRequest {

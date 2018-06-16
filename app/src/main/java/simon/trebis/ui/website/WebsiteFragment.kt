@@ -33,7 +33,7 @@ class WebsiteFragment : Fragment() {
 
         context?.let {
             databaseManager = DatabaseManager.instance(it)
-            websiteView = WebsiteView(view, it, databaseManager)
+            websiteView = WebsiteView(view)
         }
         setHasOptionsMenu(true)
 
@@ -48,7 +48,7 @@ class WebsiteFragment : Fragment() {
                 .get(WebsiteViewModel::class.java)
                 .also { observeEntries(it) }
 
-        websiteView.refresh()
+        websiteView.setEntries(ArrayList())
         navController = Navigation.findNavController(view!!)
     }
 
@@ -76,10 +76,7 @@ class WebsiteFragment : Fragment() {
     }
 
     private fun setEntries(entries: List<Entry>?, viewModel: WebsiteViewModel) {
-        entries?.let {
-            viewModel.entries = it
-            websiteView.refresh()
-        }
+        entries?.let { websiteView.setEntries(it) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -1,5 +1,6 @@
 package simon.trebis
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
@@ -8,6 +9,7 @@ import android.view.Surface.ROTATION_0
 import android.view.Surface.ROTATION_180
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import simon.trebis.Const.Companion.APP_NAMESPACE
 import simon.trebis.Const.Companion.DEFAULT_HEIGHT
 import simon.trebis.Const.Companion.DEFAULT_WIDHT
 
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         loadDisplayMetrics()
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
+        val prefs = this.getSharedPreferences(APP_NAMESPACE, Context.MODE_PRIVATE)
 
         navHost = supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
         NavigationUI.setupActionBarWithNavController(this, navHost.navController)

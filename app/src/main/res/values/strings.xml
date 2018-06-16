@@ -17,7 +17,6 @@
     <string name="name_sort">Name sort</string>
     <string name="edit">Edit</string>
     <string name="deletewebsite">Remove Website?</string>
-    <string name="delete">Remove</string>
     <string name="cancel">Cancel</string>
     <string name="searchItem">Search</string>
     <string name="downloading">Downloading</string>
@@ -36,4 +35,5 @@
     <string name="sortby">Sort By</string>
     <string name="createwebsite">Create Website</string>
     <string name="calendar">Calendar</string>
+    <string name="picturetaken">Picture Taken</string>
 </resources>

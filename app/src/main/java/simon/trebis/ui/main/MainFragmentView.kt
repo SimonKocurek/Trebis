@@ -38,10 +38,10 @@ class MainFragmentView(val view: View) {
     }
 
     private fun setupLayoutManager() {
-        val layoutManager = UnscrollableLayoutManager(view.context)
-        layoutManager.setScrollEnabled(false)
-
-        recyclerView.layoutManager = layoutManager
+        UnscrollableLayoutManager(view.context).let {
+            it.setScrollEnabled(false)
+            recyclerView.layoutManager = it
+        }
     }
 
     fun setLayouts(layouts: ArrayList<Website>, sortType: SortType, filter: String) {

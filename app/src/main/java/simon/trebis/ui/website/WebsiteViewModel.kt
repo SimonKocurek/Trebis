@@ -7,5 +7,6 @@ import java.util.*
 class WebsiteViewModel : ViewModel() {
 
     var entries: List<Entry> = ArrayList()
+    var selectedDate = Date()
 
 }

@@ -93,7 +93,7 @@ class MainFragment : Fragment() {
     private fun deleteWebsiteWithDialog(website: Website) {
         AlertDialog.Builder(context!!)
                 .setTitle(R.string.deletewebsite)
-                .setPositiveButton(R.string.delete) { _, _ -> deleteWebsite(website) }
+                .setPositiveButton(R.string.remove) { _, _ -> deleteWebsite(website) }
                 .setNegativeButton(R.string.cancel) { _, _ -> run {} }
                 .show()
     }

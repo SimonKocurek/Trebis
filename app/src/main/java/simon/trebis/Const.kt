@@ -14,5 +14,7 @@ class Const {
 
         const val DEFAULT_WIDHT = 411
         const val DEFAULT_HEIGHT = 731
+
+        const val APP_NAMESPACE = "simon.trebis"
     }
 }
