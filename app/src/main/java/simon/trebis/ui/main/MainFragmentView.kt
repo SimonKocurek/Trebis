@@ -3,12 +3,14 @@ package simon.trebis.ui.main
 import android.annotation.SuppressLint
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.CardView
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import simon.trebis.R
 import simon.trebis.data.entity.Website
 import simon.trebis.ui.SortType
+import simon.trebis.ui.UnscrollableLayoutManager
 
 class MainFragmentView(val view: View) {
 
@@ -38,7 +40,7 @@ class MainFragmentView(val view: View) {
     }
 
     private fun setupLayoutManager() {
-        UnscrollableLayoutManager(view.context).let {
+        UnscrollableLayoutManager(view.context, LinearLayoutManager.VERTICAL).let {
             it.setScrollEnabled(false)
             recyclerView.layoutManager = it
         }

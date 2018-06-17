@@ -9,6 +9,7 @@ import java.util.*
 class WebsiteFragmentCalendar(
         context: Context,
         calendarItem: MenuItem,
+        private val websiteView: WebsiteView,
         private val viewModel: WebsiteViewModel?
 ) : DatePickerDialog.OnDateSetListener {
 
@@ -27,7 +28,8 @@ class WebsiteFragmentCalendar(
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-
+        viewModel?.selectedDate = GregorianCalendar(year, month, dayOfMonth).time
+        websiteView.refreshRecyclerView()
     }
 
 }

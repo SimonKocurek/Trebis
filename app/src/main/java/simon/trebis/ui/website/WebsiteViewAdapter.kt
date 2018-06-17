@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import simon.trebis.R
+import simon.trebis.data.DatabaseManager
+import simon.trebis.data.entity.Entry
 import simon.trebis.file.FileUtils
 
 class WebsiteViewAdapter(
-        private val viewModel: WebsiteViewModel,
+        private val entries: List<Entry>,
         private val applicationContext: Context
 ) :
         RecyclerView.Adapter<WebsiteViewHolder>() {
@@ -21,13 +23,16 @@ class WebsiteViewAdapter(
     }
 
     override fun onBindViewHolder(holder: WebsiteViewHolder, position: Int) {
-        val entry = viewModel.entries[position]
+        val entry = entries[position]
 
         holder.setCreationDate(entry.date)
-        val bitmap = FileUtils(applicationContext).read(entry.id!!)
-        holder.setPhoto(bitmap)
+        holder.setPhoto(FileUtils(applicationContext).fileUri(entry.id!!))
+        holder.setDeleteAction {
+            DatabaseManager.instance(applicationContext).deleteEntry(entry)
+            FileUtils(applicationContext).remove(entry.id!!)
+        }
     }
 
-    override fun getItemCount() = viewModel.entries.size
+    override fun getItemCount() = entries.size
 
 }

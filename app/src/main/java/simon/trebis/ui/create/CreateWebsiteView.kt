@@ -1,10 +1,10 @@
 package simon.trebis.ui.create
 
-import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Bitmap
 import android.os.Build
 import android.support.design.widget.TextInputEditText
+import android.support.v7.preference.PreferenceManager
 import android.text.format.DateFormat
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -19,6 +19,8 @@ import java.io.ByteArrayOutputStream
 
 
 class CreateWebsiteView(root: View, private val activity: MainActivity) {
+
+    private val basicUrls = listOf("http://", "https://", "http://www.", "https://www.")
 
     private val dateFormat = DateFormat.getDateFormat(root.context.applicationContext)
 
@@ -46,10 +48,11 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     private fun WebView.configureSettings() {
         settings.apply {
-            javaScriptEnabled = true
+            javaScriptEnabled = PreferenceManager
+                    .getDefaultSharedPreferences(context)
+                    .getBoolean(context.getString(R.string.javascriptenabled), true)
             domStorageEnabled = true
 
             loadWithOverviewMode = true
@@ -83,6 +86,14 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
             it.url = withHttpPrefix(url)
             updateUrl(it)
         }
+    }
+
+    private fun withHttpPrefix(url: String): String {
+        if (!url.startsWithBase()) {
+            return "https://www."
+        }
+
+        return url
     }
 
     private fun onWebsiteIconChanged(favicon: Bitmap) {
@@ -127,16 +138,10 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
                 setText(website.url)
             }
 
-            webView.loadUrl(website.url)
+            if (!text.toString().isBase()) {
+                webView.loadUrl(website.url)
+            }
         }
-    }
-
-    private fun withHttpPrefix(url: String): String {
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            return "https://www."
-        }
-
-        return url
     }
 
     private fun updateCreationDate(website: Website) {
@@ -146,5 +151,9 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
     fun fragmentStopped() {
         fragmentStopped = true
     }
+
+    private fun String.isBase() = basicUrls.any { this == it }
+
+    private fun String.startsWithBase() = basicUrls.any { startsWith(it) }
 
 }

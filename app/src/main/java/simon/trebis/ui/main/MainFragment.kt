@@ -16,6 +16,7 @@ import simon.trebis.Const.Companion.WEBSITE_ID_KEY
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Website
+import simon.trebis.file.FileUtils
 import simon.trebis.ui.SortType
 import simon.trebis.work.DownloadManager
 
@@ -99,8 +100,23 @@ class MainFragment : Fragment() {
     }
 
     private fun deleteWebsite(website: Website) {
-        databaseManager.deleteWebsite(website)
-        DownloadManager().unschedule(website)
+        launch {
+            deleteEntries(website)
+            databaseManager.deleteWebsite(website)
+            DownloadManager().unschedule(website)
+        }
+    }
+
+    private suspend fun deleteEntries(website: Website) {
+        databaseManager
+                .getEntries(website.id!!)
+                .await()
+                .observe(this, Observer {
+                    it?.let { entries ->
+                        val files = FileUtils(activity!!.applicationContext)
+                        entries.forEach { entry -> files.remove(entry.id!!) }
+                    }
+                })
     }
 
     private fun goToCreateWebsite() {

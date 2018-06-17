@@ -15,9 +15,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-//        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-//        val syncConnPref = sharedPref.getString(SettingsActivity.KEY_PREF_SYNC_CONN, "")
-
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         navHost = supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment

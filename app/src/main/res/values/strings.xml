@@ -26,4 +26,5 @@
     <string name="createwebsite">Create Website</string>
     <string name="calendar">Calendar</string>
     <string name="picturetaken">Picture Taken</string>
+    <string name="javascriptenabled">javascript_enabled</string>
 </resources>

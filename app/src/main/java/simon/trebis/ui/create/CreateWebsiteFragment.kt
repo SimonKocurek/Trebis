@@ -63,6 +63,20 @@ class CreateWebsiteFragment : Fragment() {
         }
     }
 
+    private fun updateWebsite(website: Website) {
+        DownloadManager().apply { unschedule(website); schedule(website) }
+        databaseManager.updateWebsite(website)
+        navController.popBackStack()
+    }
+
+    private suspend fun createWebsite(website: Website) {
+        databaseManager.createWebsite(website).await()?.let {
+            website.id = it
+            DownloadManager().schedule(website)
+        }
+        navController.popBackStack()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -76,20 +90,6 @@ class CreateWebsiteFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun updateWebsite(website: Website) {
-        DownloadManager().apply { unschedule(website); schedule(website) }
-        databaseManager.updateWebsite(website)
-        navController.popBackStack()
-    }
-
-    private suspend fun createWebsite(website: Website) {
-        databaseManager.createWebsite(website).await()?.let {
-            website.id = it
-            DownloadManager().schedule(website)
-        }
-        navController.popBackStack()
     }
 
     override fun onStop() {

@@ -26,15 +26,11 @@
             android:icon="@drawable/ic_timer_black_24dp" />
 
         <SwitchPreference
-            android:key="javascript_enabled"
+            android:key="@string/javascriptenabled"
             android:title="Javascript enabled"
+            android:icon="@drawable/ic_timer_black_24dp"
             android:defaultValue="true"
             android:summary="Allow websites to run code" />
-
-        <SwitchPreference
-            android:key="switch_preference"
-            android:title="Snapshot notifications"
-            android:summary="This is a switch" />
 
     </PreferenceCategory>
 

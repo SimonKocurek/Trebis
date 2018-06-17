@@ -80,14 +80,22 @@ class WebsiteFragment : Fragment() {
     }
 
     private fun setEntries(entries: List<Entry>?) {
-        entries?.let { websiteView.setEntries(it) }
+        entries?.let {
+            websiteView.setEntries(it)
+            websiteView.refreshRecyclerView()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
 
         val calendarItem = menu.findItem(R.id.app_bar_calendar)
-        websiteFragmentCalendar = WebsiteFragmentCalendar(context!!, calendarItem, websiteView.viewModel)
+        websiteFragmentCalendar = WebsiteFragmentCalendar(
+                context!!,
+                calendarItem,
+                websiteView,
+                websiteView.viewModel
+        )
 
         super.onCreateOptionsMenu(menu, inflater)
     }

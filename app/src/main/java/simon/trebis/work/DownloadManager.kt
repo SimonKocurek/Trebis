@@ -19,7 +19,7 @@ class DownloadManager {
     }
 
     private fun periodicWork(website: Website): PeriodicWorkRequest {
-        return PeriodicWorkRequestBuilder<DownloadWorker>(1, TimeUnit.HOURS)
+        return PeriodicWorkRequestBuilder<DownloadWorker>(12, TimeUnit.HOURS)
                 .setInputData(inputData(website))
                 .setConstraints(constraints())
                 .addTag(website.id.toString())

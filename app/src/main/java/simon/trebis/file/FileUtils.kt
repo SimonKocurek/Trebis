@@ -1,7 +1,9 @@
 package simon.trebis.file
 
 import android.content.Context
+import android.net.Uri
 import android.os.Environment
+import java.io.File
 
 class FileUtils(private val applicationContext: Context) {
 
@@ -11,8 +13,16 @@ class FileUtils(private val applicationContext: Context) {
         }
     }
 
+    fun fileUri(entryId: Long): Uri {
+        return Uri.fromFile(File(applicationContext.filesDir, entryId.toString()))
+    }
+
     fun read(entryId: Long): ByteArray {
         return applicationContext.openFileInput(entryId.toString()).readBytes()
+    }
+
+    fun remove(entryId: Long) {
+        applicationContext.deleteFile(entryId.toString())
     }
 
     private fun isExternalStorageWritable(): Boolean {
