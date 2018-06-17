@@ -39,16 +39,12 @@ class DatabaseManager private constructor(context: Context) {
         entryDao = database.entryDao()
     }
 
-    fun createEntry(websiteId: Long, snapshot: ByteArray): Deferred<Long?> {
-        return async { entryDao.insert(Entry(websiteId, snapshot)) }
+    fun createEntry(websiteId: Long): Deferred<Long?> {
+        return async { entryDao.insert(Entry(websiteId)) }
     }
 
     fun getEntries(websiteId: Long): Deferred<LiveData<List<Entry>>> {
         return async { entryDao.getAll(websiteId) }
-    }
-
-    fun updateEntry(entry: Entry) {
-        launch { entryDao.update(entry) }
     }
 
     fun deleteEntry(entry: Entry) {

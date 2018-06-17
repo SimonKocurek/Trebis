@@ -24,15 +24,11 @@ class Entry(
         val website: Long,
 
         @NotNull
-        @ColumnInfo(name = "snapshot", typeAffinity = ColumnInfo.BLOB)
-        val snapshot: ByteArray,
-
-        @NotNull
         @ColumnInfo(name = "time_created")
-        val date: Date = Date()
-) {
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
-    @ColumnInfo(name = "entry_id")
-    var id: Long? = null
-}
+        val date: Date = Date(),
+
+        @PrimaryKey(autoGenerate = true)
+        @NonNull
+        @ColumnInfo(name = "entry_id")
+        var id: Long? = null
+)

@@ -4,13 +4,14 @@ import androidx.work.Worker
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.coroutines.experimental.launch
 import simon.trebis.Const.Companion.ACCESS_TOKEN
 import simon.trebis.Const.Companion.NO_ID
 import simon.trebis.Const.Companion.WEBSITE_ID
 import simon.trebis.Const.Companion.WEBSITE_URL
 import simon.trebis.data.DatabaseManager
+import simon.trebis.file.FileUtils
 import java.util.concurrent.TimeUnit
 
 class DownloadWorker : Worker() {
@@ -24,7 +25,7 @@ class DownloadWorker : Worker() {
         val url = inputData.getString(WEBSITE_URL, "")
         val websiteId = inputData.getLong(WEBSITE_ID, NO_ID)
         val format = "png"
-        val ttl = TimeUnit.HOURS.toMillis(12)
+        val ttl = TimeUnit.HOURS.toMillis(12 * 13) // TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         sendRequest(url, format, ttl, websiteId)
 
@@ -35,7 +36,7 @@ class DownloadWorker : Worker() {
         val requestUrl = createRequestUrl(url, format, ttl)
         val queue = Volley.newRequestQueue(applicationContext)
 
-        queue.add(StringRequest(
+        queue.add(ByteRequest(
                 Request.Method.GET,
                 requestUrl,
                 responseListener(queue, websiteId),
@@ -45,10 +46,19 @@ class DownloadWorker : Worker() {
 
     private fun errorListener(queue: RequestQueue) = Response.ErrorListener { queue.stop() }
 
-    private fun responseListener(queue: RequestQueue, websiteId: Long) = Response.Listener<String> { response ->
-        val bitmap = response.toByteArray()
-        DatabaseManager.instance(applicationContext).createEntry(websiteId, bitmap)
-        queue.stop()
+    private fun responseListener(queue: RequestQueue, websiteId: Long) = Response.Listener<ByteArray> { bitmap ->
+        launch {
+            storeResponse(websiteId, bitmap)
+            queue.stop()
+        }
+    }
+
+    private suspend fun storeResponse(websiteId: Long, bitmap: ByteArray) {
+        DatabaseManager
+                .instance(applicationContext)
+                .createEntry(websiteId)
+                .await()
+                ?.let { entryId -> FileUtils(applicationContext).store(entryId, bitmap) }
     }
 
     private fun createRequestUrl(url: String, format: String, ttl: Long): String {

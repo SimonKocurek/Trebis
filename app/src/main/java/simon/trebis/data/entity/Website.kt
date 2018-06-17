@@ -22,10 +22,10 @@ class Website(
 
         @NotNull
         @ColumnInfo(name = "url")
-        var url: String = ""
-) {
+        var url: String = "",
+
         @PrimaryKey(autoGenerate = true)
         @NonNull
         @ColumnInfo(name = "website_id")
         var id: Long? = null
-}
+)

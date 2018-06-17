@@ -43,11 +43,15 @@ class WebsiteFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        websiteView.viewModel = ViewModelProviders
-                .of(this)
-                .get(WebsiteViewModel::class.java)
+        websiteView.let {
+            it.viewModel = ViewModelProviders
+                    .of(this)
+                    .get(WebsiteViewModel::class.java)
+            it.applicationContext = activity?.applicationContext
+            it.setEntries(ArrayList())
+            it.refreshRecyclerView()
+        }
 
-        websiteView.setEntries(ArrayList())
         navController = Navigation.findNavController(view!!)
         observeEntries()
     }

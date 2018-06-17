@@ -133,7 +133,7 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
 
     private fun withHttpPrefix(url: String): String {
         if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            return "http://"
+            return "https://www."
         }
 
         return url
