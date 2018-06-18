@@ -6,7 +6,7 @@
     <string name="displayed">Displayed</string>
     <string name="no_url">No url</string>
     <string name="remove">Remove</string>
-    <string name="menu" translatable="false">Menu</string>
+    <string name="menu">Menu</string>
     <string name="sort">sort</string>
     <string name="no_site_name">No site name</string>
     <string name="website">Website</string>
@@ -19,16 +19,12 @@
     <string name="confirm">Confirm</string>
     <string name="formatdescription">Image format for website screenshots</string>
     <string name="snapshotformat">Snapshot format</string>
-    <string name="screenshotqualitysummary">Quality of taken screenshots</string>
-    <string name="screenshotquality">Snapshot quality</string>
     <string name="snapshots">Snapshots</string>
     <string name="sortby">Sort By</string>
     <string name="createwebsite">Create Website</string>
     <string name="calendar">Calendar</string>
-    <string name="picturetaken">Picture Taken</string>
     <string name="javasriptenabled">Javascript enabled</string>
     <string name="allowwebsitestoruncode">Allow websites to run code</string>
-    <string name="widthofsnapshots">Width of snapshots taken in pixels</string>
     <string name="snapshotwidth">Snapshot width in pixels</string>
     <string name="snapshotfrequencyinhours">Snapshot frequency in hours</string>
     <string name="javascriptenabled">javascript_enabled</string>

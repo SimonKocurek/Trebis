@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name" translatable="false">Trebis</string>
+    <string name="settings">Nastavenia</string>
+    <string name="snapshot">Snímok</string>
+    <string name="open">Otvor</string>
+    <string name="displayed">Zobrazené</string>
+    <string name="no_url">Bez url</string>
+    <string name="remove">Odstráň</string>
+    <string name="menu">Menu</string>
+    <string name="sort">triedenie</string>
+    <string name="no_site_name">Bez názvu</string>
+    <string name="website">Stránka</string>
+    <string name="name_sort">Triedenie mien</string>
+    <string name="edit">Uprav</string>
+    <string name="deletewebsite">Odstrániť Stránku?</string>
+    <string name="cancel">Zruš</string>
+    <string name="searchItem">Hľadaj</string>
+    <string name="website_url">URL Stránky</string>
+    <string name="confirm">Potvrdiť</string>
+    <string name="formatdescription">Format ukladania snímok</string>
+    <string name="snapshotformat">Format snímok</string>
+    <string name="snapshots">Snímky</string>
+    <string name="sortby">Triediť Podľa</string>
+    <string name="createwebsite">Vytvoriť Stránku</string>
+    <string name="calendar">Kalendár</string>
+    <string name="javasriptenabled">Javascript povolený</string>
+    <string name="allowwebsitestoruncode">Dovoliť stránkam spúšťať kód</string>
+    <string name="snapshotwidth">Šírka snímkov v pixeloch</string>
+    <string name="snapshotfrequencyinhours">Frequencia snímkov v hodinách</string>
+    <string name="javascriptenabled">javascript_enabled</string>
+    <string name="snapshot_format">snapshot_format</string>
+    <string name="snapshot_width">snapshot_width</string>
+    <string name="snapshot_frequency">snapshot_frequency</string>
+    <string name="snapshot_browser">snapshot_browser</string>
+    <string name="browserthewebsiteshould">Prehliadač, ktorému su prispôsobené snímky</string>
+    <string name="snapshotbrowser">Snímky prehliadača</string>
+</resources>
