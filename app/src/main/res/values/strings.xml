@@ -26,5 +26,16 @@
     <string name="createwebsite">Create Website</string>
     <string name="calendar">Calendar</string>
     <string name="picturetaken">Picture Taken</string>
+    <string name="javasriptenabled">Javascript enabled</string>
+    <string name="allowwebsitestoruncode">Allow websites to run code</string>
+    <string name="widthofsnapshots">Width of snapshots taken in pixels</string>
+    <string name="snapshotwidth">Snapshot width in pixels</string>
+    <string name="snapshotfrequencyinhours">Snapshot frequency in hours</string>
     <string name="javascriptenabled">javascript_enabled</string>
+    <string name="snapshot_format">snapshot_format</string>
+    <string name="snapshot_width">snapshot_width</string>
+    <string name="snapshot_frequency">snapshot_frequency</string>
+    <string name="snapshot_browser">snapshot_browser</string>
+    <string name="browserthewebsiteshould">Browser the website should be made for</string>
+    <string name="snapshotbrowser">Snapshot browser</string>
 </resources>

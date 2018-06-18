@@ -1,36 +1,48 @@
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Settings">
 
     <PreferenceCategory android:title="@string/snapshots">
 
         <ListPreference
-            android:key="snapshot_format"
-            android:title="@string/snapshotformat"
-            android:summary="@string/formatdescription"
-            android:icon="@drawable/ic_high_quality_black_24dp"
+            android:defaultValue="png"
+            android:dialogTitle="@string/snapshotformat"
             android:entries="@array/image_formats"
             android:entryValues="@array/image_formats"
-            android:dialogTitle="@string/snapshotformat" />
+            android:icon="@drawable/ic_high_quality_black_24dp"
+            android:key="@string/snapshot_format"
+            android:summary="@string/formatdescription"
+            android:title="@string/snapshotformat" />
 
-        <Preference
-            android:key="snapshot_quality"
-            android:title="@string/screenshotquality"
-            android:summary="@string/screenshotqualitysummary"
-            android:icon="@drawable/ic_photo_size_select_large_black_24dp" />
-
-        <Preference
-            android:key="preference_with_icon"
-            android:title="Snapshot frequency"
-            android:summary="This preference has an icon"
-            android:icon="@drawable/ic_timer_black_24dp" />
+        <ListPreference
+            android:defaultValue="Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36"
+            android:dialogTitle="@string/snapshotbrowser"
+            android:entries="@array/website_types"
+            android:entryValues="@array/user_agent"
+            android:icon="@drawable/ic_devices_black_24dp"
+            android:key="@string/snapshot_browser"
+            android:summary="@string/browserthewebsiteshould"
+            android:title="@string/snapshotbrowser" />
 
         <SwitchPreference
-            android:key="@string/javascriptenabled"
-            android:title="Javascript enabled"
-            android:icon="@drawable/ic_timer_black_24dp"
             android:defaultValue="true"
-            android:summary="Allow websites to run code" />
+            android:icon="@drawable/ic_code_black_24dp"
+            android:key="@string/javascriptenabled"
+            android:summary="@string/allowwebsitestoruncode"
+            android:title="@string/javasriptenabled" />
+
+        <SeekBarPreference
+            android:defaultValue="768"
+            android:key="@string/snapshot_width"
+            android:max="2000"
+            android:min="320"
+            android:title="@string/snapshotwidth" />
+
+        <SeekBarPreference
+            android:defaultValue="24"
+            android:max="48"
+            android:min="12"
+            android:key="@string/snapshot_frequency"
+            android:title="@string/snapshotfrequencyinhours" />
 
     </PreferenceCategory>
 
