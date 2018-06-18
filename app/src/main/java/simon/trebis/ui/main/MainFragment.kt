@@ -103,7 +103,7 @@ class MainFragment : Fragment() {
         launch {
             deleteEntries(website)
             databaseManager.deleteWebsite(website)
-            DownloadManager().unschedule(website)
+            DownloadManager(activity!!.applicationContext).unschedule(website)
         }
     }
 

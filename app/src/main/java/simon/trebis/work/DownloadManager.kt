@@ -1,12 +1,15 @@
 package simon.trebis.work
 
+import android.content.Context
+import android.support.v7.preference.PreferenceManager
 import androidx.work.*
 import simon.trebis.Const.Companion.WEBSITE_ID
 import simon.trebis.Const.Companion.WEBSITE_URL
+import simon.trebis.R
 import simon.trebis.data.entity.Website
 import java.util.concurrent.TimeUnit
 
-class DownloadManager {
+class DownloadManager(private val context: Context) {
 
     private val workManager: WorkManager = WorkManager.getInstance()
 
@@ -19,7 +22,12 @@ class DownloadManager {
     }
 
     private fun periodicWork(website: Website): PeriodicWorkRequest {
-        return PeriodicWorkRequestBuilder<DownloadWorker>(12, TimeUnit.HOURS)
+        val repeatInterval = PreferenceManager
+                .getDefaultSharedPreferences(context)
+                .getInt(context.getString(R.string.snapshot_frequency), 12)
+                .toLong()
+
+        return PeriodicWorkRequestBuilder<DownloadWorker>(repeatInterval, TimeUnit.HOURS)
                 .setInputData(inputData(website))
                 .setConstraints(constraints())
                 .addTag(website.id.toString())

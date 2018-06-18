@@ -64,7 +64,7 @@ class CreateWebsiteFragment : Fragment() {
     }
 
     private fun updateWebsite(website: Website) {
-        DownloadManager().apply { unschedule(website); schedule(website) }
+        DownloadManager(activity!!.applicationContext).apply { unschedule(website); schedule(website) }
         databaseManager.updateWebsite(website)
         navController.popBackStack()
     }
@@ -72,7 +72,7 @@ class CreateWebsiteFragment : Fragment() {
     private suspend fun createWebsite(website: Website) {
         databaseManager.createWebsite(website).await()?.let {
             website.id = it
-            DownloadManager().schedule(website)
+            DownloadManager(activity!!.applicationContext).schedule(website)
         }
         navController.popBackStack()
     }

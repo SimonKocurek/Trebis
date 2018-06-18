@@ -1,5 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="Settings">
+    xmlns:asp="http://schemas.android.com/apk/res-auto"
+    android:title="@string/settings">
 
     <PreferenceCategory android:title="@string/snapshots">
 
@@ -34,13 +35,13 @@
             android:defaultValue="768"
             android:key="@string/snapshot_width"
             android:max="2000"
-            android:min="320"
+            asp:min="320"
             android:title="@string/snapshotwidth" />
 
         <SeekBarPreference
             android:defaultValue="24"
             android:max="48"
-            android:min="12"
+            asp:min="12"
             android:key="@string/snapshot_frequency"
             android:title="@string/snapshotfrequencyinhours" />
 
