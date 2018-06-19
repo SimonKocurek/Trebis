@@ -11,15 +11,15 @@ import simon.trebis.Const
 import simon.trebis.R
 import simon.trebis.data.DatabaseManager
 import simon.trebis.file.FileUtils
-import simon.trebis.notification.Notifier
 import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
 
-class Downloader(private val context: Context) {
+open class Downloader(val context: Context) {
 
     companion object {
         private const val baseUrl = "https://restpack.io/api/screenshot/v4/capture"
         private val delay = TimeUnit.SECONDS.toMillis(5)
+        private val ttl = TimeUnit.HOURS.toMillis(4)
     }
 
     fun download(url: String, websiteId: Long) {
@@ -27,23 +27,21 @@ class Downloader(private val context: Context) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(it)
 
             val format: String = preferences.getString(it.getString(R.string.snapshot_format), "png")
-            val ttl = TimeUnit.HOURS.toMillis(preferences.getInt(it.getString(R.string.snapshot_frequency), 12).toLong())
             val width = preferences.getInt(it.getString(R.string.snapshot_width), 768)
             val userAgent = preferences.getString(it.getString(R.string.snapshot_browser), "Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36")
 
-            sendRequest(url, format, ttl, websiteId, width, userAgent)
+            sendRequest(url, format, websiteId, width, userAgent)
         }
     }
 
     private fun sendRequest(
             url: String,
             format: String,
-            ttl: Long,
             websiteId: Long,
             width: Int,
             userAgent: String
     ) {
-        val requestUrl = createRequestUrl(url, format, ttl, width, userAgent)
+        val requestUrl = createRequestUrl(url, format, width, userAgent)
         val queue = Volley.newRequestQueue(context)
 
         queue.add(ByteRequest(
@@ -70,19 +68,14 @@ class Downloader(private val context: Context) {
                 .instance(context)
                 .createEntry(websiteId)
                 .await()
-                ?.let { entryId ->
-                    FileUtils(context).store(entryId, bitmap)
-                    Notifier(context).showNotification(entryId)
-                }
+                ?.let { entryId -> handle(entryId, websiteId, bitmap) }
     }
 
-    private fun createRequestUrl(
-            url: String,
-            format: String,
-            ttl: Long,
-            width: Int,
-            userAgent: String
-    ): String {
+    protected open fun handle(entryId: Long, websiteId: Long, bitmap: ByteArray) {
+        FileUtils(context).store(entryId, bitmap)
+    }
+
+    private fun createRequestUrl(url: String, format: String, width: Int, userAgent: String): String {
         return "$baseUrl?" +
                 "url=${URLEncoder.encode(url, "UTF-8")}&" +
                 "format=$format&" +

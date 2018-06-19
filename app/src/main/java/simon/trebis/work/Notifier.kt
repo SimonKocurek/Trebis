@@ -1,4 +1,4 @@
-package simon.trebis.notification
+package simon.trebis.work
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -16,7 +16,12 @@ class Notifier(private val context: Context) {
         createNotificationChannel()
     }
 
-    fun showNotification(id: Long) {
+    fun showNotification(id: Long, websiteId: Long) {
+        // TODO show website
+        // TODO only in background
+        // TODO in preferences
+        // TODO translate
+        // TODO click intent
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle(context.getString(R.string.snapshot_fetched))
