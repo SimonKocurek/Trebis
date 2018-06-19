@@ -34,4 +34,15 @@
     <string name="snapshot_browser">snapshot_browser</string>
     <string name="browserthewebsiteshould">Prehliadač, ktorému su prispôsobené snímky</string>
     <string name="snapshotbrowser">Snímky prehliadača</string>
+    <string name="channel_name">Snímok spravený</string>
+    <string name="channel_description">Uložil sa nový snímok stránky</string>
+    <string name="snapshot_fetched">Snímok spravený</string>
+    <string name="downloadedanewsnapshot">Uložil sa nový snímok stránky</string>
+    <string name="deletesnapshot">Odstrániť Snímok?</string>
+    <string name="default_prefix">default_prefix</string>
+    <string name="defaultprefix">Predvolený prefix</string>
+    <string name="defaultprefixwhen">Predvolený prefix pri tvorbe stránky</string>
+    <string name="notifications_enabled">notifications_enabled</string>
+    <string name="notifymewhen">Upozorni ma, na stiahnutie nového snímku</string>
+    <string name="enablenotifications">Povoliť notifikácie</string>
 </resources>
