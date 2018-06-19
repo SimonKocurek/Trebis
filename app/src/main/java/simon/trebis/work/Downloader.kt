@@ -3,7 +3,6 @@ package simon.trebis.work
 import android.content.Context
 import android.support.v7.preference.PreferenceManager
 import com.android.volley.Request
-import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
 import kotlinx.coroutines.experimental.launch
@@ -14,13 +13,19 @@ import simon.trebis.file.FileUtils
 import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
 
-open class Downloader(val context: Context) {
+class Downloader(val context: Context) {
 
     companion object {
+        private const val RETRTY_LIMIT = 5
+
         private const val baseUrl = "https://restpack.io/api/screenshot/v4/capture"
         private val delay = TimeUnit.SECONDS.toMillis(5)
         private val ttl = TimeUnit.HOURS.toMillis(4)
     }
+
+    private val queue = Volley.newRequestQueue(context)
+    private var request: ByteRequest? = null
+    private var retries = 0
 
     fun download(url: String, websiteId: Long) {
         context.let {
@@ -42,19 +47,27 @@ open class Downloader(val context: Context) {
             userAgent: String
     ) {
         val requestUrl = createRequestUrl(url, format, width, userAgent)
-        val queue = Volley.newRequestQueue(context)
 
-        queue.add(ByteRequest(
+        request = ByteRequest(
                 Request.Method.GET,
                 requestUrl,
-                responseListener(queue, websiteId),
-                errorListener(queue)
-        ))
+                responseListener(websiteId),
+                errorListener()
+        )
+        retries = 0
+
+        queue.add(request)
     }
 
-    private fun errorListener(queue: RequestQueue) = Response.ErrorListener { queue.stop() }
+    private fun errorListener() = Response.ErrorListener {
+        if (retries++ > RETRTY_LIMIT) {
+            queue.stop()
+        } else {
+            queue.add(request)
+        }
+    }
 
-    private fun responseListener(queue: RequestQueue, websiteId: Long): Response.Listener<ByteArray> {
+    private fun responseListener(websiteId: Long): Response.Listener<ByteArray> {
         return Response.Listener { bitmap ->
             launch {
                 storeResponse(websiteId, bitmap)
@@ -71,8 +84,9 @@ open class Downloader(val context: Context) {
                 ?.let { entryId -> handle(entryId, websiteId, bitmap) }
     }
 
-    protected open fun handle(entryId: Long, websiteId: Long, bitmap: ByteArray) {
+    private fun handle(entryId: Long, websiteId: Long, bitmap: ByteArray) {
         FileUtils(context).store(entryId, bitmap)
+        Notifier(context).showNotification(entryId, websiteId)
     }
 
     private fun createRequestUrl(url: String, format: String, width: Int, userAgent: String): String {

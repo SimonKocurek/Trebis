@@ -14,7 +14,6 @@ class DownloadManager(private val context: Context) {
     private val workManager: WorkManager = WorkManager.getInstance()
 
     fun schedule(website: Website) {
-        Downloader(context).download(website.url, website.id!!)
         periodicWork(website).let { workManager.enqueue(it) }
     }
 
@@ -25,7 +24,7 @@ class DownloadManager(private val context: Context) {
     private fun periodicWork(website: Website): PeriodicWorkRequest {
         val repeatInterval = PreferenceManager
                 .getDefaultSharedPreferences(context)
-                .getInt(context.getString(R.string.snapshot_frequency), 12)
+                .getInt(context.getString(R.string.snapshot_frequency), 24)
                 .toLong()
 
         return PeriodicWorkRequestBuilder<DownloadWorker>(repeatInterval, TimeUnit.HOURS)

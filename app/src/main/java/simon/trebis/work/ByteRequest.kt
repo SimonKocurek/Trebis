@@ -9,7 +9,7 @@ import com.android.volley.toolbox.HttpHeaderParser
 class ByteRequest(
         method: Int,
         url: String,
-        private val listener: Listener<ByteArray>,
+        val listener: Listener<ByteArray>,
         errorListener: Response.ErrorListener
 ) : Request<ByteArray>(method, url, errorListener) {
 
