@@ -39,4 +39,10 @@
     <string name="snapshot_fetched">Snapshot Fetched</string>
     <string name="downloadedanewsnapshot">Downloaded a new website snapshot</string>
     <string name="deletesnapshot">Delete Snapshot?</string>
+    <string name="default_prefix">default_prefix</string>
+    <string name="defaultprefix">Default prefix</string>
+    <string name="defaultprefixwhen">Default prefix when creating new website</string>
+    <string name="notifications_enabled">notifications_enabled</string>
+    <string name="notifymewhen">Notify me when new snapshot gets downloaded</string>
+    <string name="enablenotifications">Enable notifications</string>
 </resources>

@@ -18,7 +18,7 @@ import simon.trebis.data.entity.Website
 import java.io.ByteArrayOutputStream
 
 
-class CreateWebsiteView(root: View, private val activity: MainActivity) {
+class CreateWebsiteView(val root: View, private val activity: MainActivity) {
 
     private val basicUrls = listOf("http://", "https://", "http://www.", "https://www.")
 
@@ -90,10 +90,16 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
 
     private fun withHttpPrefix(url: String): String {
         if (!url.startsWithBase()) {
-            return "https://www."
+            return "${defaultPrefix()}://www."
         }
 
         return url
+    }
+
+    private fun defaultPrefix() {
+        PreferenceManager
+                .getDefaultSharedPreferences(root.context)
+                .getString(root.context.getString(R.string.default_prefix), "https")
     }
 
     private fun onWebsiteIconChanged(favicon: Bitmap) {

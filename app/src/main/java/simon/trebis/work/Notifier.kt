@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import android.support.v7.preference.PreferenceManager
 import simon.trebis.R
 
 class Notifier(private val context: Context) {
@@ -18,7 +19,6 @@ class Notifier(private val context: Context) {
 
     fun showNotification(id: Long, websiteId: Long) {
         // TODO show website
-        // TODO in preferences
         // TODO translate
         // TODO click intent
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -27,9 +27,17 @@ class Notifier(private val context: Context) {
                 .setContentText(context.getString(R.string.downloadedanewsnapshot))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-        NotificationManagerCompat.from(context).apply {
-            notify(id.toInt(), builder.build())
+        if (areNotificationsEnabled()) {
+            NotificationManagerCompat.from(context).apply {
+                notify(id.toInt(), builder.build())
+            }
         }
+    }
+
+    private fun areNotificationsEnabled(): Boolean {
+        return PreferenceManager
+                .getDefaultSharedPreferences(context)
+                .getBoolean(context.getString(R.string.notifications_enabled), true)
     }
 
     private fun createNotificationChannel() {

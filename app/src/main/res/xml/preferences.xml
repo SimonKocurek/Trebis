@@ -2,8 +2,26 @@
     xmlns:asp="http://schemas.android.com/apk/res-auto"
     android:title="@string/settings">
 
-    <PreferenceCategory android:title="@string/snapshots">
+    <PreferenceCategory android:title="Creation">
+        <ListPreference
+            android:defaultValue="https"
+            android:dialogTitle="Default prefix"
+            android:entries="@array/default_prefix"
+            android:entryValues="@array/default_prefix"
+            android:icon="@drawable/ic_https_black_24dp"
+            android:key="@string/default_prefix"
+            android:summary="@string/defaultprefixwhen"
+            android:title="@string/defaultprefix" />
 
+        <SwitchPreference
+            android:defaultValue="true"
+            android:icon="@drawable/ic_code_black_24dp"
+            android:key="@string/javascriptenabled"
+            android:summary="@string/allowwebsitestoruncode"
+            android:title="@string/javasriptenabled" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/snapshots">
         <ListPreference
             android:defaultValue="png"
             android:dialogTitle="@string/snapshotformat"
@@ -26,10 +44,10 @@
 
         <SwitchPreference
             android:defaultValue="true"
-            android:icon="@drawable/ic_code_black_24dp"
-            android:key="@string/javascriptenabled"
-            android:summary="@string/allowwebsitestoruncode"
-            android:title="@string/javasriptenabled" />
+            android:icon="@drawable/ic_notifications_black_24dp"
+            android:key="@string/notifications_enabled"
+            android:summary="@string/notifymewhen"
+            android:title="@string/enablenotifications" />
 
         <SeekBarPreference
             android:defaultValue="768"
@@ -41,10 +59,9 @@
         <SeekBarPreference
             android:defaultValue="24"
             android:max="48"
-            asp:min="12"
+            asp:min="6"
             android:key="@string/snapshot_frequency"
             android:title="@string/snapshotfrequencyinhours" />
-
     </PreferenceCategory>
 
 </PreferenceScreen>
