@@ -14,6 +14,7 @@ class DownloadManager(private val context: Context) {
     private val workManager: WorkManager = WorkManager.getInstance()
 
     fun schedule(website: Website) {
+        Downloader(context).download(website.url, website.id!!)
         periodicWork(website).let { workManager.enqueue(it) }
     }
 

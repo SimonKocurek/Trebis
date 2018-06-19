@@ -10,6 +10,8 @@ class FileUtils(private val applicationContext: Context) {
         applicationContext.openFileOutput(entryId.toString(), Context.MODE_PRIVATE).use {
             it.write(bitmap)
         }
+
+        // TODO check SD
     }
 
     fun fileUri(entryId: Long): Uri {
