@@ -19,7 +19,6 @@
             android:id="@+id/website_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="6dp"
             android:scrollbars="none"
             tools:listitem="@layout/website_list_item" />
 
