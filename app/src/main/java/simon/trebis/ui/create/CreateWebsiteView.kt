@@ -96,8 +96,8 @@ class CreateWebsiteView(val root: View, private val activity: MainActivity) {
         return url
     }
 
-    private fun defaultPrefix() {
-        PreferenceManager
+    private fun defaultPrefix(): String? {
+        return PreferenceManager
                 .getDefaultSharedPreferences(root.context)
                 .getString(root.context.getString(R.string.default_prefix), "https")
     }
