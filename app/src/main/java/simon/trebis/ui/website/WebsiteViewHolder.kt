@@ -1,7 +1,9 @@
 package simon.trebis.ui.website
 
+import android.content.Context
 import android.graphics.PointF
 import android.net.Uri
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.view.View
@@ -31,8 +33,14 @@ class WebsiteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         ))
     }
 
-    fun setDeleteAction(onButtonClick: (View) -> Unit) {
-        deleteButton.setOnClickListener(onButtonClick)
+    fun setDeleteAction(context: Context, onButtonClick: (View) -> Unit) {
+        deleteButton.setOnClickListener {
+            AlertDialog.Builder(context)
+                    .setTitle(context.getString(R.string.deletesnapshot))
+                    .setPositiveButton(R.string.remove) { _, _ -> onButtonClick(it) }
+                    .setNegativeButton(R.string.cancel) { _, _ -> run {} }
+                    .show()
+        }
     }
 
 }

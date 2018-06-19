@@ -9,11 +9,8 @@ import simon.trebis.data.DatabaseManager
 import simon.trebis.data.entity.Entry
 import simon.trebis.file.FileUtils
 
-class WebsiteViewAdapter(
-        private val entries: List<Entry>,
-        private val applicationContext: Context
-) :
-        RecyclerView.Adapter<WebsiteViewHolder>() {
+class WebsiteViewAdapter(private val entries: List<Entry>, private val context: Context)
+    : RecyclerView.Adapter<WebsiteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WebsiteViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -26,10 +23,10 @@ class WebsiteViewAdapter(
         val entry = entries[position]
 
         holder.setCreationDate(entry.date)
-        holder.setPhoto(FileUtils(applicationContext).fileUri(entry.id!!))
-        holder.setDeleteAction {
-            DatabaseManager.instance(applicationContext).deleteEntry(entry)
-            FileUtils(applicationContext).remove(entry.id!!)
+        holder.setPhoto(FileUtils(context).fileUri(entry.id!!))
+        holder.setDeleteAction(context) {
+            DatabaseManager.instance(context).deleteEntry(entry)
+            FileUtils(context).remove(entry.id!!)
         }
     }
 

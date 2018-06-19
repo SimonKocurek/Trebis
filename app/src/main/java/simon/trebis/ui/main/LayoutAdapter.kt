@@ -16,7 +16,7 @@ class LayoutAdapter(private val dataset: List<Website>, private val context: Con
     var goToEditWebsite: (Website) -> Unit = {}
     var deleteWebsite: (Website) -> Unit = {}
 
-    private val dateFormat = DateFormat.getDateFormat(context.applicationContext)
+    private val dateFormat = DateFormat.getDateFormat(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WebsiteViewHolder {
         val view = LayoutInflater

@@ -47,7 +47,7 @@ class WebsiteFragment : Fragment() {
             it.viewModel = ViewModelProviders
                     .of(this)
                     .get(WebsiteViewModel::class.java)
-            it.applicationContext = activity?.applicationContext
+            it.context = this.context
             it.setEntries(ArrayList())
             it.refreshRecyclerView()
         }

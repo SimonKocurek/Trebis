@@ -22,7 +22,7 @@ class CreateWebsiteView(root: View, private val activity: MainActivity) {
 
     private val basicUrls = listOf("http://", "https://", "http://www.", "https://www.")
 
-    private val dateFormat = DateFormat.getDateFormat(root.context.applicationContext)
+    private val dateFormat = DateFormat.getDateFormat(root.context)
 
     private val websiteUrl = root.findViewById<TextInputEditText>(R.id.website_edit_url)
     private val creationDate = root.findViewById<TextView>(R.id.website_edit_date)

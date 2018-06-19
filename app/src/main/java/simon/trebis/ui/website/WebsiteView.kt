@@ -12,7 +12,7 @@ import java.util.*
 class WebsiteView(val view: View) {
 
     private val recyclerView: RecyclerView = view.findViewById(R.id.website_list)
-    var applicationContext: Context? = null
+    var context: Context? = null
     var viewModel: WebsiteViewModel? = null
 
     fun refreshRecyclerView() {
@@ -20,7 +20,7 @@ class WebsiteView(val view: View) {
             layoutManager = UnscrollableLayoutManager(view.context, LinearLayoutManager.HORIZONTAL)
 
             viewModel?.let { model ->
-                applicationContext?.let { context ->
+                this@WebsiteView.context?.let { context ->
                     val entries = model.entries.filter { entry -> entry.date.sameAs(model.selectedDate) }
                     adapter = WebsiteViewAdapter(entries, context)
                 }

@@ -2,6 +2,7 @@ package simon.trebis.ui.main
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
@@ -94,16 +95,16 @@ class MainFragment : Fragment() {
     private fun deleteWebsiteWithDialog(website: Website) {
         AlertDialog.Builder(context!!)
                 .setTitle(R.string.deletewebsite)
-                .setPositiveButton(R.string.remove) { _, _ -> deleteWebsite(website) }
+                .setPositiveButton(R.string.remove) { _, _ -> deleteWebsite(website, context!!) }
                 .setNegativeButton(R.string.cancel) { _, _ -> run {} }
                 .show()
     }
 
-    private fun deleteWebsite(website: Website) {
+    private fun deleteWebsite(website: Website, context: Context) {
         launch {
             deleteEntries(website)
             databaseManager.deleteWebsite(website)
-            DownloadManager(activity!!.applicationContext).unschedule(website)
+            DownloadManager(context).unschedule(website)
         }
     }
 
@@ -113,7 +114,7 @@ class MainFragment : Fragment() {
                 .await()
                 .observe(this, Observer {
                     it?.let { entries ->
-                        val files = FileUtils(activity!!.applicationContext)
+                        val files = FileUtils(context!!)
                         entries.forEach { entry -> files.remove(entry.id!!) }
                     }
                 })

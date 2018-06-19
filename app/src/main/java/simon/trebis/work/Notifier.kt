@@ -18,7 +18,6 @@ class Notifier(private val context: Context) {
 
     fun showNotification(id: Long, websiteId: Long) {
         // TODO show website
-        // TODO only in background
         // TODO in preferences
         // TODO translate
         // TODO click intent
