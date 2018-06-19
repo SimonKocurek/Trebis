@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 
 
 class UnscrollableLayoutManager(context: Context, orientation: Int)
-    : LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) {
+    : LinearLayoutManager(context, orientation, false) {
 
     private var isScrollEnabled = true
 
