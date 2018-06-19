@@ -2,12 +2,16 @@ package simon.trebis.work
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.preference.PreferenceManager
+import simon.trebis.MainActivity
 import simon.trebis.R
+
 
 class Notifier(private val context: Context) {
 
@@ -19,19 +23,27 @@ class Notifier(private val context: Context) {
 
     fun showNotification(id: Long, websiteId: Long) {
         // TODO show website
-        // TODO translate
-        // TODO click intent
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle(context.getString(R.string.snapshot_fetched))
                 .setContentText(context.getString(R.string.downloadedanewsnapshot))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(startActivityIntent())
+                .setAutoCancel(true)
 
         if (areNotificationsEnabled()) {
             NotificationManagerCompat.from(context).apply {
                 notify(id.toInt(), builder.build())
             }
         }
+    }
+
+    private fun startActivityIntent(): PendingIntent? {
+        val notificationIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+
+        return PendingIntent.getActivity(context, 0, notificationIntent, 0)
     }
 
     private fun areNotificationsEnabled(): Boolean {

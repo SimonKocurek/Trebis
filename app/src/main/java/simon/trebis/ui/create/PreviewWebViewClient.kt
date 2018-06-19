@@ -1,14 +1,13 @@
 package simon.trebis.ui.create
 
 import android.annotation.TargetApi
-import android.content.Context
 import android.os.Build
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 
 
-class PreviewWebViewClient(val context: Context, private val onPageTitleLoaded: (String) -> Unit) :
+class PreviewWebViewClient(private val onPageTitleLoaded: (String) -> Unit) :
         WebViewClient() {
 
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {

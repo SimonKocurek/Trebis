@@ -43,7 +43,7 @@ class CreateWebsiteView(val root: View, private val activity: MainActivity) {
     private fun configureWebView() {
         webView.apply {
             configureSettings()
-            webViewClient = PreviewWebViewClient(context) { onWebsiteNameChanged(it) }
+            webViewClient = PreviewWebViewClient { onWebsiteNameChanged(it) }
             webChromeClient = PreviewChromeVebViewClient { onWebsiteIconChanged(it) }
         }
     }
