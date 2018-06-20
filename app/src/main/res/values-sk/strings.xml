@@ -37,7 +37,7 @@
     <string name="channel_name">Snímok spravený</string>
     <string name="channel_description">Uložil sa nový snímok stránky</string>
     <string name="snapshot_fetched">Snímok spravený</string>
-    <string name="downloadedanewsnapshot">Uložil sa nový snímok stránky</string>
+    <string name="downloadedanewsnapshot">Stránky</string>
     <string name="deletesnapshot">Odstrániť Snímok?</string>
     <string name="default_prefix">default_prefix</string>
     <string name="defaultprefix">Predvolený prefix</string>

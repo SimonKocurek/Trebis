@@ -9,8 +9,11 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.preference.PreferenceManager
+import kotlinx.coroutines.experimental.launch
 import simon.trebis.MainActivity
 import simon.trebis.R
+import simon.trebis.data.DatabaseManager
+import simon.trebis.data.entity.Website
 
 
 class Notifier(private val context: Context) {
@@ -22,11 +25,19 @@ class Notifier(private val context: Context) {
     }
 
     fun showNotification(id: Long, websiteId: Long) {
-        // TODO show website
+        val database = DatabaseManager.instance(context)
+
+        launch {
+            val website = database.getWebsite(websiteId).await()
+            showNotificationWithWebsiteInfo(id, website!!)
+        }
+    }
+
+    private fun showNotificationWithWebsiteInfo(id: Long, website: Website) {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle(context.getString(R.string.snapshot_fetched))
-                .setContentText(context.getString(R.string.downloadedanewsnapshot))
+                .setContentText("${context.getString(R.string.downloadedanewsnapshot)} ${website.url}")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(startActivityIntent())
                 .setAutoCancel(true)
