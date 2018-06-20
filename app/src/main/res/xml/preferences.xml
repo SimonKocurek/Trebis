@@ -64,4 +64,13 @@
             android:title="@string/snapshotfrequencyinhours" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/storage">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:icon="@drawable/ic_sd_storage_black_24dp"
+            android:key="@string/prefer_sd"
+            android:summary="@string/usesdcard"
+            android:title="@string/prefersd" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

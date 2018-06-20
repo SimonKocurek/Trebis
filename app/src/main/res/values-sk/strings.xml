@@ -45,4 +45,8 @@
     <string name="notifications_enabled">notifications_enabled</string>
     <string name="notifymewhen">Upozorni ma, na stiahnutie nového snímku</string>
     <string name="enablenotifications">Povoliť notifikácie</string>
+    <string name="storage">Úložisko</string>
+    <string name="usesdcard">Použiť SD kartu na ukladanie snímok</string>
+    <string name="prefersd">Preferovať SD kartu</string>
+    <string name="prefer_sd">prefer_sd</string>
 </resources>

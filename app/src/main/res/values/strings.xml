@@ -37,7 +37,7 @@
     <string name="channel_name">Snapshot fetched</string>
     <string name="channel_description">Fetched new snapshot for website</string>
     <string name="snapshot_fetched">Snapshot Fetched</string>
-    <string name="downloadedanewsnapshot">Downloaded a new website snapshot</string>
+    <string name="downloadedanewsnapshot">Downloaded a new website snapshot for</string>
     <string name="deletesnapshot">Delete Snapshot?</string>
     <string name="default_prefix">default_prefix</string>
     <string name="defaultprefix">Default prefix</string>
@@ -45,4 +45,8 @@
     <string name="notifications_enabled">notifications_enabled</string>
     <string name="notifymewhen">Notify me when new snapshot gets downloaded</string>
     <string name="enablenotifications">Enable notifications</string>
+    <string name="storage">Storage</string>
+    <string name="usesdcard">Use SD card when available for storing snapshots</string>
+    <string name="prefersd">Prefer SD card</string>
+    <string name="prefer_sd">prefer_sd</string>
 </resources>
