@@ -37,7 +37,7 @@ class Notifier(private val context: Context) {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle(context.getString(R.string.snapshot_fetched))
-                .setContentText("${context.getString(R.string.downloadedanewsnapshot)} ${website.url}")
+                .setContentText(website.url)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(startActivityIntent())
                 .setAutoCancel(true)
