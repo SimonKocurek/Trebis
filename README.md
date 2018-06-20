@@ -5,6 +5,6 @@ The application will automatically scrape and notify you of updates on your webs
 After that you can view version from any point in time you want. Allowing you to read
 the contents at any time even without internet connection.
 
-![](header.png)
+![app/src/main/ic_launcher-web.png](header.png)
 
 Šimon Kocúrek – simon.kocurek@gmail.com
