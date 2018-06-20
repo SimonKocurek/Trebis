@@ -48,7 +48,7 @@ class MainFragmentView(val view: View) {
 
     fun setLayouts(layouts: ArrayList<Website>, sortType: SortType, filter: String) {
         val displayed = layouts
-                .filter { filter.isBlank() || it.name.contains(filter) }
+                .filter { matchesFilter(filter, it) }
                 .sortedWith(sortType.comparator)
 
         recyclerView.adapter = LayoutAdapter(displayed, view.context).also {
@@ -58,6 +58,12 @@ class MainFragmentView(val view: View) {
         }
 
         setCounter(displayed.size)
+    }
+
+    private fun matchesFilter(filter: String, it: Website): Boolean {
+        return filter.isBlank() ||
+                it.name.toLowerCase().contains(filter.toLowerCase()) ||
+                it.url.contains(filter)
     }
 
     @SuppressLint("SetTextI18n")

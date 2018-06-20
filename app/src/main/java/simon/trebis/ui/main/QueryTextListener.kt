@@ -1,8 +1,8 @@
 package simon.trebis.ui.main
 
-import android.widget.SearchView
+import android.support.v7.widget.SearchView
 
-class QueryTextListener(private val onQuerySubmit: (String) -> Unit) :
+class OnQueryTextListener(private val onQuerySubmit: (String) -> Unit) :
         SearchView.OnQueryTextListener {
 
     override fun onQueryTextSubmit(query: String?): Boolean {

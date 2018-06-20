@@ -1,7 +1,7 @@
 package simon.trebis.ui.main
 
+import android.support.v7.widget.SearchView
 import android.view.MenuItem
-import android.widget.SearchView
 
 class MainFragmentSearch(search: MenuItem, private val viewModel: MainViewModel) {
 
@@ -12,7 +12,7 @@ class MainFragmentSearch(search: MenuItem, private val viewModel: MainViewModel)
     init {
         search.isVisible = true
         searchView.setOnSearchClickListener { searchView.setQuery(viewModel.filter, true) }
-        searchView.setOnQueryTextListener(QueryTextListener { query -> onFilterChange(query) })
+        searchView.setOnQueryTextListener(OnQueryTextListener { query -> onFilterChange(query) })
     }
 
 }
