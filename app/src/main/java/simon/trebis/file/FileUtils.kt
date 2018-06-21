@@ -22,9 +22,9 @@ class FileUtils(private val context: Context) {
 
     fun fileUri(entryId: Long): Uri {
         if (canUseExternalStorage()) {
-            File(externalStorageDirectory(), entryId.toString()).apply {
-                if (isFile) {
-                    return Uri.fromFile(this)
+            File(externalStorageDirectory(), entryId.toString()).let {
+                if (it.isFile) {
+                    return Uri.fromFile(it)
                 }
             }
         }
@@ -53,7 +53,10 @@ class FileUtils(private val context: Context) {
 
     private fun externalStorageDirectory(): File {
         val externalStorage = Environment.getExternalStorageDirectory()
-        return File(externalStorage, context.getString(R.string.app_name))
+        File(externalStorage, context.getString(R.string.app_name)).let {
+            it.mkdir()
+            return it
+        }
     }
 
 }
